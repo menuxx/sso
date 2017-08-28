@@ -1,7 +1,0 @@
-
-app:
-  site-url: https://sso.yingtaohuo.com/
-
-spring:
-  freemarker:
-    cache: true
