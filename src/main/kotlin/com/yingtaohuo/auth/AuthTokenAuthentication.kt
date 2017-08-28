@@ -1,6 +1,7 @@
 package com.yingtaohuo.auth
 
 import com.yingtaohuo.db.DBShopUser
+import com.yingtaohuo.exception.InvalidAuthTokenException
 import com.yingtaohuo.util.getJwtAudience
 import com.yingtaohuo.util.getTelPhoneFromToken
 import com.yingtaohuo.util.validateToken
@@ -17,9 +18,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 
 
-
-
-
 /**
  * 作者: yinchangsheng@gmail.com
  * 创建于: 2017/8/27
@@ -30,8 +28,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
  * Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
  * token 生成机制使用 jwt 实现
  */
-
-typealias InvalidAuthTokenException = java.lang.RuntimeException
 
 val authTokenLogger = LoggerFactory.getLogger(AuthTokenAuthenticationTokenFilter::class.java)!!
 
@@ -62,7 +58,7 @@ class AuthTokenAuthenticationTokenFilter(
                     authTokenLogger.info("auth token format error", ex)
                 }
                 // 不正确的 auth_token
-                throw InvalidAuthTokenException()
+                throw InvalidAuthTokenException("auth token $authToken", ex)
             }
         } else {
             if ( authTokenLogger.isDebugEnabled ) {

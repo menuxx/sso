@@ -14,7 +14,7 @@ import javax.sql.DataSource
 @Service
 class DBItem(private val dataSource: DataSource) {
 
-    fun getById(itemId: Int) : TItemRecord {
+    fun getById(itemId: Int) : TItemRecord? {
         DSL.using(dataSource.connection).use { ctx ->
             val tItem = TItem.T_ITEM
             return ctx.select().from(tItem).where(tItem.ID.eq(itemId)).fetchOneInto(TItemRecord::class.java)

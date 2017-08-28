@@ -2,6 +2,8 @@ package com.yingtaohuo.routes.mobile
 
 import com.yingtaohuo.AllOpen
 import com.yingtaohuo.db.DBItem
+import com.yingtaohuo.exception.NotFoundException
+import org.springframework.data.crossstore.ChangeSetPersister
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -26,7 +28,8 @@ class ItemRoute(val dbItem: DBItem) {
 
     @GetMapping("/{id}")
     fun editItemView(@PathVariable id: Int, model: Model) : String {
-        model.addAttribute(dbItem.getById(id))
+        val item = dbItem.getById(id) ?: throw NotFoundException("item id:$id not found")
+        model.addAttribute(item)
         return "edit_item"
     }
 

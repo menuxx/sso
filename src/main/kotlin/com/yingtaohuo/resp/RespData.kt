@@ -8,7 +8,7 @@ package com.yingtaohuo.resp
 
 data class RespMeta(var error: String, var errorCode: Int)
 
-data class RespData(val data: Any, var meta: RespMeta?=null) {
+data class RespData(val data: Any?, var meta: RespMeta?=null) {
     fun success() : RespData {
         if (meta == null) {
             meta = RespMeta("ok", 0)
