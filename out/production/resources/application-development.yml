@@ -1,0 +1,7 @@
+
+app:
+  site-url: http://dev.sso.yingtaohuo.com:8081/
+
+spring:
+  freemarker:
+    cache: false

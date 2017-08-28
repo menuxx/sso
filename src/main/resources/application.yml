@@ -1,0 +1,45 @@
+
+app:
+  cdn-url: https://file.menuxx.com/
+
+server:
+  address: 0.0.0.0
+  port: 8081
+  context-path: /
+
+spring:
+
+  redis:
+    database: 8
+    host: wx3rd.menuxx.com
+    port: 7389
+    password: 4cj34t4j9
+    timeout: 500
+    pool:
+      max-active: 8
+      min-idle: 2
+      max-idle: 8
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: qurenjiadb
+    password: 1s$kh8g!1
+    url: jdbc:mysql://rm-uf68lsw07o293t779o.mysql.rds.aliyuncs.com/menuxx?characterEncoding=UTF-8
+    initialize: true
+
+  freemarker:
+    suffix: .ftl
+    template-loader-path:
+      - classpath:/views/
+    cache: false
+
+
+qiniu:
+  bucket: menuxx
+  access-key: sr4H3rnxg3fkN9bf5NBTj9V9ptPFMnW5Ryxbg_o6
+  secret-key: 9Gtvk0QbjvLDKWXwAi_WCYQkLq5Biu-X9wjHjXS5
+
+logging:
+  level:
+    #org.springframework: DEBUG
+    jooq: DEBUG
