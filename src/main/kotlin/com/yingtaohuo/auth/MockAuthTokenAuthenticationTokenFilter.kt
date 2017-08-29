@@ -15,9 +15,9 @@ import javax.servlet.http.HttpServletResponse
  */
 
 class MockHttpServletRequestWrapper(request: HttpServletRequest?) : HttpServletRequestWrapper(request) {
-    override fun getHeader(name: String?): String {
+    override fun getHeader(name: String?): String? {
         return if (name != null && name == "X-Authorization") {
-            genAuthToken("13575762817", "1234")
+            "YTH " + genAuthToken(telPhone = "13575762817", secret = "1234")
         } else {
             super.getHeader(name)
         }
