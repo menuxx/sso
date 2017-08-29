@@ -20,13 +20,15 @@ import org.springframework.web.bind.annotation.*
 class ItemRoute(val dbItem: DBItem) {
 
     @GetMapping("/new")
-    fun newItemView() : String {
+    fun newItemView(model: Model) : String {
+        model.addAttribute("title", "创建商品")
         return "mobile/item_new"
     }
 
     @GetMapping("/{id}")
     fun editItemView(@PathVariable id: Int, model: Model) : String {
         val item = dbItem.getById(id) ?: throw NotFoundException("item id:$id not found")
+        model.addAttribute("title", "修改商品")
         model.addAttribute("item", item)
         return "mobile/item_edit"
     }
