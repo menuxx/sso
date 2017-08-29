@@ -21,14 +21,14 @@ class ItemRoute(val dbItem: DBItem) {
 
     @GetMapping("/new")
     fun newItemView() : String {
-        return "new_item"
+        return "item_new"
     }
 
     @GetMapping("/{id}")
     fun editItemView(@PathVariable id: Int, model: Model) : String {
         val item = dbItem.getById(id) ?: throw NotFoundException("item id:$id not found")
         model.addAttribute(item)
-        return "edit_item"
+        return "item_edit"
     }
 
 }
