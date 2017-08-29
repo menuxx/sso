@@ -1,7 +1,6 @@
 package com.yingtaohuo.auth
 
 import com.yingtaohuo.db.DBShopUser
-import com.yingtaohuo.service.CaptchaService
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter

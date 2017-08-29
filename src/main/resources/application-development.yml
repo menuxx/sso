@@ -1,6 +1,6 @@
 
 app:
-  site-url: http://dev.sso.yingtaohuo.com:8081/
+  site-url: http://yin.sso.yingtaohuo.com:8081/
 
 spring:
   freemarker:

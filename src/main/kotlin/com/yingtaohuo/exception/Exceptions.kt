@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.ResponseStatus
  */
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-class InvalidAuthTokenException(message: String?, cause: Throwable?) : java.lang.RuntimeException(message, cause)
+class InvalidAuthTokenException(message: String?, cause: Throwable?) : RuntimeException(message, cause)
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-class NotFoundException(message: String?) : RuntimeException(message)
+class NotFoundException : RuntimeException {
+    constructor() : super()
+    constructor(message: String?) : super(message)
+    constructor(message: String?, cause: Throwable?) : super(message, cause)
+}
