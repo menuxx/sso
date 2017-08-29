@@ -27,7 +27,7 @@ class ItemRoute(val dbItem: DBItem) {
     @GetMapping("/{id}")
     fun editItemView(@PathVariable id: Int, model: Model) : String {
         val item = dbItem.getById(id) ?: throw NotFoundException("item id:$id not found")
-        model.addAttribute(item)
+        model.addAttribute("item", item)
         return "mobile/item_edit"
     }
 
