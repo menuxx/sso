@@ -37,8 +37,8 @@ class AuthTokenAuthenticationTokenFilter(
         private val dbShopUser: DBShopUser) : OncePerRequestFilter() {
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
-        val authorizationOfHeader = request.getHeader("Authorization")
-        if (authorizationOfHeader != null && authorizationOfHeader.startsWith("Bearer ")) {
+        val authorizationOfHeader = request.getHeader("X-Authorization")
+        if (authorizationOfHeader != null && authorizationOfHeader.startsWith("YTH ")) {
             val authToken = authorizationOfHeader.substring(7)
             try {
                 val audience = getJwtAudience(authToken).toInt()
