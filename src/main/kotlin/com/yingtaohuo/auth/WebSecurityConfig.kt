@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.security.SecurityProperties
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.core.annotation.Order
+import org.springframework.core.env.Environment
 import org.springframework.http.HttpMethod
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -24,7 +25,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 class WebSecurityConfig(
         private val userService: YTHUserDetailsService,
-        private val dbShopUser: DBShopUser
+        private val dbShopUser: DBShopUser,
+        private val env: Environment
 ) : WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
@@ -48,7 +50,12 @@ class WebSecurityConfig(
                 .antMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated()
 
-        http.addFilterBefore(AuthTokenAuthenticationTokenFilter(userService, dbShopUser), UsernamePasswordAuthenticationFilter::class.java)
+        if ( env.activeProfiles.contains("development") ) {
+            http.addFilterBefore(AuthTokenAuthenticationTokenFilter(userService, dbShopUser), UsernamePasswordAuthenticationFilter::class.java)
+        } else {
+            http.addFilterBefore(MockAuthTokenAuthenticationTokenFilter(userService, dbShopUser), UsernamePasswordAuthenticationFilter::class.java)
+        }
+
         http.headers().cacheControl()
     }
 

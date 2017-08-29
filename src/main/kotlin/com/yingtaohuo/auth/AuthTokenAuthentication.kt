@@ -32,7 +32,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 val authTokenLogger = LoggerFactory.getLogger(AuthTokenAuthenticationTokenFilter::class.java)!!
 
 // filter
-class AuthTokenAuthenticationTokenFilter(
+open class AuthTokenAuthenticationTokenFilter(
         private val userDetailsService: UserDetailsService,
         private val dbShopUser: DBShopUser) : OncePerRequestFilter() {
 

@@ -6,6 +6,7 @@ import com.yingtaohuo.NoArg
 import com.yingtaohuo.auth.YTHAuthUser
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.Claims
+import io.jsonwebtoken.SignatureAlgorithm
 import java.util.*
 
 
@@ -14,6 +15,26 @@ import java.util.*
  * 创建于: 2017/8/27
  * 微信: yin80871901
  */
+
+fun genAuthToken(telPhone: String, secret: String) : String {
+    val createdDate = Date()
+    val expirationDate = Date(Date().toInstant().plusSeconds(7200 * 4).toEpochMilli())
+
+    val subject = telPhone
+    val expireTime = expirationDate.time / 1000
+    val audience = 7
+
+    val claims = mapOf("sub" to subject, "aud" to audience, "exp" to expireTime)
+
+    return Jwts.builder()
+            .setClaims(claims)
+            .setSubject(subject)
+            .setAudience(audience.toString())
+            .setIssuedAt(createdDate)
+            .setExpiration(expirationDate)
+            .signWith(SignatureAlgorithm.HS512, secret)
+            .compact()
+}
 
 fun getTelPhoneFromToken(token: String, secret: String) : String? {
     return getAllClaimsFromToken(token, secret).subject
