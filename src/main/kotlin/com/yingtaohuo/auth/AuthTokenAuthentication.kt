@@ -39,7 +39,7 @@ class AuthTokenAuthenticationTokenFilter(
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
         val authorizationOfHeader = request.getHeader("X-Authorization")
         if (authorizationOfHeader != null && authorizationOfHeader.startsWith("YTH ")) {
-            val authToken = authorizationOfHeader.substring(7)
+            val authToken = authorizationOfHeader.substring(4)
             try {
                 val audience = getJwtAudience(authToken).toInt()
                 val user1 = dbShopUser.getUserById(audience)
