@@ -1,0 +1,24 @@
+.wrap{
+	padding: 0;
+}
+
+.item-image{
+	width: 80px;
+}
+.discounted-price{
+	color: #f75c50;
+	padding-right: 10px;
+}
+.original-price{
+	color: #ccc;
+	padding-right: 30px;
+}
+.refresh{
+	text-align: center;
+	border: none;
+	padding-bottom: 22px; 
+	border-bottom: 1px solid #ccc;
+}
+.yth-list-group{
+	padding:10px 8px;
+}
