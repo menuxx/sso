@@ -1,6 +1,6 @@
 
 app:
-  cdn-url: https://file.menuxx.com/
+  cdn-url: https://file.menuxx.com
 
 server:
   address: 0.0.0.0
