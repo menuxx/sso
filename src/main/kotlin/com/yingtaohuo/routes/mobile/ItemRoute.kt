@@ -23,10 +23,12 @@ import org.springframework.web.bind.annotation.*
 @PreAuthorize("hasRole('ADMIN')")
 class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
 
+    // page view
     @GetMapping("/")
     fun itemList(model: Model, @RequestParam(defaultValue = Page.DefaultPageSizeText) pageSize: Int, @RequestParam(defaultValue = Page.DefaultPageNumText) pageNum: Int) : String {
         val user = getCurrentUser()
         val itemList = dbItem.loadPageListRangeOfShop(user.shopId, PageParam(pageNum, pageSize))
+        model.addAttribute("pageNum", pageNum)
         model.addAttribute("itemList", itemList)
         model.addAttribute("title", "商品列表")
         return "mobile/item_list"
@@ -50,5 +52,7 @@ class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
         model.addAttribute("title", "修改商品")
         return "mobile/item_edit"
     }
+
+    // from view
 
 }
