@@ -1,6 +1,7 @@
 package com.yingtaohuo.exception
 
 import com.yingtaohuo.resp.RespData
+import org.jooq.exception.DataAccessException
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -28,6 +29,12 @@ class ExceptionHandlerConfig {
     fun authToken(ex: InvalidAuthTokenException) : RespData {
         logger.error("invalid auth token", ex)
         return RespData(null).failed("invalid auth token", 101)
+    }
+
+    @ExceptionHandler(DataAccessException::class)
+    fun dbException(ex: DataAccessException) : RespData {
+        logger.error("database access exception sqlstate : ${ex.sqlState()}", ex)
+        return RespData(null).failed("database access exception", 103)
     }
 
 }
