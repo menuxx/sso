@@ -21,7 +21,7 @@ fun main(args: Array<String>) {
     */
 
     val createdDate = Date()
-    val expirationDate = Date(Date().toInstant().plusSeconds(7200).toEpochMilli())
+    val expirationDate = Date(Date().toInstant().plusSeconds(28800).toEpochMilli())
 
     val subject = "13575762817"
     val expireTime = expirationDate.time / 1000
