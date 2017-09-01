@@ -8,12 +8,12 @@
 
     <ul class="list-group">
         <li class="list-group-item yth-list-group">
-            <button type="button" class="btn btn-default btn-block">+ 添加商品</button>
+            <a href="javascript:alert('提示：该功能近期开放，敬请期待');" class="btn btn-default btn-block">+ 添加商品</a>
         </li>
         <#list itemList as item>
             <li class="list-group-item yth-list-group">
                 <div class="media">
-                    <div class="media-left media-middle">
+                        <div class="media-left media-middle">
                         <img class="media-object img-rounded item-image" src="${app.cdnUrl}/1217.jpg?imageView2/1/w/200/h/200" alt="${item.itemName}">
                     </div>
                     <div class="media-body">

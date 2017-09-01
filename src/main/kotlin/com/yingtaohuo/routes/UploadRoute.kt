@@ -28,10 +28,10 @@ class UploadRoute(val qiniuProps: QiNiuProps) {
      */
     data class UpToken(val expireIn: Int, val uptoken: String)
     @GetMapping("/qiniu_token")
-    fun qiniuToken(@RequestParam key: String) : RespData {
+    fun qiniuToken() : UpToken {
         val auth = Auth.create(qiniuProps.accessKey, qiniuProps.secretKey)
-        val upToken = auth.uploadToken(qiniuProps.bucket, key)
-        return RespData(UpToken(3600, upToken)).success()
+        val upToken = auth.uploadToken(qiniuProps.bucket)
+        return UpToken(3600, upToken)
     }
 
 }
