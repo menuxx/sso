@@ -53,6 +53,11 @@ class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
         return "mobile/item_edit"
     }
 
-    // from view
+    // form request
+
+    @PutMapping("/{id}")
+    fun updateItem() {
+
+    }
 
 }
