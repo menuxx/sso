@@ -155,8 +155,6 @@
         return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" +date.getDate() + "-" + date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds() + "-" + date.getMilliseconds()
     }
 
-        return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" +date.getDate() + "-" + date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds() + "-" + date.getMilliseconds()
-
     // file upload
     var uploader = Qiniu.uploader({
         runtimes: 'html5',    //上传模式,依次退化
