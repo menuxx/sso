@@ -1,7 +1,6 @@
 package com.yingtaohuo
 
 import com.yingtaohuo.db.DBItem
-import com.yingtaohuo.page.Page
 import com.yingtaohuo.page.PageParam
 import com.yingtaohuo.props.AppProps
 import org.springframework.boot.CommandLineRunner

@@ -15,10 +15,12 @@ import javax.sql.DataSource
 @Service
 class DBItem(private val dataSource: DataSource) {
 
-    fun getById(itemId: Int) : TItemRecord? {
+    fun getById(itemId: Int, withShopId: Int) : TItemRecord? {
         DSL.using(dataSource.connection).use { ctx ->
             val tItem = TItem.T_ITEM
-            return ctx.select().from(tItem).where(tItem.ID.eq(itemId)).fetchOneInto(TItemRecord::class.java)
+            return ctx.select().from(tItem)
+                    .where(tItem.ID.eq(itemId).and(tItem.CORP_ID.eq(withShopId)))
+                    .fetchOneInto(TItemRecord::class.java)
         }
     }
 

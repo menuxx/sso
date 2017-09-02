@@ -8,14 +8,14 @@ package com.yingtaohuo.resp
 
 data class RespMeta(var error: String, var errorCode: Int)
 
-data class RespData(val data: Any?, var meta: RespMeta?=null) {
-    fun success() : RespData {
+data class RespData<out T>(val data: T?, var meta: RespMeta?=null) {
+    fun success() : RespData<T> {
         if (meta == null) {
             meta = RespMeta("ok", 0)
         }
         return this
     }
-    fun failed(error: String, errorCode: Int) : RespData {
+    fun failed(error: String, errorCode: Int) : RespData<T> {
         if (meta == null) {
             meta = RespMeta(error, errorCode)
         }

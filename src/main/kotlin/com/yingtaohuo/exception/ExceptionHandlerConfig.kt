@@ -1,8 +1,10 @@
 package com.yingtaohuo.exception
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.yingtaohuo.resp.RespData
 import org.jooq.exception.DataAccessException
 import org.slf4j.LoggerFactory
+import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
@@ -19,22 +21,44 @@ class ExceptionHandlerConfig {
 
     @ExceptionHandler(NotFoundException::class)
     @ResponseBody
-    fun notFound(ex: NotFoundException) : RespData {
+    fun notFound(ex: NotFoundException) : RespData<Any> {
         logger.error("not found", ex)
-        return RespData(null).failed("not found", 102)
+        return RespData(null).failed(ex.message ?: "not found", 102)
     }
 
     @ExceptionHandler(InvalidAuthTokenException::class)
     @ResponseBody
-    fun authToken(ex: InvalidAuthTokenException) : RespData {
+    fun authToken(ex: InvalidAuthTokenException) : RespData<Any> {
         logger.error("invalid auth token", ex)
-        return RespData(null).failed("invalid auth token", 101)
+        return RespData(null).failed(ex.message ?: "invalid auth token", 101)
+    }
+
+    @ExceptionHandler(InvalidParameterException::class)
+    @ResponseBody
+    fun invalidParam1(ex: InvalidParameterException) : RespData<Any> {
+        logger.error("invalid params", ex)
+        return RespData(null).failed(ex.message ?: "invalid params", 104)
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException::class)
+    @ResponseBody
+    fun invalidParam2(ex: HttpMessageNotReadableException) : RespData<Any> {
+        logger.error("invalid params", ex)
+        return RespData(null).failed("invalid params", 104)
+    }
+
+    @ExceptionHandler(InvalidFormatException::class)
+    @ResponseBody
+    fun invalidParam3(ex: InvalidFormatException) : RespData<Any> {
+        logger.error("invalid params", ex)
+        return RespData(null).failed("${ex.value} not cast ${ex.targetType}", 104)
     }
 
     @ExceptionHandler(DataAccessException::class)
-    fun dbException(ex: DataAccessException) : RespData {
+    @ResponseBody
+    fun dbException(ex: DataAccessException) : RespData<Any> {
         logger.error("database access exception sqlstate : ${ex.sqlState()}", ex)
-        return RespData(null).failed("database access exception", 103)
+        return RespData(null).failed(ex.message ?: "database access exception", 103)
     }
 
 }

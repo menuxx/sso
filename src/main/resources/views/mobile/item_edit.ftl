@@ -72,6 +72,20 @@
                     display: flex;
                     flex-direction: row;
                 }
+
+                .file-choose .image-list .item-image-box {
+                    position: relative;
+                }
+
+                .file-choose .image-list .remove-btn {
+                    width: 20px;
+                    height: 20px;
+                    position: absolute;
+                    right: 0;
+                    top: -5px;
+                    font-size: 20px;
+                }
+
                 .file-choose .image-list .item-image{
                     width: 70px;
                     height: 70px;
@@ -91,14 +105,29 @@
                 .file-choose .choose-btn .choose-btn-native{
                     display: none;
                 }
+
             </style>
 
             <div class="form-group" id="fileUploadContainer">
                 <label>上传图片：</label>
                 <div class="file-choose">
                     <div class="image-list">
-                        <img class="item-image" src="${app.cdnUrl}/1217.jpg?imageView2/1/w/200/h/200">
-                        <img class="item-image" src="${app.cdnUrl}/1217.jpg?imageView2/1/w/200/h/200">
+                        <div class="item-image-box">
+                            <span class="glyphicon glyphicon-remove-circle remove-btn"></span>
+                            <img class="item-image" src="https://file.menuxx.com/images/item/2017-9-2-0-19-35-104.jpeg">
+                        </div>
+                        <div class="item-image-box">
+                            <span class="glyphicon glyphicon-remove-circle remove-btn"></span>
+                            <img class="item-image" src="https://file.menuxx.com/images/item/2017-9-2-0-19-35-104.jpeg">
+                        </div>
+                        <div class="item-image-box">
+                            <span class="glyphicon glyphicon-remove-circle remove-btn"></span>
+                            <img class="item-image" src="https://file.menuxx.com/images/item/2017-9-2-0-19-35-104.jpeg">
+                        </div>
+                        <div class="item-image-box">
+                            <span class="glyphicon glyphicon-remove-circle remove-btn"></span>
+                            <img class="item-image" src="https://file.menuxx.com/images/item/2017-9-2-0-19-35-104.jpeg">
+                        </div>
                     </div>
                     <label id="uploadBtn" class="choose-btn">
                         +<input accept="image/png,image/gif" class="choose-btn-native" type="file">
@@ -114,17 +143,17 @@
             <div class="form-group">
                 <span class="required">*</span>
                 <label>单位：</label>
-                <input name="unit" type="text" value="${item.unit}" class="form-control" placeholder="例如：盒、个、袋、包...">
+                <input name="unit" type="text" value="<#if item.unit??>${item.unit}</#if>" class="form-control" placeholder="例如：盒、个、袋、包...">
             </div>
 
             <div class="form-group">
                 <label>条形码：</label>
-                <input name="barCode" type="number" value="${item.barCode}" class="form-control">
+                <input name="barCode" type="number" value="<#if item.barCode??>${item.barCode}</#if>" class="form-control">
             </div>
 
             <div class="form-group">
                 <label>商品编码：</label>
-                <input name="itemCode" type="number" value="${item.itemCode}" class="form-control">
+                <input name="itemCode" type="number" value="<#if item.itemCode??>${item.itemCode}</#if>" class="form-control">
             </div>
 
             <div class="form-group">
@@ -163,21 +192,28 @@
         // uptoken : '', //若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
         // unique_names: true, // 默认 false，key为文件名。若开启该选项，SDK为自动生成上传成功后的key（文件名）。
         // save_key: true,   // 默认 false。若在服务端生成uptoken的上传策略中指定了 `sava_key`，则开启，SDK会忽略对key的处理
-        domain: 'https://file.menuxx.com/',   //bucket 域名，下载资源时用到，**必需**
+        domain: '${app.cdnUrl}',   //bucket 域名，下载资源时用到，**必需**
         get_new_uptoken: false,  // 设置上传文件的时候是否每次都重新获取新的token
-        max_file_size: '1mb',           //最大文件体积限制
+        max_file_size: '3mb',           //最大文件体积限制
         max_retries: 3,                   //上传失败最大重试次数
-        chunk_size: '4mb',                //分块上传时，每片的体积
+        chunk_size: '1mb',                //分块上传时，每片的体积
         auto_start: true,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传,
+        log_level: 5,
+        multi_selection: false,
+        // disable_statistics_report: false,
         filters: {
-            max_file_size: "1mb",
+            max_file_size: "3mb",
             mime_types: [
-                { title : "图片文件", extensions : "jpg,gif,png" }
+                { title : "图片文件", extensions : "jpeg" },
+                { title : "图片文件", extensions : "jpg" },
+                { title : "图片文件", extensions : "gif" },
+                { title : "图片文件", extensions : "png" }
             ]
         },
         init: {
             'FilesAdded': function(up, files) {
                 plupload.each(files, function(file) {
+                    console.log('FilesAdded', file)
                     // 文件添加进队列后,处理相关的事情
                 });
             },
@@ -188,21 +224,16 @@
                 // 每个文件上传时,处理相关的事情
             },
             'FileUploaded': function(up, file, info) {
-                // 每个文件上传成功后,处理相关的事情
-                // 其中 info.response 是文件上传成功后，服务端返回的json，形式如
-                // {
-                //    "hash": "Fh8xVqod2MQ1mocfI4S4KpRL6D98",
-                //    "key": "gogopher.jpg"
-                //  }
-                // 参考http://developer.qiniu.com/docs/v6/api/overview/up/response/simple-response.html
-
-                console.log(info)
-
-                // var domain = up.getOption('domain');
-                // var res = parseJSON(info.response);
-                // var sourceLink = domain + res.key; 获取上传成功后的文件的Url
+                var fileKey = JSON.parse(info.response).key
+                var domain = up.getOption('domain')
+                var fileUrl = domain + '/' + fileKey
+                $('.image-list').append($('<img class="item-image" src="' + fileUrl + '" />'))
+                up.refresh()
             },
             'Error': function(up, err, errTip) {
+                if (err.code === -600) {
+                    alert('文件太大了，选一张小的吧')
+                }
                 //上传出错时,处理相关的事情
             },
             'UploadComplete': function() {
