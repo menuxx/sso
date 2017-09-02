@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="16e7a7ca-6fe0-4af4-b16a-c39b64887d86" name="Default" comment="添加文件上传部分">
+    <list default="true" id="16e7a7ca-6fe0-4af4-b16a-c39b64887d86" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/resp/Errors.kt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/resp/Interceptors.kt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/resp/OnlyID.kt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/web/WebConfig.kt" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/yingtaohuo/model/TItem.kt" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/App.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/App.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/db/DBItem.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/db/DBItem.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/exception/ExceptionHandlerConfig.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/exception/ExceptionHandlerConfig.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/exception/Exceptions.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/exception/Exceptions.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/resp/RespData.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/resp/RespData.kt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/routes/mobile/ItemRoute.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/routes/mobile/ItemRoute.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/views/mobile/item_edit.ftl" afterPath="$PROJECT_DIR$/src/main/resources/views/mobile/item_edit.ftl" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -72,8 +83,8 @@
       <file leaf-file-name="ItemRoute.kt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/routes/mobile/ItemRoute.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="55" column="8" lean-forward="false" selection-start-line="55" selection-start-column="8" selection-end-line="55" selection-end-column="8" />
+            <state relative-caret-position="322">
+              <caret line="62" column="24" lean-forward="true" selection-start-line="62" selection-start-column="24" selection-end-line="62" selection-end-column="24" />
               <folding>
                 <element signature="e#38#686#0" expanded="true" />
               </folding>
@@ -127,11 +138,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="dev" />
-      </map>
-    </option>
   </component>
   <component name="GradleLocalSettings">
     <option name="myGradleHomes">
@@ -1427,7 +1433,7 @@
       <workItem from="1503936407522" duration="32519000" />
       <workItem from="1504157861016" duration="10041000" />
       <workItem from="1504233162659" duration="15450000" />
-      <workItem from="1504322074068" duration="9918000" />
+      <workItem from="1504322074068" duration="9706000" />
     </task>
     <task id="LOCAL-00001" summary="修复mobile模板找不到">
       <created>1503993558926</created>
@@ -1492,24 +1498,17 @@
       <option name="project" value="LOCAL" />
       <updated>1504278734597</updated>
     </task>
-    <task id="LOCAL-00010" summary="添加文件上传部分">
-      <created>1504335747278</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1504335747278</updated>
-    </task>
-    <option name="localTasksCounter" value="11" />
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="155493000" />
+    <option name="totallyTimeSpent" value="155281000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="7" y="23" width="1187" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27631578" sideWeight="0.5065502" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37829912" sideWeight="0.50305676" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="JRebel Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925764" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="JRebel Executor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1528,7 +1527,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37865496" sideWeight="0.49694324" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27631578" sideWeight="0.49344978" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27631578" sideWeight="0.4970162" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2908297" sideWeight="0.50584793" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22882096" sideWeight="0.49415204" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925764" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1562,8 +1561,7 @@
     <MESSAGE value="添加商品列表页面" />
     <MESSAGE value="页面内不支持动态 pageNum" />
     <MESSAGE value=".idea remove from git" />
-    <MESSAGE value="添加文件上传部分" />
-    <option name="LAST_COMMIT_MESSAGE" value="添加文件上传部分" />
+    <option name="LAST_COMMIT_MESSAGE" value=".idea remove from git" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1957,8 +1955,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/routes/mobile/ItemRoute.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="55" column="8" lean-forward="false" selection-start-line="55" selection-start-column="8" selection-end-line="55" selection-end-column="8" />
+        <state relative-caret-position="322">
+          <caret line="62" column="24" lean-forward="true" selection-start-line="62" selection-start-column="24" selection-end-line="62" selection-end-column="24" />
           <folding>
             <element signature="e#38#686#0" expanded="true" />
           </folding>
