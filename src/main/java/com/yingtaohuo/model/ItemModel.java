@@ -3,7 +3,7 @@ package com.yingtaohuo.model;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-public class TItem {
+public class ItemModel {
 
     private Integer id;
 

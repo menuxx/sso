@@ -5,7 +5,7 @@ import com.yingtaohuo.db.DBCategory
 import com.yingtaohuo.db.DBItem
 import com.yingtaohuo.exception.InvalidParameterException
 import com.yingtaohuo.exception.NotFoundException
-import com.yingtaohuo.model.TItem
+import com.yingtaohuo.model.ItemModel
 import com.yingtaohuo.page.Page
 import com.yingtaohuo.page.PageParam
 import com.yingtaohuo.resp.OnlyID
@@ -29,7 +29,7 @@ import javax.validation.Valid
 class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
 
     // page view
-    @GetMapping("/")
+    @GetMapping("/list")
     fun itemList(model: Model, @RequestParam(defaultValue = Page.DefaultPageSizeText) pageSize: Int, @RequestParam(defaultValue = Page.DefaultPageNumText) pageNum: Int) : String {
         val user = getCurrentUser()
         val itemList = dbItem.loadPageListRangeOfShop(user.shopId, PageParam(pageNum, pageSize))
@@ -51,11 +51,8 @@ class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
         // 防止出现 编辑 不是 该店铺商品
         val item = dbItem.getById(id, user.shopId) ?: throw NotFoundException("item id:$id not found")
         val categories = dbCategory.loadCategoryRangeShop(user.shopId)
-
         model.addAttribute("categories", categories)
-
         model.addAttribute("item", item)
-
         model.addAttribute("title", "修改商品")
         return "mobile/item_edit"
     }
@@ -63,16 +60,21 @@ class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
     // form request
     @PutMapping("/{id}")
     @ResponseBody
-    fun updateItem(@PathVariable("id") itemId: Int,  @Valid @RequestBody item: TItem) : RespData<OnlyID> {
-        if ( item.id == null || item.corpId == null ) throw InvalidParameterException("缺少必要的参数")
-        return RespData(OnlyID(102)).success()
+    fun updateItem(@PathVariable("id") itemId: Int,  @Valid @RequestBody itemModel: ItemModel) : RespData<OnlyID> {
+        val user = getCurrentUser()
+        if ( itemModel.id == null || itemModel.corpId == null ) throw InvalidParameterException("缺少必要的参数")
+        val num = dbItem.updateItemById(itemId, itemModel, withShopId = user.shopId)
+        if ( num > 0 ) {
+            return RespData(OnlyID(itemId)).success()
+        }
+        throw InvalidParameterException("您修改的商品不存在")
     }
 
     @PostMapping("/")
     @ResponseBody
-    fun postItem(@Valid @RequestBody item: TItem) : RespData<TItem> {
+    fun postItem(@Valid @RequestBody itemModel: ItemModel) : RespData<ItemModel> {
         val user = getCurrentUser()
-        val item = TItem()
+        val item = ItemModel()
         return RespData(item).success()
     }
 
