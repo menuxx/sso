@@ -242,6 +242,7 @@
             'Key': function(up, file) {
                 // image/xxxx
                 var ext = file.type.replace("image/", "")
+
                 return "images/item/" + getDatetime(new Date()) + '.' + ext
             }
         }
