@@ -53,7 +53,7 @@ class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
         val categories = dbCategory.loadCategoryRangeShop(user.shopId)
 
         model.addAttribute("categories", categories)
-        
+
         model.addAttribute("item", item)
 
         model.addAttribute("title", "修改商品")
