@@ -38,6 +38,10 @@ apply plugin : 'kotlin-jpa'
 apply plugin : 'org.springframework.boot'
 apply plugin : 'nu.studer.jooq'
 
+bootRun {
+    addResources = true
+}
+
 noArg {
     annotation("com.yingtaohuo.NoArg")
 }

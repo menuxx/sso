@@ -7,11 +7,11 @@ ADD lib /tmp/build/lib
 
 ADD src /tmp/build/src
 
-RUN cd /tmp/build && mvn  -q dependency:resolve
+RUN cd /tmp/build && gradle build -x test
 
-RUN cd /tmp/build && mvn -q -DskipTests=true package \
+RUN cd /tmp/build
         #拷贝编译结果到指定目录
-        && mv target/*.jar /app.jar \
+        && mv build/libs/*.jar /app.jar \
         #清理编译痕迹
         && cd / && rm -rf /tmp/build
 
