@@ -74,14 +74,14 @@
                 <div class="file-choose">
                     <div class="image-list">
                         <#list item.coverImageUrls as imageUrl>
-                            <div class="item-image-box">
+                            <div class="item-image-box" data-filekey="${imageUrl}">
                                 <span class="glyphicon glyphicon-remove-circle remove-btn"></span>
-                                <img class="item-image" src="https://file.menuxx.com/${imageUrl}">
+                                <img class="item-image" src="${app.cdnUrl}/${imageUrl}">
                             </div>
                         </#list>
                     </div>
                     <label id="uploadBtn" class="choose-btn">
-                        +<input name="file" accept="image/png,image/gif" class="choose-btn-native" type="file">
+                        +<input name="file" class="choose-btn-native" type="file">
                     </label>
                 </div>
             </div>
@@ -118,8 +118,16 @@
 <script src="${app.siteUrl}/js/zh_CN.js"></script>
 
 <script type="text/javascript">
+
     $("#itemEditForm").validate({
         submitHandler:function(form){
+
+            var coverImages = [];
+
+            $('.item-image-box').each(function(i, box) {
+                coverImages.push($(box).data('filekey'))
+            });
+
             $.ajax({
                 url: '/items/1',
                 type: 'PUT',
@@ -128,7 +136,8 @@
                     id: 1,
                     corpId: 1,
                     itemName: $('[name=itemName]').val(),
-                    productPrice: 1
+                    coverImages: coverImages.join(":"),
+                    productPrice: 1,
                 })
             }).done(function(data){
                 alert("保存成功！")
@@ -144,6 +153,13 @@
     function getDatetime(date) {
         return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" +date.getDate() + "-" + date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds() + "-" + date.getMilliseconds()
     }
+
+    $(".image-list").delegate('.remove-btn', 'click',function(){
+        $(this).parent().remove()
+        if ($('.item-image-box').length <= 3 ) {
+            $("#uploadBtn").show();
+        }
+    })
 
     // file upload
     var uploader = Qiniu.uploader({
@@ -188,8 +204,14 @@
                 var fileKey = JSON.parse(info.response).key
                 var domain = up.getOption('domain')
                 var fileUrl = domain + '/' + fileKey
-                $('.image-list').append($('<img class="item-image" src='+ fileUrl + '>'));
-                up.refresh()
+                $('.image-list').append($('<div class="item-image-box" data-filekey="'+ fileKey +'">' +
+                        '<span class="glyphicon glyphicon-remove-circle remove-btn"></span>'+
+                        '<img class="item-image" src="'+ fileUrl +'">'+
+                        '</div>'
+                ));
+                if ($('.item-image-box').length >=3 ) {
+                    $("#uploadBtn").hide();
+                }
             },
             'Error': function(up, err, errTip) {
                 if (err.code === -600) {
