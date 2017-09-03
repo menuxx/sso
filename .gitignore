@@ -2,3 +2,6 @@
 .gradle
 out
 build
+.DS_Store
+classes
+sso.iml
