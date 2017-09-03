@@ -3,6 +3,7 @@ package com.yingtaohuo.routes.mobile
 import com.yingtaohuo.AllOpen
 import com.yingtaohuo.db.DBCategory
 import com.yingtaohuo.db.DBItem
+import com.yingtaohuo.db.fromRecord
 import com.yingtaohuo.exception.InvalidParameterException
 import com.yingtaohuo.exception.NotFoundException
 import com.yingtaohuo.model.ItemModel
@@ -10,6 +11,7 @@ import com.yingtaohuo.page.Page
 import com.yingtaohuo.page.PageParam
 import com.yingtaohuo.resp.OnlyID
 import com.yingtaohuo.resp.RespData
+import com.yingtaohuo.sso.db.tables.records.TItemRecord
 import com.yingtaohuo.util.getCurrentUser
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
@@ -57,10 +59,12 @@ class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
         return "mobile/item_edit"
     }
 
-    // form request
+    /**
+     * 修改商品
+     */
     @PutMapping("/{id}")
     @ResponseBody
-    fun updateItem(@PathVariable("id") itemId: Int,  @Valid @RequestBody itemModel: ItemModel) : RespData<OnlyID> {
+    fun updateItem(@PathVariable("id") itemId: Int,  @RequestBody itemModel: ItemModel) : RespData<OnlyID> {
         val user = getCurrentUser()
         if ( itemModel.id == null || itemModel.corpId == null ) throw InvalidParameterException("缺少必要的参数")
         val num = dbItem.updateItemById(itemId, itemModel, withShopId = user.shopId)
@@ -70,12 +74,18 @@ class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
         throw InvalidParameterException("您修改的商品不存在")
     }
 
+    /**
+     * 创建商品
+     */
     @PostMapping("/")
     @ResponseBody
-    fun postItem(@Valid @RequestBody itemModel: ItemModel) : RespData<ItemModel> {
+    fun postItem(@Valid @RequestBody item: ItemModel) : RespData<ItemModel> {
         val user = getCurrentUser()
-        val item = ItemModel()
-        return RespData(item).success()
+        item.corpId = user.shopId
+        val itemId = dbItem.insertItem(item)
+        item.id = itemId
+        val newItem = fromRecord<TItemRecord, ItemModel>(dbItem.getById(itemId, user.shopId)!!)
+        return RespData(newItem).success()
     }
 
 }

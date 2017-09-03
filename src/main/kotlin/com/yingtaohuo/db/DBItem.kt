@@ -42,11 +42,20 @@ class DBItem(private val dataSource: DataSource) {
     fun updateItemById(itemId: Int, itemModel: ItemModel, withShopId: Int) : Int {
         DSL.using(dataSource.connection).use { ctx ->
             val tItem = TItem.T_ITEM
-            val updateRecord = toRecord<TItemRecord, ItemModel>(itemModel)
+            val updateRecord = toRecord<TItemRecord, ItemModel>(itemModel, true)
             if ( logger.isDebugEnabled ) logger.debug(updateRecord.toString())
             return ctx.update(tItem)
                     .set(updateRecord)
                     .where(tItem.ID.eq(itemId).and(tItem.CORP_ID.eq(withShopId)))
+                    .execute()
+        }
+    }
+
+    fun insertItem(itemModel: ItemModel) : Int {
+        DSL.using(dataSource.connection).use { ctx ->
+            val tItem = TItem.T_ITEM
+            return ctx.insertInto(tItem)
+                    .values(toRecord<TItemRecord, ItemModel>(itemModel, false))
                     .execute()
         }
     }
