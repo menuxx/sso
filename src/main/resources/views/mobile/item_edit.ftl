@@ -12,20 +12,12 @@
             <div class="form-group">
                 <span class="required">*</span>
                 <label>商品名称：</label>
-                <input name="itemName" type="text" value="${itemModel.itemName}" required class="form-control">
-            </div>
-            <div class="form-group">
-                <span class="required">*</span>
-                <label>原价：</label>
-                <div class="input-group">
-                    <span class="input-group-addon">¥</span>
-                    <input name="productPrice" type="number" value="${itemModel.productPrice / 100}" class="form-control">
-                </div>
+                <input name="itemName" type="text" value="${item.itemName}" required class="form-control">
             </div>
             <div class="form-group">
                 <span class="required">*</span>
                 <label>选择分类：</label>
-                <select class="form-control" name="categoryId">${itemModel.categoryId}
+                <select class="form-control" name="categoryId">${item.categoryId}
                     <option>麻辣烫</option>
                     <option>盖浇饭</option>
                     <option>煲仔饭</option>
@@ -34,16 +26,29 @@
                 </select>
             </div>
             <div class="form-group">
+                <span class="required">*</span>
+                <label>单位：</label>
+                <input name="unit" type="text" value="<#if item.unit??>${item.unit}</#if>" class="form-control" placeholder="例如：盒、个、袋、包...">
+            </div>
+            <div class="form-group">
+                <span class="required">*</span>
+                <label>原价：</label>
+                <div class="input-group">
+                    <span class="input-group-addon">¥</span>
+                    <input name="productPrice" type="number" value="${item.productPrice / 100}" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
                 <label>折后价：</label>
                 <div class="input-group">
                     <span class="input-group-addon">¥</span>
-                    <input name="discountPrice" type="number" value="${itemModel.discountPrice / 100}" class="form-control">
+                    <input name="discountPrice" type="number" value="${item.discountPrice / 100}" class="form-control">
                 </div>
             </div>
             <div class="form-group">
                 <label>打包计价：</label>
                 <label class="checkbox-inline">
-                    <input name="packageFlag" checked type="checkbox" value="${itemModel.packageFlag}">该商品打包时计算打包价
+                    <input name="packageFlag" checked type="checkbox" value="${item.packageFlag}">该商品打包时计算打包价
                 </label>
             </div>
 
@@ -51,109 +56,55 @@
                 <label>库存商品：</label>
                 <div class="checkbox">
                     <label>
-                        <input name="stock" value="${itemModel.offline}" type="radio"> 缺货
+                        <input name="stock" value="${item.offline}" type="radio"> 缺货
                     </label>
                     <span class="yth-help-info text-warning">(会继续显示在小程序上但不能选购)</span>
                 </div>
 
                 <div class="checkbox">
                     <label>
-                        <input name="stock" value="${itemModel.soldout}" type="radio"> 下架
+                        <input name="stock" value="${item.soldout}" type="radio"> 下架
                     </label>
                     <span class="yth-help-info text-warning">(不会继续出现在小程序上面)</span>
                 </div>
             </div>
-            <style>
-                .file-choose{
-                    display: flex;
-                    flex-direction: row;
-                }
-                .file-choose .image-list{
-                    display: flex;
-                    flex-direction: row;
-                }
-
-                .file-choose .image-list .itemModel-image-box {
-                    position: relative;
-                }
-
-                .file-choose .image-list .remove-btn {
-                    width: 20px;
-                    height: 20px;
-                    position: absolute;
-                    right: 0;
-                    top: -5px;
-                    font-size: 20px;
-                }
-
-                .file-choose .image-list .itemModel-image{
-                    width: 70px;
-                    height: 70px;
-                    display: block;
-                    margin: 0 5px;
-                }
-                .file-choose .choose-btn{
-                    width: 70px;
-                    height: 70px;
-                    display: block;
-                    margin: 0 5px;
-                    border:1px dashed #cccccc;
-                    font-size: 30px;
-                    text-align: center;
-                    line-height:60px;
-                }
-                .file-choose .choose-btn .choose-btn-native{
-                    display: none;
-                }
-
-            </style>
 
             <div class="form-group" id="fileUploadContainer">
                 <label>上传图片：</label>
                 <div class="file-choose">
                     <div class="image-list">
-                        <div class="itemModel-image-box">
+                        <div class="item-image-box">
                             <span class="glyphicon glyphicon-remove-circle remove-btn"></span>
-                            <img class="itemModel-image" src="https://file.menuxx.com/images/itemModel/2017-9-2-0-19-35-104.jpeg">
+                            <img class="item-image" src="https://file.menuxx.com/images/item/2017-9-2-0-19-35-104.jpeg">
                         </div>
-                        <div class="itemModel-image-box">
+                        <div class="item-image-box">
                             <span class="glyphicon glyphicon-remove-circle remove-btn"></span>
-                            <img class="itemModel-image" src="https://file.menuxx.com/images/itemModel/2017-9-2-0-19-35-104.jpeg">
+                            <img class="item-image" src="https://file.menuxx.com/images/item/2017-9-2-0-19-35-104.jpeg">
                         </div>
-                        <div class="itemModel-image-box">
+                        <div class="item-image-box">
                             <span class="glyphicon glyphicon-remove-circle remove-btn"></span>
-                            <img class="itemModel-image" src="https://file.menuxx.com/images/itemModel/2017-9-2-0-19-35-104.jpeg">
-                        </div>
-                        <div class="itemModel-image-box">
-                            <span class="glyphicon glyphicon-remove-circle remove-btn"></span>
-                            <img class="itemModel-image" src="https://file.menuxx.com/images/itemModel/2017-9-2-0-19-35-104.jpeg">
+                            <img class="item-image" src="https://file.menuxx.com/images/item/2017-9-2-0-19-35-104.jpeg">
                         </div>
                     </div>
                     <label id="uploadBtn" class="choose-btn">
-                        +<input accept="image/png,image/gif" class="choose-btn-native" type="file">
+                        +<input name="file" accept="image/png,image/gif" class="choose-btn-native" type="file">
                     </label>
                 </div>
             </div>
 
             <div class="form-group">
                 <label>商品描述：</label>
-                <textarea name="itemDesc" class="form-control" rows="3">${itemModel.itemDesc}</textarea>
-            </div>
-
-            <div class="form-group">
-                <span class="required">*</span>
-                <label>单位：</label>
-                <input name="unit" type="text" value="<#if itemModel.unit??>${itemModel.unit}</#if>" class="form-control" placeholder="例如：盒、个、袋、包...">
+                <textarea name="itemDesc" class="form-control" rows="3">${item.itemDesc}</textarea>
             </div>
 
             <div class="form-group">
                 <label>条形码：</label>
-                <input name="barCode" type="number" value="<#if itemModel.barCode??>${itemModel.barCode}</#if>" class="form-control">
+                <input name="barCode" type="number" value="<#if item.barCode??>${item.barCode}</#if>" class="form-control">
             </div>
 
             <div class="form-group">
                 <label>商品编码：</label>
-                <input name="itemCode" type="number" value="<#if itemModel.itemCode??>${itemModel.itemCode}</#if>" class="form-control">
+                <input name="itemCode" type="number" value="<#if item.itemCode??>${item.itemCode}</#if>" class="form-control">
             </div>
 
             <div class="form-group">
@@ -174,6 +125,22 @@
 
 <script type="text/javascript">
     $("#itemEditForm").validate({
+        submitHandler:function(form){
+            $.ajax({
+                url: '/items/1',
+                type: 'PUT',
+                contentType: "application/json",
+                data: JSON.stringify({
+                    id: 1,
+                    corpId: 1,
+                    itemName: $('[name=itemName]').val(),
+                    productPrice: 1
+                })
+            }).done(function(data){
+                alert("保存成功！")
+            })
+        },
+        ignore: "*:not([name])",
         rules: {
             '[name=itemName]': 'required',
             '[name=productPrice]': 'required'
@@ -227,7 +194,7 @@
                 var fileKey = JSON.parse(info.response).key
                 var domain = up.getOption('domain')
                 var fileUrl = domain + '/' + fileKey
-                $('.image-list').append($('<img class="itemModel-image" src="' + fileUrl + '" />'))
+                $('.image-list').append($('<img class="item-image" src="' + fileUrl + '" />'))
                 up.refresh()
             },
             'Error': function(up, err, errTip) {
@@ -242,7 +209,7 @@
             'Key': function(up, file) {
                 // image/xxxx
                 var ext = file.type.replace("image/", "")
-                return "images/itemModel/" + getDatetime(new Date()) + '.' + ext
+                return "images/item/" + getDatetime(new Date()) + '.' + ext
             }
         }
     });

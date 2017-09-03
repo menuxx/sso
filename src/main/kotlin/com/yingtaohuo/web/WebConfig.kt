@@ -10,8 +10,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
-@Configuration
-@EnableWebMvc
+// @Configuration
+// @EnableWebMvc
 class WebConfig() : WebMvcConfigurerAdapter() {
 
     override fun addInterceptors(registry: InterceptorRegistry) {

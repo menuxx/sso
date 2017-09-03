@@ -7,22 +7,22 @@
 <div class="container wrap" id="container">
 
     <ul class="list-group">
-        <li class="list-group-itemModel yth-list-group">
+        <li class="list-group-item yth-list-group">
             <a href="javascript:alert('提示：该功能近期开放，敬请期待');" class="btn btn-default btn-block">+ 添加商品</a>
         </li>
-        <#list itemList as itemModel>
-            <li class="list-group-itemModel yth-list-group">
+        <#list itemList as item>
+            <li class="list-group-item yth-list-group">
                 <div class="media">
                         <div class="media-left media-middle">
-                        <img class="media-object img-rounded itemModel-image" src="${app.cdnUrl}/1217.jpg?imageView2/1/w/200/h/200" alt="${itemModel.itemName}">
+                        <img class="media-object img-rounded item-image" src="${app.cdnUrl}/1217.jpg?imageView2/1/w/200/h/200" alt="${item.itemName}">
                     </div>
                     <div class="media-body">
-                        <h5 class="media-heading">${itemModel.itemName}</h5>
-                        <p>${itemModel.itemDesc}</p>
-                        <p><span class="discounted-price">${itemModel.discountPrice / 100}</span><s class="original-price">${itemModel.productPrice / 100}</s></p>
+                        <h5 class="media-heading">${item.itemName}</h5>
+                        <p>${item.itemDesc}</p>
+                        <p><span class="discounted-price">${item.discountPrice / 100}</span><s class="original-price">${item.productPrice / 100}</s></p>
                     </div>
                     <div class="media-right media-middle">
-                        <a href="${app.siteUrl}/items/${itemModel.id}" class="btn btn-link">编辑</a>
+                        <a href="${app.siteUrl}/items/${item.id}" class="btn btn-link">编辑</a>
                     </div>
                 </div>
             </li>

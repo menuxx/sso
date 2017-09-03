@@ -48,7 +48,7 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
-    <output url="file://$MODULE_DIR$/../../out/production/classes" />
+    <output url="file://$MODULE_DIR$/../../build/classes/main" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../build/generated-src/jooq/menuxx">
       <sourceFolder url="file://$MODULE_DIR$/../../build/generated-src/jooq/menuxx" isTestSource="false" />
