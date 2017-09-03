@@ -11,6 +11,7 @@
 .file-choose{
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 .file-choose .image-list{
     display: flex;
