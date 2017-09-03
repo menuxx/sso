@@ -1,7 +1,9 @@
-FROM gradle:4.0.1-jdk8-alpine
+FROM java:8-jdk
 MAINTAINER Yinchangsheng <yinchangsheng@gmail.com>
 
-ADD gradle /tmp/build/
+ADD gradlew /tmp/build/
+
+ADD gradle /tmp/build/gradle
 
 ADD settings.gradle /tmp/build/
 
@@ -11,13 +13,9 @@ ADD build.gradle /tmp/build/
 
 ADD src /tmp/build/src
 
-# RUN mkdir .gradle
+RUN cd /tmp/build && ./gradlew generateMenuxxJooqSchemaSource
 
-ENV GRADLE_USER_HOME .gradle
-
-# RUN chmod 777 /tmp/build
-
-RUN cd /tmp/build && gradle build -x test
+RUN cd /tmp/build && ./gradlew build -x test
 
 #1.拷贝编译结果到指定目录 2.清理编译痕迹
 RUN cd /tmp/build && mv build/libs/*.jar /app.jar && cd / && rm -rf /tmp/build
