@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="16e7a7ca-6fe0-4af4-b16a-c39b64887d86" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules/sso_test.iml" afterPath="$PROJECT_DIR$/.idea/modules/sso_test.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/yingtaohuo/model/ItemModel.java" afterPath="$PROJECT_DIR$/src/main/java/com/yingtaohuo/model/ItemModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/db/DBItem.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/db/DBItem.kt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/db/DBRecordModel.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/db/DBRecordModel.kt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/exception/ExceptionHandlerConfig.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/exception/ExceptionHandlerConfig.kt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/resp/RespData.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/resp/RespData.kt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/routes/mobile/ItemRoute.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/routes/mobile/ItemRoute.kt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/application.yml" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -79,8 +71,8 @@
       <file leaf-file-name="ItemRoute.kt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/routes/mobile/ItemRoute.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="413">
-              <caret line="33" column="24" lean-forward="true" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="24" />
+            <state relative-caret-position="232">
+              <caret line="69" column="84" lean-forward="false" selection-start-line="69" selection-start-column="84" selection-end-line="69" selection-end-column="84" />
               <folding>
                 <element signature="e#38#782#0" expanded="true" />
               </folding>
@@ -634,7 +626,6 @@
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/a05cf69f-01d7-4d21-a089-bb377b6c7daf/console.sql" />
         <option value="$PROJECT_DIR$/src/main/resources/mybaits/config.properties" />
         <option value="$PROJECT_DIR$/src/main/resources/mybaits/generatorConfig.xml" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/build/generated-src/jooq/menuxx/com/yingtaohuo/sso/db/tables/records/TItemRecord.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/yingtaohuo/model/TItem.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/db/DBCategory.kt" />
@@ -657,6 +648,7 @@
         <option value="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/db/DBItem.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/db/DBRecordModel.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/routes/mobile/ItemRoute.kt" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -1106,6 +1098,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="AndroidView" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -1280,9 +1275,6 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="AndroidView" />
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1303,7 +1295,7 @@
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth2" value="75" />
     <property name="RequestMappingsPanelOrder2" value="2" />
-    <property name="add_unversioned_files" value="true&#10;/Users/yinchangsheng/jwork/sso/build/generated-src/jooq/menuxx/com/yingtaohuo/sso/db/tables/records/TItemRecord.java&#10;/Users/yinchangsheng/jwork/sso/build/generated-src/jooq/menuxx/com/yingtaohuo/sso/db/tables/TItem.java" />
+    <property name="add_unversioned_files" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="MySQL&#10;com.mysql.cj.jdbc.Driver" />
   </component>
@@ -1491,7 +1483,8 @@
       <workItem from="1504233162659" duration="15450000" />
       <workItem from="1504322074068" duration="11613000" />
       <workItem from="1504337690037" duration="15217000" />
-      <workItem from="1504441902477" duration="77000" />
+      <workItem from="1504441902477" duration="138000" />
+      <workItem from="1504442069566" duration="191000" />
     </task>
     <task id="LOCAL-00001" summary="修复mobile模板找不到">
       <created>1503993558926</created>
@@ -1584,11 +1577,18 @@
       <option name="project" value="LOCAL" />
       <updated>1504336867568</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="支持 jooq record to pojo">
+      <created>1504442026587</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1504442026588</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="177867000" />
+    <option name="totallyTimeSpent" value="178119000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="7" y="23" width="1187" height="777" extended-state="0" />
@@ -1612,7 +1612,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15350877" sideWeight="0.49694324" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27631578" sideWeight="0.49344978" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27631578" sideWeight="0.49344978" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2908297" sideWeight="0.50584793" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31266376" sideWeight="0.49415204" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925764" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1649,7 +1649,8 @@
     <MESSAGE value="添加文件上传部分" />
     <MESSAGE value="商品修改" />
     <MESSAGE value="添加 TItem pojo" />
-    <option name="LAST_COMMIT_MESSAGE" value="添加 TItem pojo" />
+    <MESSAGE value="支持 jooq record to pojo" />
+    <option name="LAST_COMMIT_MESSAGE" value="支持 jooq record to pojo" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1671,14 +1672,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/routes/UploadRoute.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="29" column="31" lean-forward="false" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/resp/Errors.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -1697,7 +1690,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="29" lean-forward="false" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1761,7 +1753,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="122">
           <caret line="60" column="76" lean-forward="true" selection-start-line="60" selection-start-column="76" selection-end-line="60" selection-end-column="76" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1900,14 +1891,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/App.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -2018,9 +2001,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2029,7 +2009,7 @@
         <state relative-caret-position="900">
           <caret line="60" column="42" lean-forward="false" selection-start-line="60" selection-start-column="42" selection-end-line="60" selection-end-column="42" />
           <folding>
-            <element signature="e#27#222#0" expanded="true" />
+            <element signature="e#27#222#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2044,10 +2024,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="926">
+          <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="5" lean-forward="true" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/yingtaohuo/routes/mobile/ItemRoute.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="413">
-          <caret line="33" column="24" lean-forward="true" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="24" />
+        <state relative-caret-position="232">
+          <caret line="69" column="84" lean-forward="false" selection-start-line="69" selection-start-column="84" selection-end-line="69" selection-end-column="84" />
           <folding>
             <element signature="e#38#782#0" expanded="true" />
           </folding>
