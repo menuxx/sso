@@ -7,7 +7,7 @@ ADD settings.gradle /tmp/build/
 
 ADD build.gradle /tmp/build/
 
-ADD lib /tmp/build/lib
+# ADD lib /tmp/build/lib
 
 ADD src /tmp/build/src
 
