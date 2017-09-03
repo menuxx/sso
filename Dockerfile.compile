@@ -11,7 +11,7 @@ ADD build.gradle /tmp/build/
 
 ADD src /tmp/build/src
 
-RUN chmod 755 /tmp/build
+RUN sudo root
 
 RUN cd /tmp/build && gradle build -x test --stacktrace
 
