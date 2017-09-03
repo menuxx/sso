@@ -1,0 +1,32 @@
+FROM gradle:4.0.1-jdk8-alpine
+MAINTAINER Yinchangsheng <yinchangsheng@gmail.com>
+
+ADD gradle /tmp/build/
+
+ADD settings.gradle /tmp/build/
+
+ADD build.gradle /tmp/build/
+
+# ADD lib /tmp/build/lib
+
+ADD src /tmp/build/src
+
+# RUN mkdir .gradle
+
+ENV GRADLE_USER_HOME .gradle
+
+# RUN chmod 777 /tmp/build
+
+RUN cd /tmp/build && gradle build -x test
+
+#1.拷贝编译结果到指定目录 2.清理编译痕迹
+RUN cd /tmp/build && mv build/libs/*.jar /app.jar && cd / && rm -rf /tmp/build
+
+VOLUME /tmp
+VOLUME /log
+
+EXPOSE 8080
+
+# ENTRYPOINT ["java", "$JAVA_OPTS -Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar"]
+
+ENTRYPOINT java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar

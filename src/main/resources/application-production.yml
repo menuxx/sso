@@ -1,7 +1,25 @@
 
 app:
-  site-url: https://sso.yingtaohuo.com/
+  site-url: https://sso.yingtaohuo.com
 
 spring:
   freemarker:
     cache: true
+
+  redis:
+    database: 8
+    host: wx3rd.menuxx.com
+    port: 7389
+    password: 4cj34t4j9
+    timeout: 500
+    pool:
+      max-active: 10
+      min-idle: 5
+      max-idle: 10
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: FNQ31287twv
+    url: jdbc:mysql://nizhuantech.com:65321/menuxx_prd?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    initialize: true

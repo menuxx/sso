@@ -17,12 +17,12 @@
             <div class="form-group">
                 <span class="required">*</span>
                 <label>选择分类：</label>
-                <select class="form-control" name="categoryId">${item.categoryId}
-                    <option>麻辣烫</option>
-                    <option>盖浇饭</option>
-                    <option>煲仔饭</option>
-                    <option>凉皮</option>
-                    <option>卤味</option>
+                <select class="form-control" name="categoryId">
+                    <#list categories as category>
+                    <option value="${category.id}">${category.categoryName}</option>
+                        <#else>
+                        <option>--空空如也--</option>
+                    </#list>
                 </select>
             </div>
             <div class="form-group">

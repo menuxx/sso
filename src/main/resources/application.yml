@@ -10,7 +10,7 @@ server:
 spring:
 
   redis:
-    database: 8
+    database: 7
     host: wx3rd.menuxx.com
     port: 7389
     password: 4cj34t4j9
@@ -41,8 +41,3 @@ qiniu:
   bucket: menuxx
   access-key: sr4H3rnxg3fkN9bf5NBTj9V9ptPFMnW5Ryxbg_o6
   secret-key: 9Gtvk0QbjvLDKWXwAi_WCYQkLq5Biu-X9wjHjXS5
-
-logging:
-  level:
-    #org.springframework: DEBUG
-    jooq: DEBUG

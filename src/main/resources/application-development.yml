@@ -5,3 +5,9 @@ app:
 spring:
   freemarker:
     cache: false
+
+logging:
+  level:
+    com.yingtaohuo: DEBUG
+    # org.springframework: DEBUG
+    jooq: DEBUG
