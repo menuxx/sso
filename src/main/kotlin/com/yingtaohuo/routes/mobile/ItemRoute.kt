@@ -54,7 +54,7 @@ class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
         val item = dbItem.getById(id, user.shopId) ?: throw NotFoundException("item id:$id not found")
         val categories = dbCategory.loadCategoryRangeShop(user.shopId)
         model.addAttribute("categories", categories)
-        model.addAttribute("item", item)
+        model.addAttribute("item", fromRecord<TItemRecord, ItemModel>(item))
         model.addAttribute("title", "修改商品")
         return "mobile/item_edit"
     }

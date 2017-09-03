@@ -1,7 +1,12 @@
 package com.yingtaohuo.model;
 
+import org.springframework.util.StringUtils;
+
 import javax.validation.constraints.NotNull;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 public class ItemModel {
 
@@ -227,5 +232,12 @@ public class ItemModel {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+    public List<String> getCoverImageUrls() {
+    	if (coverImages != null && !StringUtils.isEmpty(coverImages)) {
+				return Arrays.asList(coverImages.split(":"));
+			}
+			return Collections.emptyList();
+		}
 
 }

@@ -73,18 +73,12 @@
                 <label>上传图片：</label>
                 <div class="file-choose">
                     <div class="image-list">
-                        <div class="item-image-box">
-                            <span class="glyphicon glyphicon-remove-circle remove-btn"></span>
-                            <img class="item-image" src="https://file.menuxx.com/images/item/2017-9-2-0-19-35-104.jpeg">
-                        </div>
-                        <div class="item-image-box">
-                            <span class="glyphicon glyphicon-remove-circle remove-btn"></span>
-                            <img class="item-image" src="https://file.menuxx.com/images/item/2017-9-2-0-19-35-104.jpeg">
-                        </div>
-                        <div class="item-image-box">
-                            <span class="glyphicon glyphicon-remove-circle remove-btn"></span>
-                            <img class="item-image" src="https://file.menuxx.com/images/item/2017-9-2-0-19-35-104.jpeg">
-                        </div>
+                        <#list item.coverImageUrls as imageUrl>
+                            <div class="item-image-box">
+                                <span class="glyphicon glyphicon-remove-circle remove-btn"></span>
+                                <img class="item-image" src="https://file.menuxx.com/${imageUrl}">
+                            </div>
+                        </#list>
                     </div>
                     <label id="uploadBtn" class="choose-btn">
                         +<input name="file" accept="image/png,image/gif" class="choose-btn-native" type="file">
@@ -194,7 +188,7 @@
                 var fileKey = JSON.parse(info.response).key
                 var domain = up.getOption('domain')
                 var fileUrl = domain + '/' + fileKey
-                $('.image-list').append($('<img class="item-image" src="' + fileUrl + '" />'))
+                $('.image-list').append($('<img class="item-image" src='+ fileUrl + '>'));
                 up.refresh()
             },
             'Error': function(up, err, errTip) {
