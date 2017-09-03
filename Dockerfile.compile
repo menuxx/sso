@@ -11,11 +11,13 @@ ADD build.gradle /tmp/build/
 
 ADD src /tmp/build/src
 
-RUN apt-get install sudo
+# RUN mkdir .gradle
 
-RUN sudo root
+ENV GRADLE_USER_HOME .gradle
 
-RUN cd /tmp/build && gradle build -x test --stacktrace
+# RUN chmod 777 /tmp/build
+
+RUN cd /tmp/build && gradle build -x test
 
 #1.拷贝编译结果到指定目录 2.清理编译痕迹
 RUN cd /tmp/build && mv build/libs/*.jar /app.jar && cd / && rm -rf /tmp/build
