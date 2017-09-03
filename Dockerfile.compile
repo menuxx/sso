@@ -1,7 +1,11 @@
 FROM gradle:4.0.1-jdk8-alpine
 MAINTAINER Yinchangsheng <yinchangsheng@gmail.com>
 
-ADD pom.xml /tmp/build/
+ADD gradle /tmp/build/
+
+ADD settings.gradle /tmp/build/
+
+ADD build.gradle /tmp/build/
 
 ADD lib /tmp/build/lib
 
