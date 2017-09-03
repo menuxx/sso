@@ -33,6 +33,7 @@
               <option value="$KOTLIN_BUNDLED$/lib/noarg-compiler-plugin.jar" />
             </array>
           </option>
+          <option name="version" value="true" />
           <option name="coroutinesWarn" value="true" />
         </compilerArguments>
       </configuration>

@@ -14,6 +14,7 @@ public class ItemModel {
 
     private String itemDesc;
 
+    @NotNull
     private Integer categoryId;
 
     @NotNull
