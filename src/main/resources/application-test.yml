@@ -1,13 +1,7 @@
 
 app:
-  site-url: http://127.0.0.1:8081
+  site-url: https://dev.sso.yingtaohuo.com
 
 spring:
   freemarker:
-    cache: false
-
-logging:
-  level:
-    com.yingtaohuo: DEBUG
-    # org.springframework: DEBUG
-    jooq: DEBUG
+    cache: true

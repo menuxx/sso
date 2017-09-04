@@ -1,6 +1,6 @@
 
 app:
-  site-url: https://dev.sso.yingtaohuo.com
+  site-url: http://127.0.0.1:80801
 
 spring:
   freemarker:
@@ -8,6 +8,6 @@ spring:
 
 logging:
   level:
-    # com.yingtaohuo: DEBUG
+    com.yingtaohuo: DEBUG
     # org.springframework: DEBUG
     jooq: DEBUG
