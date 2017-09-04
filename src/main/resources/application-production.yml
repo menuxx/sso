@@ -29,3 +29,6 @@ spring:
       init-s-q-l: select 1
       max-wait: 5000
       validation-query: select count(1) from t_item
+
+  resources:
+    cache-period: 3600
