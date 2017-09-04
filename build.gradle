@@ -91,13 +91,39 @@ dependencies {
     testCompile "junit:junit:4.12"
 }
 
-// gradle generateMenuxxJooqSchemaSource
+// ./gradlew generateMenuxxDevJooqSchemaSource
 
-// 手动执行 // compileJava.dependsOn(processResources)
+// 手动执行
+compileJava.dependsOn(processResources)
 
 jooq {
     version = '3.9.5'
     edition = 'OSS'
+    menuxxDev(sourceSets.main) {
+        jdbc {
+            driver = 'com.mysql.cj.jdbc.Driver'
+            url = 'jdbc:mysql://rm-uf68lsw07o293t779o.mysql.rds.aliyuncs.com/menuxx?characterEncoding=UTF-8'
+            user = 'qurenjiadb'
+            password = '1s$kh8g!1'
+        }
+        generator {
+            database {
+                name = 'org.jooq.util.mysql.MySQLDatabase'
+                inputSchema = 'menuxx'
+            }
+            generate {
+                relations = true
+                deprecated = false
+                records = true
+                immutablePojos = true
+                fluentSetters = true
+            }
+            target {
+                packageName = 'com.yingtaohuo.sso.db'
+                // directory = 'src/main/java'
+            }
+        }
+    }
     menuxxProd(sourceSets.main) {
         jdbc {
             driver = 'com.mysql.cj.jdbc.Driver'
@@ -123,35 +149,10 @@ jooq {
             }
         }
     }
-    menuxx(sourceSets.main) {
-        jdbc {
-            driver = 'com.mysql.cj.jdbc.Driver'
-            url = 'jdbc:mysql://rm-uf68lsw07o293t779o.mysql.rds.aliyuncs.com/menuxx?characterEncoding=UTF-8'
-            user = 'qurenjiadb'
-            password = '1s$kh8g!1'
-        }
-        generator {
-            database {
-                name = 'org.jooq.util.mysql.MySQLDatabase'
-                inputSchema = 'menuxx'
-            }
-            generate {
-                relations = true
-                deprecated = false
-                records = true
-                immutablePojos = true
-                fluentSetters = true
-            }
-            target {
-                packageName = 'com.yingtaohuo.sso.db'
-                // directory = 'src/main/java'
-            }
-        }
-    }
 }
 
-project.tasks.getByName('compileJava').dependsOn -= 'generateMenuxxProdJooqSchemaSource'
-project.tasks.getByName('compileJava').dependsOn -= 'generateMenuxxJooqSchemaSource'
+// project.tasks.getByName('compileJava').dependsOn -= 'generateMenuxxProdJooqSchemaSource'
+// project.tasks.getByName('compileJava').dependsOn -= 'generateMenuxxDevJooqSchemaSource'
 
 def getDbProperties = {
     def properties = new Properties()
