@@ -201,9 +201,9 @@
                 // 每个文件上传时,处理相关的事情
             },
             'FileUploaded': function(up, file, info) {
-                var fileKey = JSON.parse(info.response).key
-                var domain = up.getOption('domain')
-                var fileUrl = domain + '/' + fileKey
+                var fileKey = JSON.parse(info.response).key,
+                var domain = up.getOption('domain');
+                var fileUrl = domain + '/' + fileKey,
                 $('.image-list').append($('<div class="item-image-box" data-filekey="'+ fileKey +'">' +
                         '<span class="glyphicon glyphicon-remove-circle remove-btn"></span>'+
                         '<img class="item-image" src="'+ fileUrl +'">'+
