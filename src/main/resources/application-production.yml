@@ -21,8 +21,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: FNQ31287twv
-    # url: jdbc:mysql://10.23.84.153/menuxx_prd?useSSL=false&useUnicode=true&characterEncoding=UTF-8
-    url: jdbc:mysql://nizhuantech.com:65321/menuxx_prd?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://10.23.84.153/menuxx_prd?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    # url: jdbc:mysql://nizhuantech.com:65321/menuxx_prd?useSSL=false&useUnicode=true&characterEncoding=UTF-8
     initialize: true
     tomcat:
       max-active: 30
