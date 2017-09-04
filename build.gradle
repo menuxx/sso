@@ -93,7 +93,7 @@ dependencies {
 
 // gradle generateMenuxxJooqSchemaSource
 
-compileJava.dependsOn(processResources)
+// 手动执行 // compileJava.dependsOn(processResources)
 
 jooq {
     version = '3.9.5'
