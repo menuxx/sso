@@ -5,3 +5,9 @@ app:
 spring:
   freemarker:
     cache: true
+
+  resources:
+    cache-period: 3600
+    chain:
+      cache: true
+      gzipped: true

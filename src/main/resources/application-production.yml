@@ -31,4 +31,7 @@ spring:
       validation-query: select count(1) from t_item
 
   resources:
-    cache-period: 3600
+    cache-period: 7200
+    chain:
+      cache: true
+      gzipped: true
