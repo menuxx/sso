@@ -4,7 +4,7 @@ app:
 
 server:
   address: 0.0.0.0
-  port: 8081
+  port: ${port:8081}
   context-path: /
 
 spring:
