@@ -21,5 +21,11 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: FNQ31287twv
-    url: jdbc:mysql://nizhuantech.com:65321/menuxx_prd?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://10.23.84.153/menuxx_prd?useSSL=false&useUnicode=true&characterEncoding=UTF-8
     initialize: true
+    tomcat:
+      max-active: 30
+      min-idle: 3
+      init-s-q-l: select 1
+      max-wait: 5000
+      validation-query: select count(1) from t_item
