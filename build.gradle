@@ -94,7 +94,7 @@ dependencies {
 // ./gradlew generateMenuxxDevJooqSchemaSource
 
 // 手动执行
-compileJava.dependsOn(processResources)
+// compileJava.dependsOn(processResources)
 
 jooq {
     version = '3.9.5'
@@ -151,8 +151,8 @@ jooq {
     }
 }
 
-// project.tasks.getByName('compileJava').dependsOn -= 'generateMenuxxProdJooqSchemaSource'
-// project.tasks.getByName('compileJava').dependsOn -= 'generateMenuxxDevJooqSchemaSource'
+project.tasks.getByName('compileJava').dependsOn -= 'generateMenuxxProdJooqSchemaSource'
+project.tasks.getByName('compileJava').dependsOn -= 'generateMenuxxDevJooqSchemaSource'
 
 def getDbProperties = {
     def properties = new Properties()
