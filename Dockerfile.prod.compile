@@ -13,6 +13,8 @@ ADD build.gradle /tmp/build/
 
 ADD src /tmp/build/src
 
+RUN cd /tmp/build && ./gradlew clean
+
 RUN cd /tmp/build && ./gradlew generateMenuxxProdJooqSchemaSource
 
 RUN cd /tmp/build && ./gradlew build -x test
