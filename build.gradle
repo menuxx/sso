@@ -150,6 +150,9 @@ jooq {
     }
 }
 
+project.tasks.getByName('compileJava').dependsOn -= 'generateMenuxxProdJooqSchemaSource'
+project.tasks.getByName('compileJava').dependsOn -= 'generateMenuxxJooqSchemaSource'
+
 def getDbProperties = {
     def properties = new Properties()
     file("src/main/resources/mybatis/config.properties").withInputStream { inputStream ->
