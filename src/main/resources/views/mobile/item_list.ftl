@@ -1,5 +1,7 @@
 
 <#include "./header.ftl" />
+<#setting number_format=",##0.00">
+
 <link rel="stylesheet" type="text/css" href="${app.siteUrl}/css/lianxi-2.css">
 </head>
 <body>
@@ -22,7 +24,7 @@
                         <p><span class="discounted-price discountPrice">¥${item.discountPrice / 100}</span><s class="original-price productPrice">¥${item.productPrice / 100}</s></p>
                     </div>
                     <div class="media-right media-middle">
-                        <a href="${app.siteUrl}/items/${item.id}" class="btn btn-link itemEditLink">编辑</a>
+                        <a href="${app.siteUrl}/items/${item.id?string["000"]}" class="btn btn-link itemEditLink">编辑</a>
                     </div>
                 </div>
             </li>
