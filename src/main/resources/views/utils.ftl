@@ -9,3 +9,11 @@
         </#if>
     </#if>
 </#function>
+
+<#function defaultUrl val prefix _defaultUrl>
+    <#if val??>
+        <#return prefix + val/>
+    <#else>
+        <#return _defaultUrl/>
+    </#if>
+</#function>
