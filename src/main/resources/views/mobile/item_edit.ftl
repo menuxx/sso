@@ -26,7 +26,6 @@
                 </select>
             </div>
             <div class="form-group">
-                <span class="required">*</span>
                 <label>单位：</label>
                 <input name="unit" type="text" value="<#if item.unit??>${item.unit}</#if>" class="form-control" placeholder="例如：盒、个、袋、包...">
             </div>
@@ -70,7 +69,7 @@
             </div>
 
             <div class="form-group" id="fileUploadContainer">
-                <label>上传图片：</label>
+                <label>商品图(第一张作为缩略图，最多可以传三张)：</label>
                 <div class="file-choose">
                     <div class="image-list">
                         <#list item.coverImageUrls as imageUrl>
@@ -103,7 +102,7 @@
             </div>
 
             <div class="form-group">
-                <button type="submit" class="btn btn-block">保存</button>
+                <button type="submit" class="btn btn-primary btn-block">保存</button>
             </div>
 
         </form>
