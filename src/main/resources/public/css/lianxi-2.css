@@ -2,6 +2,10 @@
 	padding: 0;
 }
 
+.list-wrap{
+	margin: 0;
+}
+
 .item-image{
 	width: 80px;
 }
@@ -14,9 +18,9 @@
 	padding-right: 30px;
 }
 .refresh{
+	display: block;
 	text-align: center;
-	border: none;
-	padding-bottom: 22px; 
+	padding: 10px 0;
 	border-bottom: 1px solid #ccc;
 }
 .yth-list-group{

@@ -35,20 +35,20 @@
                 <label>原价：</label>
                 <div class="input-group">
                     <span class="input-group-addon">¥</span>
-                    <input name="productPrice" type="number" value="${item.productPrice / 100}" class="form-control">
+                    <input name="productPrice" type="number" data-value-type="number" value="${item.productPrice / 100}" class="form-control">
                 </div>
             </div>
             <div class="form-group">
                 <label>折后价：</label>
                 <div class="input-group">
                     <span class="input-group-addon">¥</span>
-                    <input name="discountPrice" type="number" value="${item.discountPrice / 100}" class="form-control">
+                    <input name="discountPrice" type="number" data-value-type="number" value="${item.discountPrice / 100}" class="form-control">
                 </div>
             </div>
             <div class="form-group">
                 <label>打包计价：</label>
                 <label class="checkbox-inline">
-                    <input name="packageFlag" checked type="checkbox" value="${item.packageFlag}">该商品打包时计算打包价
+                    <input name="packageFlag" value="1" data-value-type="number" type="checkbox" data-unchecked-value="0" <#if item.packageFlag==0>checked</#if> />该商品打包时计算打包价
                 </label>
             </div>
 
@@ -56,14 +56,14 @@
                 <label>库存商品：</label>
                 <div class="checkbox">
                     <label>
-                        <input name="stock" value="${item.offline}" type="radio"> 缺货
+                        <input name="soldout" type="checkbox" value="1" data-value-type="number" data-unchecked-value="0" <#if item.soldout==0>checked</#if> /> 缺货
                     </label>
                     <span class="yth-help-info text-warning">(会继续显示在小程序上但不能选购)</span>
                 </div>
 
                 <div class="checkbox">
                     <label>
-                        <input name="stock" value="${item.soldout}" type="radio"> 下架
+                        <input name="offline" type="checkbox" value="1" data-value-type="number" data-unchecked-value="0" <#if item.offline==0>checked</#if> />下架
                     </label>
                     <span class="yth-help-info text-warning">(不会继续出现在小程序上面)</span>
                 </div>
@@ -74,14 +74,15 @@
                 <div class="file-choose">
                     <div class="image-list">
                         <#list item.coverImageUrls as imageUrl>
-                            <div class="item-image-box" data-filekey="${imageUrl}">
+                            <div class="item-image-box">
+                                <input type="hidden" name="filekeys[]" value="${imageUrl}">
                                 <span class="glyphicon glyphicon-remove-circle remove-btn"></span>
                                 <img class="item-image" src="${app.cdnUrl}/${imageUrl}">
                             </div>
                         </#list>
                     </div>
                     <label id="uploadBtn" class="choose-btn">
-                        +<input name="file" class="choose-btn-native" type="file">
+                        +<input class="choose-btn-native" type="file">
                     </label>
                 </div>
             </div>
@@ -108,25 +109,33 @@
         </form>
     </div>
 </div>
-
-<script src="${app.siteUrl}/js/jquery.validate.js"></script>
+<script src="${app.siteUrl}/${assets('js/jquery.serializejson.js', app.envs)}"></script>
+<script src="${app.siteUrl}/${assets('js/jquery.validate.js', app.envs)}"></script>
+<script src="${app.siteUrl}/${assets('js/messages_zh.js', app.envs)}"></script>
+<script src="${app.siteUrl}/${assets('js/moxie.js', app.envs)}"></script>
 <script src="${app.siteUrl}/js/jquery.validate.bootstrap.js"></script>
-<script src="${app.siteUrl}/js/messages_zh.js"></script>
-<script src="${app.siteUrl}/js/moxie.js"></script>
 <script src="${app.siteUrl}/js/plupload.dev.js"></script>
 <script src="${app.siteUrl}/js/qiniu.min.js"></script>
 <script src="${app.siteUrl}/js/zh_CN.js"></script>
-
 <script type="text/javascript">
+
+
 
     $("#itemEditForm").validate({
         submitHandler:function(form){
 
-            var coverImages = [];
+            var filekeys = $(form).serializeJSON().filekeys
+            var productPrice = $(form).serializeJSON().productPrice * 100
+            var discountPrice = $(form).serializeJSON().discountPrice * 100
+            var categoryId = $(form).serializeJSON().categoryId
+            var unit = $(form).serializeJSON().unit
+            var packageFlag = $(form).serializeJSON().packageFlag
+            var soldout = $(form).serializeJSON().soldout
+            var offline = $(form).serializeJSON().offline
+            var itemDesc = $(form).serializeJSON().itemDesc
+            var barCode = $(form).serializeJSON().barCode
+            var itemCode = $(form).serializeJSON().itemCode
 
-            $('.item-image-box').each(function(i, box) {
-                coverImages.push($(box).data('filekey'))
-            });
 
             $.ajax({
                 url: '/items/1',
@@ -136,8 +145,17 @@
                     id: 1,
                     corpId: 1,
                     itemName: $('[name=itemName]').val(),
-                    coverImages: coverImages.join(":"),
-                    productPrice: 1,
+                    coverImages: filekeys.join(":"),
+                    productPrice: productPrice,
+                    discountPrice: discountPrice,
+                    categoryId: categoryId,
+                    unit: unit,
+                    packageFlag: packageFlag,
+                    soldout: soldout,
+                    offline: offline,
+                    itemDesc: itemDesc,
+                    barCode: barCode,
+                    itemCode: itemCode
                 })
             }).done(function(data){
                 alert("保存成功！")
@@ -201,10 +219,11 @@
                 // 每个文件上传时,处理相关的事情
             },
             'FileUploaded': function(up, file, info) {
-                var fileKey = JSON.parse(info.response).key,
-                var domain = up.getOption('domain');
-                var fileUrl = domain + '/' + fileKey,
-                $('.image-list').append($('<div class="item-image-box" data-filekey="'+ fileKey +'">' +
+                var fileKey = JSON.parse(info.response).key
+                var domain = up.getOption('domain')
+                var fileUrl = domain + '/' + fileKey
+                $('.image-list').append($('<div class="item-image-box">' +
+                        '<input type="hidden" name="filekeys[]" value="'+ fileKey +'">'+
                         '<span class="glyphicon glyphicon-remove-circle remove-btn"></span>'+
                         '<img class="item-image" src="'+ fileUrl +'">'+
                         '</div>'

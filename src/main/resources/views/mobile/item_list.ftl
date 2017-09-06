@@ -6,9 +6,9 @@
 
 <div class="container wrap" id="container">
 
-    <ul class="list-group">
+    <ul class="list-group list-wrap">
         <li class="list-group-item yth-list-group">
-            <a href="javascript:alert('提示：该功能近期开放，敬请期待');" class="btn btn-default btn-block">+ 添加商品</a>
+            <a href="javascript:alert('该功能近期开放，敬请期待');" class="btn btn-default btn-block">+ 添加商品</a>
         </li>
         <#list itemList as item>
             <li class="list-group-item yth-list-group">
@@ -30,7 +30,7 @@
             空空如也
         </#list>
     </ul>
-    <a href="${app.siteUrl}/items/?pageNum=${pageNum+1}" class="btn btn-default btn-block refresh">加载更多</a>
+    <a href="${app.siteUrl}/items/?pageNum=${pageNum+1}" class="refresh">加载更多</a>
 </div>
 
 <#include "./footer.ftl" />
