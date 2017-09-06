@@ -233,6 +233,13 @@ public class ItemModel {
         this.createTime = createTime;
     }
 
+    public String getThumbnail() {
+        if (StringUtils.isEmpty(thumbnails)) {
+            return coverImages.split(":")[0];
+        }
+        return null;
+    }
+
     public List<String> getCoverImageUrls() {
     	if (coverImages != null && !StringUtils.isEmpty(coverImages)) {
 				return Arrays.asList(coverImages.split(":"));

@@ -14,7 +14,7 @@
             <li class="list-group-item yth-list-group">
                 <div class="media">
                         <div class="media-left media-middle">
-                        <img class="media-object img-rounded item-image" src="${app.cdnUrl}/1217.jpg?imageView2/1/w/200/h/200" alt="${item.itemName}">
+                        <img class="media-object img-rounded item-image" src="${defaultUrl(item.thumbnail, app.cdnUrl, "https://file.menuxx.com/")}" alt="${item.itemName}">
                     </div>
                     <div class="media-body">
                         <h5 class="media-heading">${item.itemName}</h5>

@@ -36,7 +36,7 @@ class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
     @GetMapping("/list")
     fun itemList(model: Model, @RequestParam(defaultValue = Page.DefaultPageSizeText) pageSize: Int, @RequestParam(defaultValue = Page.DefaultPageNumText) pageNum: Int) : String {
         val user = getCurrentUser()
-        val itemList = dbItem.loadPageListRangeOfShop(user.shopId, PageParam(pageNum, pageSize))
+        val itemList = dbItem.loadPageListRangeOfShop(user.shopId, PageParam(pageNum, pageSize)).map { fromRecord<TItemRecord, ItemModel>(it) }
         model.addAttribute("pageNum", pageNum)
         model.addAttribute("itemList", itemList)
         model.addAttribute("title", "商品列表")
@@ -79,9 +79,9 @@ class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
     // page view
     @GetMapping("/")
     @ResponseBody
-    fun itemListApi(model: Model, @RequestParam(defaultValue = Page.DefaultPageSizeText) pageSize: Int, @RequestParam(defaultValue = Page.DefaultPageNumText) pageNum: Int) : RespData<List<TItemRecord>> {
+    fun itemListApi(model: Model, @RequestParam(defaultValue = Page.DefaultPageSizeText) pageSize: Int, @RequestParam(defaultValue = Page.DefaultPageNumText) pageNum: Int) : RespData<List<ItemModel>> {
         val user = getCurrentUser()
-        val list = dbItem.loadPageListRangeOfShop(user.shopId, PageParam(pageNum, pageSize))
+        val list = dbItem.loadPageListRangeOfShop(user.shopId, PageParam(pageNum, pageSize)).map { fromRecord<TItemRecord, ItemModel>(it) }
         return RespData(list).success()
     }
 
