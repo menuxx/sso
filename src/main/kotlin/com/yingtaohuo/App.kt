@@ -8,6 +8,17 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ModelAttribute
+import com.fasterxml.jackson.annotation.JsonInclude
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
+import org.springframework.context.annotation.Bean
+import org.jooq.impl.TableRecordImpl
+import com.fasterxml.jackson.databind.util.ClassUtil.getDeclaringClass
+import com.fasterxml.jackson.databind.introspect.AnnotatedMember
+import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector
+
+
+
+
 
 /**
  * 作者: yinchangsheng@gmail.com
@@ -17,6 +28,21 @@ import org.springframework.web.bind.annotation.ModelAttribute
 @SpringBootApplication(scanBasePackages = arrayOf("com.yingtaohuo", "com.yingtaohuo.*"))
 @EnableGlobalMethodSecurity(securedEnabled = true)
 class App {
+
+    // // http://stackoverflow.com/questions/26945580/jackson-serialization-how-to-ignore-superclass-properties
+    private class IgnoreInheritedIntrospector : JacksonAnnotationIntrospector() {
+        override fun hasIgnoreMarker(m: AnnotatedMember?): Boolean {
+            return m!!.declaringClass == TableRecordImpl::class.java || super.hasIgnoreMarker(m)
+        }
+    }
+
+    @Bean
+    fun objectMapperBuilder(): Jackson2ObjectMapperBuilder {
+        val builder = Jackson2ObjectMapperBuilder()
+        builder.annotationIntrospector(IgnoreInheritedIntrospector())
+        builder.serializationInclusion(JsonInclude.Include.NON_NULL)
+        return builder
+    }
 
 }
 

@@ -35,38 +35,40 @@
                 <label>原价：</label>
                 <div class="input-group">
                     <span class="input-group-addon">¥</span>
-                    <input name="productPrice" type="number" value="${item.productPrice / 100}" class="form-control">
+                    <input name="productPrice" data-value-type="number" type="number" value="${item.productPrice / 100}" class="form-control">
                 </div>
             </div>
             <div class="form-group">
                 <label>折后价：</label>
                 <div class="input-group">
                     <span class="input-group-addon">¥</span>
-                    <input name="discountPrice" type="number" value="${item.discountPrice / 100}" class="form-control">
+                    <input name="discountPrice" type="number" data-value-type="number" value="${item.discountPrice / 100}" class="form-control">
                 </div>
             </div>
             <div class="form-group">
                 <label>打包计价：</label>
                 <label class="checkbox-inline">
-                    <input name="packageFlag" checked type="checkbox" value="${item.packageFlag}">该商品打包时计算打包价
+                    <input name="packageFlag" <#if item.packageFlag==1>checked</#if> type="checkbox" data-value-type="number" data-unchecked-value="0" value="1">该商品打包时计算打包价
                 </label>
             </div>
 
             <div class="form-group">
+
                 <label>库存商品：</label>
                 <div class="checkbox">
                     <label>
-                        <input name="stock" value="${item.offline}" type="radio"> 缺货
+                        <input name="soldout" <#if item.soldout==1>checked</#if> data-value-type="number" data-unchecked-value="0" value="1" type="checkbox"> 缺货
                     </label>
                     <span class="yth-help-info text-warning">(会继续显示在小程序上但不能选购)</span>
                 </div>
 
                 <div class="checkbox">
                     <label>
-                        <input name="stock" value="${item.soldout}" type="radio"> 下架
+                        <input name="offline" value="${item.offline}" type="checkbox"> 下架
                     </label>
                     <span class="yth-help-info text-warning">(不会继续出现在小程序上面)</span>
                 </div>
+
             </div>
 
             <div class="form-group" id="fileUploadContainer">
@@ -81,14 +83,14 @@
                         </#list>
                     </div>
                     <label id="uploadBtn" class="choose-btn">
-                        +<input name="file" class="choose-btn-native" type="file">
+                        +<input accept="image/*" name="file" class="choose-btn-native" type="file">
                     </label>
                 </div>
             </div>
 
             <div class="form-group">
                 <label>商品描述：</label>
-                <textarea name="itemDesc" class="form-control" rows="3">${item.itemDesc}</textarea>
+                <textarea name="itemDesc" class="form-control" data-value-type="null" rows="3">${item.itemDesc}</textarea>
             </div>
 
             <div class="form-group">
@@ -109,6 +111,7 @@
     </div>
 </div>
 
+<script src="${app.siteUrl}/js/jquery.serializejson.js"></script>
 <script src="${app.siteUrl}/js/jquery.validate.js"></script>
 <script src="${app.siteUrl}/js/jquery.validate.bootstrap.js"></script>
 <script src="${app.siteUrl}/js/messages_zh.js"></script>
@@ -120,7 +123,7 @@
 <script type="text/javascript">
 
     $("#itemEditForm").validate({
-        submitHandler:function(form){
+        submitHandler: function(form) {
 
             var coverImages = [];
 
@@ -207,6 +210,7 @@
                 $('.image-list').append($('<div class="item-image-box" data-filekey="'+ fileKey +'">' +
                         '<span class="glyphicon glyphicon-remove-circle remove-btn"></span>'+
                         '<img class="item-image" src="'+ fileUrl +'">'+
+                        '<input type="hidden" name="fileKeys[]" value="' +  fileKey + '">' +
                         '</div>'
                 ));
                 if ($('.item-image-box').length >=3 ) {

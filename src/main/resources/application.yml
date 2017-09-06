@@ -14,18 +14,33 @@ spring:
     host: wx3rd.menuxx.com
     port: 7389
     password: 4cj34t4j9
-    timeout: 500
+    timeout: 1000
     pool:
-      max-active: 8
-      min-idle: 2
-      max-idle: 8
+      max-wait: 10000
+      max-active: 50
+      min-idle: 20
+      max-idle: 30
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+    #password: FNQ31287twv
+    #username: root
+    type: com.zaxxer.hikari.HikariDataSource
+    #url: jdbc:mysql://nizhuantech.com:65321/menuxx_prd?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    #type: com.zaxxer.hikari.HikariDataSource
     username: qurenjiadb
     password: 1s$kh8g!1
     url: jdbc:mysql://rm-uf68lsw07o293t779o.mysql.rds.aliyuncs.com/menuxx?characterEncoding=UTF-8
-    initialize: true
+    hikari:
+      maximum-pool-size: 10
+      connection-init-sql: select count(1) from t_item
+      idle-timeout: 10000
+      auto-commit: false
+      max-lifetime: 180000
+      initialization-fail-fast: true
+      validation-timeout: 5000
+      minimum-idle: 20
+      connection-timeout: 6000
 
   freemarker:
     suffix: .ftl

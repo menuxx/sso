@@ -11,6 +11,8 @@ import com.yingtaohuo.page.Page
 import com.yingtaohuo.page.PageParam
 import com.yingtaohuo.resp.OnlyID
 import com.yingtaohuo.resp.RespData
+import com.yingtaohuo.resp.RespPageData
+import com.yingtaohuo.resp.RespPageMeta
 import com.yingtaohuo.sso.db.tables.records.TItemRecord
 import com.yingtaohuo.util.getCurrentUser
 import org.springframework.security.access.prepost.PreAuthorize
@@ -72,6 +74,15 @@ class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
             return RespData(OnlyID(itemId)).success()
         }
         throw InvalidParameterException("您修改的商品不存在")
+    }
+
+    // page view
+    @GetMapping("/")
+    @ResponseBody
+    fun itemListApi(model: Model, @RequestParam(defaultValue = Page.DefaultPageSizeText) pageSize: Int, @RequestParam(defaultValue = Page.DefaultPageNumText) pageNum: Int) : RespData<List<TItemRecord>> {
+        val user = getCurrentUser()
+        val list = dbItem.loadPageListRangeOfShop(user.shopId, PageParam(pageNum, pageSize))
+        return RespData(list).success()
     }
 
     /**
