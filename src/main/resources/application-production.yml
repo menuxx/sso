@@ -13,23 +13,28 @@ spring:
     password: 4cj34t4j9
     timeout: 500
     pool:
-      max-active: 10
-      min-idle: 5
-      max-idle: 10
+      max-active: 100
+      min-idle: 100
+      max-idle: 100
+      max-wait: 10000
+
 
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
     password: FNQ31287twv
-    # url: jdbc:mysql://10.23.84.153/menuxx_prd?useSSL=false&useUnicode=true&characterEncoding=UTF-8
-    url: jdbc:mysql://nizhuantech.com:65321/menuxx_prd?useSSL=false&useUnicode=true&characterEncoding=UTF-8
-    initialize: true
-    tomcat:
-      max-active: 30
-      min-idle: 3
-      init-s-q-l: select 1
-      max-wait: 5000
-      validation-query: select count(1) from t_item
+    username: root
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://10.23.84.153/menuxx_prd?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    #url: jdbc:mysql://nizhuantech.com:65321/menuxx_prd?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    hikari:
+      maximum-pool-size: 30
+      minimum-idle: 20
+      connection-init-sql: select count(1) from t_item
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      idle-timeout: 10000
+      auto-commit: false
+      max-lifetime: 1800000
+      initialization-fail-fast: true
+      validation-timeout: 5000
 
   resources:
     cache-period: 7200
