@@ -8,16 +8,16 @@
 
     <div class="row form-page">
 
-        <form novalidate id="itemEditForm" method="POST">
+        <form novalidate id="itemEditForm">
             <div class="form-group">
                 <span class="required">*</span>
                 <label>商品名称：</label>
-                <input name="itemName" type="text" value="${item.itemName}" required class="form-control">
+                <input name="itemName" type="text" value="${item.itemName}" class="form-control">
             </div>
             <div class="form-group">
                 <span class="required">*</span>
                 <label>选择分类：</label>
-                <select class="form-control" name="categoryId">
+                <select data-value-type="number" class="form-control" name="categoryId">
                     <#list categories as category>
                     <option value="${category.id}">${category.categoryName}</option>
                         <#else>
@@ -119,46 +119,27 @@
 <script src="${app.siteUrl}/js/zh_CN.js"></script>
 <script type="text/javascript">
 
-
+    if ($('.item-image-box').length <= 3 ) {
+        $("#uploadBtn").show();
+    }
 
     $("#itemEditForm").validate({
-        submitHandler:function(form){
-
-            var filekeys = $(form).serializeJSON().filekeys
-            var productPrice = $(form).serializeJSON().productPrice * 100
-            var discountPrice = $(form).serializeJSON().discountPrice * 100
-            var categoryId = $(form).serializeJSON().categoryId
-            var unit = $(form).serializeJSON().unit
-            var packageFlag = $(form).serializeJSON().packageFlag
-            var soldout = $(form).serializeJSON().soldout
-            var offline = $(form).serializeJSON().offline
-            var itemDesc = $(form).serializeJSON().itemDesc
-            var barCode = $(form).serializeJSON().barCode
-            var itemCode = $(form).serializeJSON().itemCode
-
-
-            $.ajax({
-                url: '/items/1',
-                type: 'PUT',
+        submitHandler: function(form) {
+            //https://github.com/marioizquierdo/jquery.serializeJSON
+            var formData =  $(form).serializeJSON()
+            formData.productPrice *= 100
+            formData.discountPrice *= 100
+            formData.coverImages = formData.filekeys.join(":")
+            formData.id = ${item.id}
+            formData.corpId = ${item.corpId}
+            $.ajax("/items/${item.id}", {
+                type: "PUT",
                 contentType: "application/json",
-                data: JSON.stringify({
-                    id: 1,
-                    corpId: 1,
-                    itemName: $('[name=itemName]').val(),
-                    coverImages: filekeys.join(":"),
-                    productPrice: productPrice,
-                    discountPrice: discountPrice,
-                    categoryId: categoryId,
-                    unit: unit,
-                    packageFlag: packageFlag,
-                    soldout: soldout,
-                    offline: offline,
-                    itemDesc: itemDesc,
-                    barCode: barCode,
-                    itemCode: itemCode
-                })
-            }).done(function(data){
+                data: JSON.stringify(formData)
+            }).success(function(){
                 alert("保存成功！")
+            }).fail(function(){
+                alert("保存失败！")
             })
         },
         ignore: "*:not([name])",

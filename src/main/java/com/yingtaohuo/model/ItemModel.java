@@ -234,8 +234,8 @@ public class ItemModel {
     }
 
     public String getThumbnail() {
-        if (StringUtils.isEmpty(thumbnails)) {
-            return coverImages.split(":")[0];
+        if (!StringUtils.isEmpty(thumbnails)) {
+            return thumbnails.split(":")[0];
         }
         return null;
     }

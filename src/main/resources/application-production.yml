@@ -31,7 +31,6 @@ spring:
       connection-init-sql: select count(1) from t_item
       driver-class-name: com.mysql.cj.jdbc.Driver
       idle-timeout: 10000
-      auto-commit: false
       max-lifetime: 1800000
       initialization-fail-fast: true
       validation-timeout: 5000

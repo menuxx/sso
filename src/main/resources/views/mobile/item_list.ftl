@@ -6,7 +6,7 @@
 
 <div class="container wrap" id="container">
 
-    <ul class="list-group list-wrap">
+    <ul class="list-group list-wrap list item-list">
         <li class="list-group-item yth-list-group">
             <a href="javascript:alert('该功能近期开放，敬请期待');" class="btn btn-default btn-block">+ 添加商品</a>
         </li>
@@ -14,15 +14,15 @@
             <li class="list-group-item yth-list-group">
                 <div class="media">
                         <div class="media-left media-middle">
-                        <img class="media-object img-rounded item-image" src="${defaultUrl(item.thumbnail, app.cdnUrl, "https://file.menuxx.com/")}" alt="${item.itemName}">
+                        <img class="media-object img-rounded item-image thumbnailUrl thumbnailAlt" src="<#if item.thumbnail??>${app.cdnUrl}/${item.thumbnail}<#else>${app.cdnUrl}/default_image_item.jpg</#if>" alt="${item.itemName}">
                     </div>
                     <div class="media-body">
-                        <h5 class="media-heading">${item.itemName}</h5>
-                        <p>${item.itemDesc}</p>
-                        <p><span class="discounted-price">${item.discountPrice / 100}</span><s class="original-price">${item.productPrice / 100}</s></p>
+                        <h5 class="media-heading itemName">${item.itemName}</h5>
+                        <p class="itemDesc">${item.itemDesc}</p>
+                        <p><span class="discounted-price discountPrice">¥${item.discountPrice / 100}</span><s class="original-price productPrice">¥${item.productPrice / 100}</s></p>
                     </div>
                     <div class="media-right media-middle">
-                        <a href="${app.siteUrl}/items/${item.id}" class="btn btn-link">编辑</a>
+                        <a href="${app.siteUrl}/items/${item.id}" class="btn btn-link itemEditLink">编辑</a>
                     </div>
                 </div>
             </li>
@@ -30,7 +30,50 @@
             空空如也
         </#list>
     </ul>
-    <a href="${app.siteUrl}/items/?pageNum=${pageNum+1}" class="refresh">加载更多</a>
+    <a class="refresh">加载更多</a>
 </div>
+<script src="${app.siteUrl}/${assets('js/list.js', app.envs)}"></script>
+<script>
+    var pageNum = 2
+    var options = {
+        valueNames: [
+            { name: 'thumbnailUrl', attr: 'src' },
+            { name: 'thumbnailAlt', attr: 'alt' },
+            'itemName',
+            'itemDesc',
+            'discountPrice',
+            'productPrice',
+            { name: 'itemEditLink', attr: 'href' }
+        ],
+        item: $("<div />").append($('.yth-list-group:eq(1)').clone() ).html()
+    }
+    var hackerList = new List('container', options, [])
+    $(".refresh").on("click", function(){
+        $.ajax("/items/?pageNum=" + pageNum).success(function(res) {
+            var list = res.data.map(function (item) {
+                item.discountPrice /= 100
+                item.productPrice /= 100
+                item.thumbnailAlt = item.itemName
+                if (item.thumbnail) {
+                    item.thumbnailUrl = '${app.cdnUrl}/' + item.thumbnail
+                } else {
+                    item.thumbnailUrl = '${app.cdnUrl}/default_image_item.jpg'
+                }
+                item.itemEditLink = '${app.siteUrl}/items/' + item.id
+                return item
+            })
+            if(list.length > 0){
+                hackerList.add(list)
+                pageNum++
+            } else{
+                alert("没有更多了...")
+            }
+        })
+    })
+</script>
+<script>
+
+</script>
+
 
 <#include "./footer.ftl" />

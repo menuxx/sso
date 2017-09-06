@@ -8,6 +8,7 @@ import com.zaxxer.hikari.HikariDataSource
 import org.jooq.impl.DSL
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 /**
  * 作者: yinchangsheng@gmail.com
@@ -43,6 +44,7 @@ class DBItem(private val dataSource: HikariDataSource) {
         }
     }
 
+    @Transactional
     fun updateItemById(itemId: Int, itemModel: ItemModel, withShopId: Int) : Int {
         dataSource.connection.use {
             DSL.using(it).use { ctx ->
