@@ -17,7 +17,7 @@
             <div class="form-group">
                 <span class="required">*</span>
                 <label>选择分类：</label>
-                <select data-value-type="number" class="form-control" name="categoryId">
+                <select data-value-type="number" class="form-control category-select" name="categoryId">
                     <#list categories as category>
                     <option value="${category.id}">${category.categoryName}</option>
                         <#else>
@@ -47,7 +47,7 @@
             <div class="form-group">
                 <label>打包计价：</label>
                 <label class="checkbox-inline">
-                    <input name="packageFlag" value="1" data-value-type="number" type="checkbox" data-unchecked-value="0" <#if item.packageFlag==0>checked</#if> />该商品打包时计算打包价
+                    <input name="packageFlag" value="1" data-value-type="number" type="checkbox" data-unchecked-value="0" <#if item.packageFlag==1>checked</#if> />该商品打包时计算打包价
                 </label>
             </div>
 
@@ -55,14 +55,14 @@
                 <label>库存商品：</label>
                 <div class="checkbox">
                     <label>
-                        <input name="soldout" type="checkbox" value="1" data-value-type="number" data-unchecked-value="0" <#if item.soldout==0>checked</#if> /> 缺货
+                        <input name="soldout" type="checkbox" value="1" data-value-type="number" data-unchecked-value="0" <#if item.soldout==1>checked</#if> /> 缺货
                     </label>
                     <span class="yth-help-info text-warning">(会继续显示在小程序上但不能选购)</span>
                 </div>
 
                 <div class="checkbox">
                     <label>
-                        <input name="offline" type="checkbox" value="1" data-value-type="number" data-unchecked-value="0" <#if item.offline==0>checked</#if> />下架
+                        <input name="offline" type="checkbox" value="1" data-value-type="number" data-unchecked-value="0" <#if item.offline==1>checked</#if> />下架
                     </label>
                     <span class="yth-help-info text-warning">(不会继续出现在小程序上面)</span>
                 </div>
@@ -108,19 +108,32 @@
         </form>
     </div>
 </div>
+
 <script src="${app.siteUrl}/${assets('js/jquery.serializejson.js', app.envs)}"></script>
+<#if app.envs?seq_contains('development')>
+    <script src="${app.siteUrl}/${assets('js/moxie.js', app.envs)}"></script>
+    <script src="${app.siteUrl}/js/plupload.dev.js"></script>
+    <script src="${app.siteUrl}/js/qiniu.min.js"></script>
+<#else>
+    <script src="${app.siteUrl}/js/plupload.full.min.js"></script>
+    <script src="${app.siteUrl}/js/qiniu.min.js"></script>
+</#if>
 <script src="${app.siteUrl}/${assets('js/jquery.validate.js', app.envs)}"></script>
 <script src="${app.siteUrl}/${assets('js/messages_zh.js', app.envs)}"></script>
-<script src="${app.siteUrl}/${assets('js/moxie.js', app.envs)}"></script>
 <script src="${app.siteUrl}/js/jquery.validate.bootstrap.js"></script>
-<script src="${app.siteUrl}/js/plupload.dev.js"></script>
-<script src="${app.siteUrl}/js/qiniu.min.js"></script>
 <script src="${app.siteUrl}/js/zh_CN.js"></script>
 <script type="text/javascript">
 
     if ($('.item-image-box').length <= 3 ) {
         $("#uploadBtn").show();
     }
+
+    // 自动选中 当前 item 的分类
+    $(".category-select option").each(function (index, option) {
+        if ( parseInt(option.value) === ${item.categoryId} ) {
+            $(".category-select").val(index + 1)
+        }
+    })
 
     $("#itemEditForm").validate({
         submitHandler: function(form) {
@@ -174,7 +187,7 @@
         max_retries: 3,                   //上传失败最大重试次数
         chunk_size: '1mb',                //分块上传时，每片的体积
         auto_start: true,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传,
-        log_level: 5,
+        //log_level: 5,
         multi_selection: false,
         // disable_statistics_report: false,
         filters: {

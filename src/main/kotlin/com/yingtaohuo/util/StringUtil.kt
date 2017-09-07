@@ -18,5 +18,5 @@ fun camelToUnderscore(world: String) : String {
 }
 
 fun coverImageToThumbnails(coverImages: String?) : String? {
-    return coverImages?.split("?")?.filterNot { url -> StringUtils.isEmpty(url)  }?.map { url -> "$url?imageView2/2/w/200/h/200" }?.joinToString(":")
+    return coverImages?.split("?")?.filterNot { url -> StringUtils.isEmpty(url)  }?.joinToString(":") { url -> "$url?imageView2/1/w/200/h/200" }
 }
