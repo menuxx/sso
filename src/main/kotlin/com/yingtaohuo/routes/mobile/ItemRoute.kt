@@ -14,6 +14,7 @@ import com.yingtaohuo.resp.RespData
 import com.yingtaohuo.resp.RespPageData
 import com.yingtaohuo.resp.RespPageMeta
 import com.yingtaohuo.sso.db.tables.records.TItemRecord
+import com.yingtaohuo.util.coverImageToThumbnails
 import com.yingtaohuo.util.getCurrentUser
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
@@ -69,6 +70,7 @@ class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
     fun updateItem(@PathVariable("id") itemId: Int,  @RequestBody itemModel: ItemModel) : RespData<OnlyID> {
         val user = getCurrentUser()
         if ( itemModel.id == null || itemModel.corpId == null ) throw InvalidParameterException("缺少必要的参数")
+        itemModel.thumbnails = coverImageToThumbnails(itemModel.coverImages)
         val num = dbItem.updateItemById(itemId, itemModel, withShopId = user.shopId)
         if ( num > 0 ) {
             return RespData(OnlyID(itemId)).success()

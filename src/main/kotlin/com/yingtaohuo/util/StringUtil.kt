@@ -15,3 +15,7 @@ fun fwLower(world: String) : String {
 fun camelToUnderscore(world: String) : String {
     return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, world)
 }
+
+fun coverImageToThumbnails(coverImages: String?) : String? {
+    return coverImages?.split("?")?.map { url -> "$url?imageView2/2/w/200/h/200" }?.joinToString(":")
+}

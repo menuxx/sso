@@ -128,6 +128,7 @@
             var formData =  $(form).serializeJSON()
             formData.productPrice *= 100
             formData.discountPrice *= 100
+            formData.filekeys = formData.filekeys || []
             formData.coverImages = formData.filekeys.join(":")
             formData.id = ${item.id}
             formData.corpId = ${item.corpId}
