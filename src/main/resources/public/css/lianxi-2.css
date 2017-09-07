@@ -1,3 +1,8 @@
+
+body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
+	font-family: Microsoft YaHei,'宋体' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+}
+
 .wrap{
 	padding: 0;
 }
@@ -25,4 +30,37 @@
 }
 .yth-list-group{
 	padding:10px 8px;
+}
+
+/* user_list */
+
+.page-header-wrap{
+	background-color: #ffb700;
+	height: 100px;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+}
+
+.total-people{
+	background-color: #ffffff;
+	text-align: center;
+	width: 60px;
+	height: 60px;
+	border-radius:30px;
+	line-height: 60px;
+
+}
+
+.total-num{
+	color: #ffb700;
+	font-size: 30px;
+}
+
+.consumed{
+	width: 60px;
+	height: 23px;
+	color: #cccccc;
+
 }

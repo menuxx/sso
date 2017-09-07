@@ -54,6 +54,7 @@ class ViewModelConfig(val appProps: AppProps, val env: Environment) {
         appProps.envs = env.activeProfiles
         model.addAttribute("app", appProps)
     }
+
 }
 
 fun main(args: Array<String>) {

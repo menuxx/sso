@@ -6,6 +6,7 @@ import com.yingtaohuo.db.fromRecord
 import com.yingtaohuo.model.UserModel
 import com.yingtaohuo.page.Page
 import com.yingtaohuo.page.PageParam
+import com.yingtaohuo.resp.RespData
 import com.yingtaohuo.sso.db.tables.records.TUserRecord
 import com.yingtaohuo.util.getCurrentUser
 import org.springframework.security.access.prepost.PreAuthorize
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.*
  */
 @AllOpen
 @Controller
-@RequestMapping("/shops")
+@RequestMapping("/shops/{shopId}")
 @PreAuthorize("hasRole('ADMIN')")
 class ShopRoute(val dbWXUser: DBUser) {
 
@@ -29,6 +30,7 @@ class ShopRoute(val dbWXUser: DBUser) {
         val user = getCurrentUser()
         val userList = dbWXUser.getUsersRangeOfShop(user.shopId, PageParam(pageNum, pageSize))
         model.addAttribute("pageNum", pageNum)
+        model.addAttribute("user", user)
         model.addAttribute("userList", userList)
         model.addAttribute("title", "用户列表")
         return "mobile/user_list"
@@ -36,11 +38,11 @@ class ShopRoute(val dbWXUser: DBUser) {
 
     @GetMapping("/users")
     @ResponseBody
-    fun getUsers(model: Model, @RequestParam(defaultValue = Page.DefaultPageSizeText) pageSize: Int, @RequestParam(defaultValue = Page.DefaultPageNumText) pageNum: Int) : List<UserModel> {
+    fun getUsers(model: Model, @RequestParam(defaultValue = Page.DefaultPageSizeText) pageSize: Int, @RequestParam(defaultValue = Page.DefaultPageNumText) pageNum: Int) : RespData<List<UserModel>> {
         val user = getCurrentUser()
-        return dbWXUser.getUsersRangeOfShop(user.shopId, PageParam(pageNum, pageSize)).map { record ->
+        return RespData(dbWXUser.getUsersRangeOfShop(user.shopId, PageParam(pageNum, pageSize)).map { record ->
             fromRecord<TUserRecord, UserModel>(record)
-        }
+        }).success()
     }
 
 }

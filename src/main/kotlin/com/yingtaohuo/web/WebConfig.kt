@@ -18,7 +18,7 @@ class WebConfig : WebMvcConfigurerAdapter() {
     private val CLASSPATH_RESOURCE_LOCATIONS = arrayOf("classpath:/META-INF/resources/", "classpath:/resources/", "classpath:/static/", "classpath:/public/")
 
     override fun addViewControllers(registry: ViewControllerRegistry) {
-        registry.addRedirectViewController("/", "/items/list")
+        //registry.addRedirectViewController("/", "/items/list")
     }
 
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {

@@ -73,9 +73,7 @@
         })
     })
 </script>
-<script>
 
-</script>
 
 
 <#include "./footer.ftl" />
