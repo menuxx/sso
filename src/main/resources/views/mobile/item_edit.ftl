@@ -52,7 +52,9 @@
             </div>
 
             <div class="form-group">
+
                 <label>库存商品：</label>
+
                 <div class="checkbox">
                     <label>
                         <input name="soldout" type="checkbox" value="1" data-value-type="number" data-unchecked-value="0" <#if item.soldout==1>checked</#if> /> 缺货

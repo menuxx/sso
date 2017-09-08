@@ -33,4 +33,13 @@ class DBUser(private val dataSource: HikariDataSource) {
         }
     }
 
+    fun getTotalCount(): Int {
+        dataSource.connection.use {
+            DSL.using(it).use { ctx ->
+                val tUser = TUser.T_USER
+                return ctx.select().from(tUser).count()
+            }
+        }
+    }
+
 }

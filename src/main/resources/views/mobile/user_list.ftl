@@ -9,7 +9,7 @@
 
     <div class="page-header-wrap">
         <div class="total-people">
-            <p class="total-num" >36</p>
+            <p class="total-num">${userCount}</p>
         </div>
     </div>
 
@@ -73,7 +73,6 @@
                 }else{
                     user.consumed = "未消费过"
                 }
-
                 return user
             })
             if(list.length > 0){

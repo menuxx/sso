@@ -23,12 +23,14 @@ import org.springframework.web.bind.annotation.*
 @Controller
 @RequestMapping("/shops/{shopId}")
 @PreAuthorize("hasRole('ADMIN')")
-class ShopRoute(val dbWXUser: DBUser) {
+class ShopRoute(val dbUser: DBUser) {
 
     @GetMapping("/users/list")
     fun getUsersView(model: Model, @RequestParam(defaultValue = Page.DefaultPageSizeText) pageSize: Int, @RequestParam(defaultValue = Page.DefaultPageNumText) pageNum: Int) : String {
         val user = getCurrentUser()
-        val userList = dbWXUser.getUsersRangeOfShop(user.shopId, PageParam(pageNum, pageSize))
+        val userList = dbUser.getUsersRangeOfShop(user.shopId, PageParam(pageNum, pageSize))
+        val userCount = dbUser.getTotalCount()
+        model.addAttribute("userCount", userCount)
         model.addAttribute("pageNum", pageNum)
         model.addAttribute("user", user)
         model.addAttribute("userList", userList)
@@ -40,7 +42,7 @@ class ShopRoute(val dbWXUser: DBUser) {
     @ResponseBody
     fun getUsers(model: Model, @RequestParam(defaultValue = Page.DefaultPageSizeText) pageSize: Int, @RequestParam(defaultValue = Page.DefaultPageNumText) pageNum: Int) : RespData<List<UserModel>> {
         val user = getCurrentUser()
-        return RespData(dbWXUser.getUsersRangeOfShop(user.shopId, PageParam(pageNum, pageSize)).map { record ->
+        return RespData(dbUser.getUsersRangeOfShop(user.shopId, PageParam(pageNum, pageSize)).map { record ->
             fromRecord<TUserRecord, UserModel>(record)
         }).success()
     }
