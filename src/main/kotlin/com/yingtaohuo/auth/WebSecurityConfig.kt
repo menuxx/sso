@@ -32,8 +32,8 @@ class WebSecurityConfig(
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
 
-        http.csrf()
-                .disable()
+        http.anonymous().disable()
+                .csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(AuthTokenAuthenticationEntryPoint())
                 .and()
                 .authorizeRequests()
@@ -48,7 +48,8 @@ class WebSecurityConfig(
                         "/**/*.js"
                 ).permitAll()
                 .antMatchers("/auth/**").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest()
+                .authenticated()
 
         if ( env.activeProfiles.contains("development") ) {
             http.addFilterBefore(MockAuthTokenAuthenticationTokenFilter(userService, dbShopUser), UsernamePasswordAuthenticationFilter::class.java)

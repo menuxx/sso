@@ -18,8 +18,8 @@ class YTHGrantedAuthority(private val authorize: String) : GrantedAuthority {
 class YTHAuthUser(
         val id: Int,
         val shopId: Int,
-        val nickname: String,
-        val email: String,
+        var nickname: String?,
+        var email: String?,
         val telphone: String,
         val enabled: Boolean,
         val captcha: String,
