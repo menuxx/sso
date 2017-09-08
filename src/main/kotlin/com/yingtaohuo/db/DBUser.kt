@@ -33,11 +33,11 @@ class DBUser(private val dataSource: HikariDataSource) {
         }
     }
 
-    fun getTotalCount(): Int {
+    fun getTotalCountOfShop(shopId: Int): Int {
         dataSource.connection.use {
             DSL.using(it).use { ctx ->
                 val tUser = TUser.T_USER
-                return ctx.select().from(tUser).count()
+                return ctx.select().from(tUser).where(tUser.CORP_ID.eq(shopId)).count()
             }
         }
     }

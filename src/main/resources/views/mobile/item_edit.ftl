@@ -133,7 +133,7 @@
     // 自动选中 当前 item 的分类
     $(".category-select option").each(function (index, option) {
         if ( parseInt(option.value) === ${item.categoryId} ) {
-            $(".category-select").val(index + 1)
+            $(".category-select").val(parseInt(option.value))
         }
     })
 

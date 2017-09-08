@@ -9,7 +9,7 @@
 
     <div class="page-header-wrap">
         <div class="total-people">
-            <p class="total-num">${userCount}</p>
+            <p class="total-num">${userCount?string["0"]}</p>
         </div>
     </div>
 
@@ -43,6 +43,13 @@
 </div>
 <script src="${app.siteUrl}/${assets('js/list.js', app.envs)}"></script>
 <script>
+
+    // 自适应容器大小
+    var $content = $('.total-num');
+    // 通过 zoom 来调节文字大小
+    var zoom =  $content.width() / 75;
+    $content.css('zoom', zoom);
+
     var pageNum = 2
     var options = {
         valueNames: [

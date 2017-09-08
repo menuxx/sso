@@ -29,7 +29,7 @@ class ShopRoute(val dbUser: DBUser) {
     fun getUsersView(model: Model, @RequestParam(defaultValue = Page.DefaultPageSizeText) pageSize: Int, @RequestParam(defaultValue = Page.DefaultPageNumText) pageNum: Int) : String {
         val user = getCurrentUser()
         val userList = dbUser.getUsersRangeOfShop(user.shopId, PageParam(pageNum, pageSize))
-        val userCount = dbUser.getTotalCount()
+        val userCount = dbUser.getTotalCountOfShop(user.shopId)
         model.addAttribute("userCount", userCount)
         model.addAttribute("pageNum", pageNum)
         model.addAttribute("user", user)
