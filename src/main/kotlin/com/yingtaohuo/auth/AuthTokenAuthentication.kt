@@ -1,11 +1,9 @@
 package com.yingtaohuo.auth
 
-import com.yingtaohuo.db.DBShopUser
 import com.yingtaohuo.exception.InvalidAuthTokenException
-import com.yingtaohuo.util.getJwtAudience
+import com.yingtaohuo.props.AppProps
 import com.yingtaohuo.util.getTelPhoneFromToken
 import com.yingtaohuo.util.validateToken
-import io.jsonwebtoken.SignatureException
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.context.SecurityContextHolder
@@ -34,21 +32,19 @@ val authTokenLogger = LoggerFactory.getLogger(AuthTokenAuthenticationTokenFilter
 
 // filter
 open class AuthTokenAuthenticationTokenFilter(
-        private val userDetailsService: UserDetailsService,
-        private val dbShopUser: DBShopUser) : OncePerRequestFilter() {
+        private val appProps: AppProps,
+        private val userDetailsService: UserDetailsService) : OncePerRequestFilter() {
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
         val authorizationOfHeader = request.getHeader("X-Authorization")
         if (authorizationOfHeader != null && authorizationOfHeader.startsWith("YTH ")) {
             val authToken = authorizationOfHeader.substring(4)
             try {
-                val audience = getJwtAudience(authToken).toInt()
-                val user1 = dbShopUser.getUserById(audience)
-                val telPhone = getTelPhoneFromToken(authToken, user1.secret)
+                val telPhone = getTelPhoneFromToken(authToken, appProps.ssoSecret)
                 if ( SecurityContextHolder.getContext().authentication == null ) {
-                    val user2 = userDetailsService.loadUserByUsername(telPhone) as YTHAuthUser
-                    if ( validateToken(authToken, user1.secret, user2) ) {
-                        val authentication = UsernamePasswordAuthenticationToken(user2, null, user2.authorities)
+                    val user = userDetailsService.loadUserByUsername(telPhone) as YTHAuthUser
+                    if ( validateToken(authToken, appProps.ssoSecret, user) ) {
+                        val authentication = UsernamePasswordAuthenticationToken(user, null, user.authorities)
                         authentication.details = WebAuthenticationDetailsSource().buildDetails(request)
                         authTokenLogger.info("authenticated user $telPhone, setting security context")
                         SecurityContextHolder.getContext().authentication = authentication

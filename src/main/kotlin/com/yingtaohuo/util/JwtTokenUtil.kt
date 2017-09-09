@@ -7,11 +7,7 @@ import com.yingtaohuo.auth.YTHAuthUser
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.SignatureAlgorithm
-import java.security.Key
 import java.util.*
-import javax.crypto.spec.SecretKeySpec
-import javax.xml.bind.DatatypeConverter
-
 
 /**
  * 作者: yinchangsheng@gmail.com
@@ -29,15 +25,13 @@ fun genAuthToken(telPhone: String, secret: String) : String {
 
     val claims = mapOf("sub" to subject, "aud" to audience, "exp" to expireTime)
 
-    val secretKey = DatatypeConverter.parseBase64Binary(secret)
-
     return Jwts.builder()
             .setClaims(claims)
             .setSubject(subject)
             .setAudience(audience.toString())
             .setIssuedAt(createdDate)
             .setExpiration(expirationDate)
-            .signWith(SignatureAlgorithm.HS512, secretKey)
+            .signWith(SignatureAlgorithm.HS512, secret)
             .compact()
 }
 
@@ -54,7 +48,6 @@ fun getExpirationDateFromToken(token: String, secret: String) : Date {
 }
 
 fun getAllClaimsFromToken(token: String, secret: String): Claims {
-   // val key = DatatypeConverter.parseBase64Binary(secret)
     return Jwts.parser()
             .setSigningKey(secret)
             .parseClaimsJws(token)

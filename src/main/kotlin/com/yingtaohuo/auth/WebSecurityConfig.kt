@@ -1,6 +1,6 @@
 package com.yingtaohuo.auth
 
-import com.yingtaohuo.db.DBShopUser
+import com.yingtaohuo.props.AppProps
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
@@ -24,8 +24,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 @EnableWebSecurity
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 class WebSecurityConfig(
+        private val appProps: AppProps,
         private val userService: YTHUserDetailsService,
-        private val dbShopUser: DBShopUser,
         private val env: Environment
 ) : WebSecurityConfigurerAdapter() {
 
@@ -52,9 +52,9 @@ class WebSecurityConfig(
                 .authenticated()
 
         //if ( env.activeProfiles.contains("development") ) {
-        //    http.addFilterBefore(MockAuthTokenAuthenticationTokenFilter(userService, dbShopUser), UsernamePasswordAuthenticationFilter::class.java)
+        //    http.addFilterBefore(MockAuthTokenAuthenticationTokenFilter(appProps, userService), UsernamePasswordAuthenticationFilter::class.java)
         //} else {
-            http.addFilterBefore(AuthTokenAuthenticationTokenFilter(userService, dbShopUser), UsernamePasswordAuthenticationFilter::class.java)
+            http.addFilterBefore(AuthTokenAuthenticationTokenFilter(appProps, userService), UsernamePasswordAuthenticationFilter::class.java)
         //}
 
         http.headers().cacheControl()

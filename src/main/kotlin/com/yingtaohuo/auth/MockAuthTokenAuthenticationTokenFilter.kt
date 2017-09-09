@@ -1,6 +1,6 @@
 package com.yingtaohuo.auth
 
-import com.yingtaohuo.db.DBShopUser
+import com.yingtaohuo.props.AppProps
 import com.yingtaohuo.util.genAuthToken
 import org.springframework.security.core.userdetails.UserDetailsService
 import javax.servlet.FilterChain
@@ -24,7 +24,7 @@ class MockHttpServletRequestWrapper(request: HttpServletRequest?) : HttpServletR
     }
 }
 
-class MockAuthTokenAuthenticationTokenFilter(userDetailsService: UserDetailsService, dbShopUser: DBShopUser) : AuthTokenAuthenticationTokenFilter(userDetailsService, dbShopUser) {
+class MockAuthTokenAuthenticationTokenFilter(appProps: AppProps, userDetailsService: UserDetailsService) : AuthTokenAuthenticationTokenFilter(appProps, userDetailsService) {
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
         super.doFilterInternal(MockHttpServletRequestWrapper(request), response, filterChain)

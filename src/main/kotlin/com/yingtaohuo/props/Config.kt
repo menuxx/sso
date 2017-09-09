@@ -17,4 +17,4 @@ data class QiNiuProps(var bucket: String?, var accessKey: String?, var secretKey
 @ConfigurationProperties("app")
 @Component
 @NoArg
-data class AppProps(var cdnUrl: String?, var siteUrl: String?, var envs: Array<String>?)
+data class AppProps(var cdnUrl: String?, var siteUrl: String?, val ssoSecret: String, var envs: Array<String>?)

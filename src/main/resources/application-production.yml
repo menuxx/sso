@@ -23,8 +23,8 @@ spring:
     password: FNQ31287twv
     username: root
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://10.23.84.153/menuxx_prd?useSSL=false&useUnicode=true&characterEncoding=UTF-8
-    #url: jdbc:mysql://nizhuantech.com:65321/menuxx_prd?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    #url: jdbc:mysql://10.23.84.153/menuxx_prd?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://nizhuantech.com:65321/menuxx_prd?useSSL=false&useUnicode=true&characterEncoding=UTF-8
     hikari:
       maximum-pool-size: 30
       minimum-idle: 20
