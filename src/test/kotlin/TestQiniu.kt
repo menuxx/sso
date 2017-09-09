@@ -34,7 +34,7 @@ fun main(args: Array<String>) {
     val expireTime = expirationDate.time / 1000
     val audience = 32
     // val secret = "MTIzNA=="
-    val secret = "hw3h9y"
+    val secret = "eWluZ3Rhb2h1bw=="
 
     // val secretKey = DatatypeConverter.parseBase64Binary(secret)
 
@@ -69,7 +69,7 @@ fun main(args: Array<String>) {
     // println("secretKey: $secretKey")
 
     // val secretKey1 = DatatypeConverter.parseBase64Binary(secret)
-    val token1 = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMzU5MzMwOTQxMiIsImF1ZCI6IjciLCJleHAiOjE1MDQ5NTgxMDksImlhdCI6MTUwNDkyOTMwOX0.IlHTivBaH4tLLYDtXEHb9rAb0Uw6WklwGSqNUiwaWndea10XviJp-fulwNe0vLLOmcZOp15qzWgkGh1oetVcYQ"
+    val token1 = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMzU5MzMwOTQxMiIsImF1ZCI6IjMyIiwiZXhwIjoxNTA0OTYxNzAxLCJpYXQiOjE1MDQ5MzI5MDF9.g7itROrtd8v_uJYBMg1fXIEdYTJRQM-m3WCYxzf9MMX9rpMEyXheOo3O_W5IY2OZNK5-LfynxYRZkpDJ8aoxSg"
     //val token1 = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMzU5MzMwOTQxMiIsImF1ZCI6IjciLCJleHAiOjE1MDQ5NTU1MDAsImlhdCI6MTUwNDkyNjcwMH0.22efzHQzGYJ16ObnBZ_sMON1iKLVOuUAiVh3QQLtbhH4RhvQ_o4XZ1h_DNfTOnsx6u2FvijaeugiRqPgIaPx_A"
 
     println(isTokenExpired(token1, secret))

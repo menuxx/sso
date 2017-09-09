@@ -40,10 +40,10 @@ open class AuthTokenAuthenticationTokenFilter(
         if (authorizationOfHeader != null && authorizationOfHeader.startsWith("YTH ")) {
             val authToken = authorizationOfHeader.substring(4)
             try {
-                val telPhone = getTelPhoneFromToken(authToken, appProps.ssoSecret)
+                val telPhone = getTelPhoneFromToken(authToken, appProps.ssoSecret!!)
                 if ( SecurityContextHolder.getContext().authentication == null ) {
                     val user = userDetailsService.loadUserByUsername(telPhone) as YTHAuthUser
-                    if ( validateToken(authToken, appProps.ssoSecret, user) ) {
+                    if ( validateToken(authToken, appProps.ssoSecret!!, user) ) {
                         val authentication = UsernamePasswordAuthenticationToken(user, null, user.authorities)
                         authentication.details = WebAuthenticationDetailsSource().buildDetails(request)
                         authTokenLogger.info("authenticated user $telPhone, setting security context")
