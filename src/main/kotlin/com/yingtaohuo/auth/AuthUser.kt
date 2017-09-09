@@ -22,7 +22,7 @@ class YTHAuthUser(
         var email: String?,
         val telphone: String,
         val enabled: Boolean,
-        val captcha: String,
+        val captcha: String?,
         val lastLoginTime: Date,
         private val authorities: MutableList<YTHGrantedAuthority>?= mutableListOf()
 ) : UserDetails {

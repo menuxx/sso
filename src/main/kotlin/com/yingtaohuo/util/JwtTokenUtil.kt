@@ -7,7 +7,10 @@ import com.yingtaohuo.auth.YTHAuthUser
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.SignatureAlgorithm
+import java.security.Key
 import java.util.*
+import javax.crypto.spec.SecretKeySpec
+import javax.xml.bind.DatatypeConverter
 
 
 /**
@@ -26,13 +29,15 @@ fun genAuthToken(telPhone: String, secret: String) : String {
 
     val claims = mapOf("sub" to subject, "aud" to audience, "exp" to expireTime)
 
+    val secretKey = DatatypeConverter.parseBase64Binary(secret)
+
     return Jwts.builder()
             .setClaims(claims)
             .setSubject(subject)
             .setAudience(audience.toString())
             .setIssuedAt(createdDate)
             .setExpiration(expirationDate)
-            .signWith(SignatureAlgorithm.HS512, secret)
+            .signWith(SignatureAlgorithm.HS512, secretKey)
             .compact()
 }
 
@@ -49,6 +54,7 @@ fun getExpirationDateFromToken(token: String, secret: String) : Date {
 }
 
 fun getAllClaimsFromToken(token: String, secret: String): Claims {
+   // val key = DatatypeConverter.parseBase64Binary(secret)
     return Jwts.parser()
             .setSigningKey(secret)
             .parseClaimsJws(token)
@@ -61,8 +67,8 @@ data class JwtPayload(val sub: String, val aud: String, val exp: Int, val iat: S
 private val objectMapper = ObjectMapper().registerModule(KotlinModule())
 
 fun parseBody(token: String) : JwtPayload {
-    val paylod = token.split(".")[1]
-    val body = Base64.getDecoder().decode(paylod.toByteArray())
+    val payload = token.split(".")[1]
+    val body = Base64.getDecoder().decode(payload.toByteArray())
     return objectMapper.readValue<JwtPayload>(body, JwtPayload::class.java)
 }
 

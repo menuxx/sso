@@ -5,6 +5,7 @@ import com.yingtaohuo.exception.InvalidAuthTokenException
 import com.yingtaohuo.util.getJwtAudience
 import com.yingtaohuo.util.getTelPhoneFromToken
 import com.yingtaohuo.util.validateToken
+import io.jsonwebtoken.SignatureException
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.context.SecurityContextHolder

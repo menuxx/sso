@@ -1,8 +1,15 @@
 import com.qiniu.util.Auth
 import com.yingtaohuo.util.getJwtSubject
+import com.yingtaohuo.util.getTelPhoneFromToken
+import com.yingtaohuo.util.isTokenExpired
+import com.yingtaohuo.util.validateToken
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import java.util.*
+import javax.xml.bind.DatatypeConverter
+import javax.crypto.spec.SecretKeySpec
+
+
 
 /**
  * 作者: yinchangsheng@gmail.com
@@ -23,10 +30,15 @@ fun main(args: Array<String>) {
     val createdDate = Date()
     val expirationDate = Date(Date().toInstant().plusSeconds(28800).toEpochMilli())
 
-    val subject = "13575762817"
+    val subject = "13593309412"
     val expireTime = expirationDate.time / 1000
     val audience = 7
+    // val secret = "MTIzNA=="
     val secret = "1234"
+
+    // val secretKey = DatatypeConverter.parseBase64Binary(secret)
+
+    // val signingKey = SecretKeySpec(secretKey, SignatureAlgorithm.HS256.jcaName)
 
     val claims = mapOf("sub" to subject, "aud" to audience, "exp" to expireTime)
 
@@ -39,15 +51,36 @@ fun main(args: Array<String>) {
     .signWith(SignatureAlgorithm.HS512, secret)
     .compact()
 
-    println("------" + getJwtSubject(token))
+    // println("------" + getJwtSubject(token))
+
+    // println("secretKey: ${String(secretKey)}")
 
     println(token)
+//
+//    val header = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).header
+//    println(header)
+//
+//    val body = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).body
+//
+//    println(body)
 
-    val header = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).header
-    println(header)
+    // val token1 = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMzU3NTc2MjgxNyIsImF1ZCI6IjciLCJleHAiOjE1MDQ5MTYwMzcsImlhdCI6MTUwNDg4NzIzN30.RTicBIopDZ_tdpXFkBQdxc4jmd84tBMdsH_jAWDLHteWVWNaqjoL89Y5K2vOMTeUMpcuM29ghyY8qatSg67TZw"
 
-    val body = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).body
+    // println("secretKey: $secretKey")
 
-    println(body)
+    // val secretKey1 = DatatypeConverter.parseBase64Binary(secret)
+    val token1 = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMzU5MzMwOTQxMiIsImF1ZCI6IjciLCJleHAiOjE1MDQ5NTU4MzQsImlhdCI6MTUwNDkyNzAzNH0.lbRU0-CNPaPErRLmwORJbR6cCDIHXkNaC5mMT9jHalzuA5nfpT7Ih0qicqD145inz_Wt1cpYE_6kDQRx7LOcNQ"
+    //val token1 = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMzU5MzMwOTQxMiIsImF1ZCI6IjciLCJleHAiOjE1MDQ5NTU1MDAsImlhdCI6MTUwNDkyNjcwMH0.22efzHQzGYJ16ObnBZ_sMON1iKLVOuUAiVh3QQLtbhH4RhvQ_o4XZ1h_DNfTOnsx6u2FvijaeugiRqPgIaPx_A"
+
+    println(isTokenExpired(token1, secret))
+    println(isTokenExpired(token1, secret))
+    println(getTelPhoneFromToken(token, secret))
+
+    println(
+            Jwts.parser()
+            .setSigningKey(secret)
+            .parseClaimsJws(token1)
+            .body.subject
+    )
 
 }
