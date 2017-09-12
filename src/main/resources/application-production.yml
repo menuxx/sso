@@ -1,11 +1,12 @@
 
 app:
   site-url: https://sso.yingtaohuo.com
+  #site-url: http://127.0.0.1:8081
 
 spring:
   freemarker:
     cache: true
-
+  
   redis:
     database: 8
     host: wx3rd.menuxx.com
@@ -40,3 +41,9 @@ spring:
     chain:
       cache: true
       gzipped: true
+
+logging:
+  level:
+    # com.yingtaohuo: DEBUG
+    # org.springframework: DEBUG
+    jooq: DEBUG

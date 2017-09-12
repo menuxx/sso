@@ -1,6 +1,6 @@
 
 <#include "./header.ftl" />
-<#setting number_format=",##0.00">
+<#setting number_format="0">
 
 <link rel="stylesheet" type="text/css" href="${app.siteUrl}/css/lianxi-2.css">
 </head>

@@ -30,9 +30,9 @@ fun main(args: Array<String>) {
     val createdDate = Date()
     val expirationDate = Date(Date().toInstant().plusSeconds(28800).toEpochMilli())
 
-    val subject = "13593309412"
+    val subject = "13575762817"
     val expireTime = expirationDate.time / 1000
-    val audience = 32
+    val audience = 7
     // val secret = "MTIzNA=="
     val secret = "eWluZ3Rhb2h1bw=="
 
@@ -69,18 +69,18 @@ fun main(args: Array<String>) {
     // println("secretKey: $secretKey")
 
     // val secretKey1 = DatatypeConverter.parseBase64Binary(secret)
-    val token1 = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMzU5MzMwOTQxMiIsImF1ZCI6IjMyIiwiZXhwIjoxNTA0OTYxNzAxLCJpYXQiOjE1MDQ5MzI5MDF9.g7itROrtd8v_uJYBMg1fXIEdYTJRQM-m3WCYxzf9MMX9rpMEyXheOo3O_W5IY2OZNK5-LfynxYRZkpDJ8aoxSg"
+    // val token1 = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMzU5MzMwOTQxMiIsImF1ZCI6IjMyIiwiZXhwIjoxNTA0OTYxNzAxLCJpYXQiOjE1MDQ5MzI5MDF9.g7itROrtd8v_uJYBMg1fXIEdYTJRQM-m3WCYxzf9MMX9rpMEyXheOo3O_W5IY2OZNK5-LfynxYRZkpDJ8aoxSg"
     //val token1 = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMzU5MzMwOTQxMiIsImF1ZCI6IjciLCJleHAiOjE1MDQ5NTU1MDAsImlhdCI6MTUwNDkyNjcwMH0.22efzHQzGYJ16ObnBZ_sMON1iKLVOuUAiVh3QQLtbhH4RhvQ_o4XZ1h_DNfTOnsx6u2FvijaeugiRqPgIaPx_A"
 
-    println(isTokenExpired(token1, secret))
-    println(isTokenExpired(token1, secret))
-    println(getTelPhoneFromToken(token, secret))
-
-    println(
-            Jwts.parser()
-            .setSigningKey(secret)
-            .parseClaimsJws(token1)
-            .body.subject
-    )
+//    println(isTokenExpired(token1, secret))
+//    println(isTokenExpired(token1, secret))
+//    println(getTelPhoneFromToken(token, secret))
+//
+//    println(
+//            Jwts.parser()
+//            .setSigningKey(secret)
+//            .parseClaimsJws(token1)
+//            .body.subject
+//    )
 
 }

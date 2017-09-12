@@ -12,12 +12,8 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 import org.springframework.context.annotation.Bean
 import org.jooq.impl.TableRecordImpl
-import com.fasterxml.jackson.databind.util.ClassUtil.getDeclaringClass
 import com.fasterxml.jackson.databind.introspect.AnnotatedMember
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector
-
-
-
 
 
 /**

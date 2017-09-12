@@ -1,5 +1,6 @@
 
 <#include "./header.ftl" />
+<#setting number_format="0">
 
 </head>
 <body>
