@@ -1,6 +1,6 @@
 
 <#include "./header.ftl" />
-<#setting number_format="0">
+<#setting number_format="000">
 
 <link rel="stylesheet" type="text/css" href="${app.siteUrl}/css/lianxi-2.css">
 </head>
@@ -10,7 +10,7 @@
 
     <ul class="list-group list-wrap list item-list">
         <li class="list-group-item yth-list-group">
-            <a href="javascript:alert('该功能近期开放，敬请期待');" class="btn btn-default btn-block">+ 添加商品</a>
+            <a href="/items/new" class="btn btn-default btn-block">+ 添加商品</a>
         </li>
         <#list itemList as item>
             <li class="list-group-item yth-list-group">
@@ -21,10 +21,10 @@
                     <div class="media-body">
                         <h5 class="media-heading itemName">${item.itemName}</h5>
                         <p class="itemDesc">${item.itemDesc}</p>
-                        <p><span class="discounted-price discountPrice">¥${item.discountPrice / 100}</span><s class="original-price productPrice">¥${item.productPrice / 100}</s></p>
+                        <p><span class="discounted-price discountPrice">¥${(item.discountPrice / 100)?string("0.00")}</span><s class="original-price productPrice">¥${(item.productPrice / 100)?string("0.00")}</s></p>
                     </div>
                     <div class="media-right media-middle">
-                        <a href="${app.siteUrl}/items/${item.id?string["0"]}" class="btn btn-link itemEditLink">编辑</a>
+                        <a href="${app.siteUrl}/items/${item.id}" class="btn btn-link itemEditLink">编辑</a>
                     </div>
                 </div>
             </li>
@@ -53,8 +53,8 @@
     $(".refresh").on("click", function(){
         $.ajax("/items/?pageNum=" + pageNum).success(function(res) {
             var list = res.data.map(function (item) {
-                item.discountPrice /= 100
-                item.productPrice /= 100
+                item.discountPrice = "¥" + (item.discountPrice /= 100)
+                item.productPrice = "¥" + (item.productPrice /= 100)
                 item.thumbnailAlt = item.itemName
                 if (item.thumbnail) {
                     item.thumbnailUrl = '${app.cdnUrl}/' + item.thumbnail
