@@ -44,7 +44,11 @@ class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
 
     @GetMapping("/new")
     fun newItemView(model: Model) : String {
+        val user = getCurrentUser()
+        val categories = dbCategory.loadCategoryRangeShop(user.shopId)
         model.addAttribute("title", "创建商品")
+        model.addAttribute("categories", categories)
+        model.addAttribute("user", user)
         return "mobile/item_new"
     }
 
@@ -93,9 +97,7 @@ class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
     fun postItem(@Valid @RequestBody item: ItemModel) : RespData<ItemModel> {
         val user = getCurrentUser()
         item.corpId = user.shopId
-        val itemId = dbItem.insertItem(item)
-        item.id = itemId
-        val newItem = fromRecord<TItemRecord, ItemModel>(dbItem.getById(itemId, user.shopId)!!)
+        val newItem = fromRecord<TItemRecord, ItemModel>(dbItem.insertItem(item))
         return RespData(newItem).success()
     }
 

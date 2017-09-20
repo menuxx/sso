@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServletResponse
  * 微信: yin80871901
  */
 
-class MockHttpServletRequestWrapper(request: HttpServletRequest?) : HttpServletRequestWrapper(request) {
+class MockHttpServletRequestWrapper(request: HttpServletRequest?, val appProps: AppProps) : HttpServletRequestWrapper(request) {
     override fun getHeader(name: String?): String? {
         return if (name != null && name == "X-Authorization") {
-            "YTH " + genAuthToken(telPhone = "13575762817", secret = "1234")
+            "YTH " + genAuthToken(telPhone = "13575762817", secret = appProps.ssoSecret!!)
         } else {
             super.getHeader(name)
         }
@@ -27,6 +27,6 @@ class MockHttpServletRequestWrapper(request: HttpServletRequest?) : HttpServletR
 class MockAuthTokenAuthenticationTokenFilter(appProps: AppProps, userDetailsService: UserDetailsService) : AuthTokenAuthenticationTokenFilter(appProps, userDetailsService) {
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
-        super.doFilterInternal(MockHttpServletRequestWrapper(request), response, filterChain)
+        super.doFilterInternal(MockHttpServletRequestWrapper(request, appProps), response, filterChain)
     }
 }

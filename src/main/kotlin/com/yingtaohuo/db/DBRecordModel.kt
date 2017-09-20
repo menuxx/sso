@@ -11,7 +11,7 @@ import java.lang.reflect.Modifier
  * 创建于: 2017/9/2
  * 微信: yin80871901
  */
-inline fun <reified R: Record, reified M> toRecord(model: M, change: Boolean) : R {
+inline fun <reified R: Record, reified M> toRecord(model: M, change: Boolean, nullEmpty: Boolean) : R {
 
     val rCtor = R::class.java
     val mCtor = M::class.java
@@ -38,8 +38,21 @@ inline fun <reified R: Record, reified M> toRecord(model: M, change: Boolean) : 
             try {
                 val _value = getter.invoke(model)
                 if ( _value != null ) {
-                    mSetter.invoke(emptyRecord, _value)
-                    if (change) emptyRecord.changed(name, true)
+                    if (nullEmpty) {
+                        if ( _value is String && _value.isNotEmpty() ) {
+                            mSetter.invoke(emptyRecord, _value)
+                            if (change) emptyRecord.changed(name, true)
+                        } else if (_value !is String) {
+                            mSetter.invoke(emptyRecord, _value)
+                            if (change) emptyRecord.changed(name, true)
+                        } else {
+                            if (change) emptyRecord.changed(name, false)
+                        }
+                    }
+                    else {
+                        mSetter.invoke(emptyRecord, _value)
+                        if (change) emptyRecord.changed(name, true)
+                    }
                 } else {
                     // 如果未设置值，就将 change 改成 false
                     if (change) emptyRecord.changed(name, false)

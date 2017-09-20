@@ -32,7 +32,7 @@ val authTokenLogger = LoggerFactory.getLogger(AuthTokenAuthenticationTokenFilter
 
 // filter
 open class AuthTokenAuthenticationTokenFilter(
-        private val appProps: AppProps,
+        val appProps: AppProps,
         private val userDetailsService: UserDetailsService) : OncePerRequestFilter() {
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {

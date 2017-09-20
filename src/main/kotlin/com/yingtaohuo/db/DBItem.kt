@@ -37,7 +37,12 @@ class DBItem(private val dataSource: HikariDataSource) {
                 val tItem = TItem.T_ITEM
                 val limit = page.pageSize
                 val offset = (page.pageNum - 1) * page.pageSize
-                return ctx.select().from(tItem).where(tItem.CORP_ID.eq(shopId)).limit(limit).offset(offset).fetchArray().map { record ->
+                return ctx.select().from(tItem)
+                        .where(tItem.CORP_ID.eq(shopId))
+                        .orderBy(tItem.CREATE_TIME.desc())
+                        .limit(limit).offset(offset)
+                        .fetchArray()
+                        .map { record ->
                     record.into(TItemRecord::class.java)
                 }
             }
@@ -49,7 +54,7 @@ class DBItem(private val dataSource: HikariDataSource) {
         dataSource.connection.use {
             DSL.using(it).use { ctx ->
                 val tItem = TItem.T_ITEM
-                val updateRecord = toRecord<TItemRecord, ItemModel>(itemModel, true)
+                val updateRecord = toRecord<TItemRecord, ItemModel>(itemModel, true, false)
                 if ( logger.isDebugEnabled ) logger.debug(updateRecord.toString())
                 return ctx.update(tItem)
                         .set(updateRecord)
@@ -59,13 +64,15 @@ class DBItem(private val dataSource: HikariDataSource) {
         }
     }
 
-    fun insertItem(itemModel: ItemModel) : Int {
+    fun insertItem(itemModel: ItemModel) : TItemRecord {
         dataSource.connection.use {
             DSL.using(it).use { ctx ->
                 val tItem = TItem.T_ITEM
+                val record = toRecord<TItemRecord, ItemModel>(itemModel, false, true)
                 return ctx.insertInto(tItem)
-                        .values(toRecord<TItemRecord, ItemModel>(itemModel, false))
-                        .execute()
+                        .set(record)
+                        .returning()
+                        .fetchOne()
             }
         }
     }

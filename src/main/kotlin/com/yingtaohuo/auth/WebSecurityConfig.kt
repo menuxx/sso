@@ -51,11 +51,11 @@ class WebSecurityConfig(
                 .anyRequest()
                 .authenticated()
 
-        //if ( env.activeProfiles.contains("development") ) {
-        //    http.addFilterBefore(MockAuthTokenAuthenticationTokenFilter(appProps, userService), UsernamePasswordAuthenticationFilter::class.java)
-        //} else {
+        if ( env.activeProfiles.contains("development") ) {
+            http.addFilterBefore(MockAuthTokenAuthenticationTokenFilter(appProps, userService), UsernamePasswordAuthenticationFilter::class.java)
+        } else {
             http.addFilterBefore(AuthTokenAuthenticationTokenFilter(appProps, userService), UsernamePasswordAuthenticationFilter::class.java)
-        //}
+        }
 
         http.headers().cacheControl()
     }
