@@ -8,7 +8,7 @@ package com.yingtaohuo.page
 
 object Page {
 
-    const val DefaultPageSizeText = "10"
+    const val DefaultPageSizeText = "30"
     const val DefaultPageNumText = "1"
 
     const val DefaultPageSize = 10

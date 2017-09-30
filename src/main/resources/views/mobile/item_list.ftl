@@ -12,12 +12,10 @@
     </div>
 
     <div class="yth-nav-list">
-        <ul class="nav nav-pills nav-stacked yth-nav-stacked">
-            <li role="presentation" class="active"><a class="nav-link" href="#">炒菜</a></li>
-            <li role="presentation"><a class="nav-link" href="#">饮料</a></li>
-            <li role="presentation"><a class="nav-link" href="#">麻辣烫</a></li>
-            <li role="presentation"><a class="nav-link" href="#">盖浇饭</a></li>
-            <li role="presentation"><a class="nav-link" href="#">小卤味</a></li>
+        <ul class="category-list nav nav-pills nav-stacked yth-nav-stacked">
+            <#list categories as cate>
+                <li role="presentation" data-category-id="${cate.id?string('0')}" <#if currentCateId=cate.id>class="active"</#if>><a class="nav-link">${cate.categoryName}</a></li>
+            </#list>
         </ul>
         <ul class="list-group list-wrap list item-list">
         <#list itemList as item>
@@ -45,6 +43,11 @@
 </div>
 <script src="${app.siteUrl}/${assets('js/list.js', app.envs)}"></script>
 <script>
+
+    function getCurrentCategoryId() {
+        return $(".category-list li.active").data("category-id")
+    }
+
     var pageNum = 2
     var options = {
         valueNames: [
@@ -59,8 +62,35 @@
         item: $("<div />").append($('.yth-list-group:eq(1)').clone() ).html()
     }
     var hackerList = new List('container', options, [])
+
+    $(".category-list").delegate("li", "click", function () {
+        var li = $(this)
+        var cateId = li.data('category-id')
+        $.ajax("/items/?pageNum=1&cateId=" + cateId).success(function(res) {
+            var list = res.data.map(function (item) {
+                item.discountPrice = "¥" + (item.discountPrice /= 100)
+                item.productPrice = "¥" + (item.productPrice /= 100)
+                item.thumbnailAlt = item.itemName
+                if (item.thumbnail) {
+                    item.thumbnailUrl = '${app.cdnUrl}/' + item.thumbnail
+                } else {
+                    item.thumbnailUrl = '${app.cdnUrl}/default_image_item.jpg'
+                }
+                item.itemEditLink = '${app.siteUrl}/items/' + item.id
+                return item
+            })
+            pageNum = 1
+            hackerList.clear()
+            hackerList.add(list)
+            pageNum++
+            $(".category-list li.active").removeClass("active")
+            li.addClass("active")
+        })
+    })
+
     $(".refresh").on("click", function(){
-        $.ajax("/items/?pageNum=" + pageNum).success(function(res) {
+        var cateId = getCurrentCategoryId()
+        $.ajax("/items/?pageNum=" + pageNum + '&cateId=' + cateId).success(function(res) {
             var list = res.data.map(function (item) {
                 item.discountPrice = "¥" + (item.discountPrice /= 100)
                 item.productPrice = "¥" + (item.productPrice /= 100)
