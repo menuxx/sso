@@ -1,14 +1,11 @@
-import com.qiniu.util.Auth
-import com.yingtaohuo.util.getJwtSubject
-import com.yingtaohuo.util.getTelPhoneFromToken
-import com.yingtaohuo.util.isTokenExpired
-import com.yingtaohuo.util.validateToken
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
+import java.lang.ClassCastException
 import java.util.*
-import javax.xml.bind.DatatypeConverter
-import javax.crypto.spec.SecretKeySpec
-
+import java.util.regex.Pattern
+import kotlin.reflect.KMutableProperty
+import kotlin.reflect.full.*
+import kotlin.reflect.jvm.javaType
 
 
 /**
@@ -17,6 +14,41 @@ import javax.crypto.spec.SecretKeySpec
  * 微信: yin80871901
  */
 
+fun toUnderscore(s: String) : String {
+    val m = Pattern.compile("(?<=[a-z])[A-Z]").matcher(s)
+    val sb = StringBuffer()
+    while (m.find()) {
+        m.appendReplacement(sb, "_" + m.group().toLowerCase())
+    }
+    m.appendTail(sb)
+    return sb.toString()
+}
+
+inline fun <reified T : Any> mapToBean(map: Map<String, Any>) : T {
+    val instan = T::class.createInstance()
+    val properties = T::class.declaredMemberProperties.filterIsInstance<KMutableProperty<*>>()
+    for (p in properties) {
+        val rawVal =  map[toUnderscore(p.name)]
+        if (rawVal != null) {
+            val typedVal = when(p.getter.call(instan)) {
+                is String -> rawVal
+                is Int -> rawVal.toString().toIntOrNull()
+                is Boolean -> rawVal.toString().toBoolean()
+                is Long -> rawVal.toString().toLongOrNull()
+                is Double -> rawVal.toString().toDoubleOrNull()
+                else -> throw IllegalArgumentException("未知参数类型，转换值只能支持原始类型")
+            }
+            p.setter.call(instan, typedVal)
+        }
+    }
+    return instan
+}
+
+data class Order1(var id: Int?, var name: String?, var age: String?, var nickName: String?) {
+    constructor() : this(0, "0", "0", "")
+}
+
+data class Order(var id: Int, var name: String, var age: String)
 
 fun main(args: Array<String>) {
 
@@ -30,9 +62,9 @@ fun main(args: Array<String>) {
     val createdDate = Date()
     val expirationDate = Date(Date().toInstant().plusSeconds(28800).toEpochMilli())
 
-    val subject = "13575762817"
+    val subject = "18606590985"
     val expireTime = expirationDate.time / 1000
-    val audience = 7
+    val audience = 69
     // val secret = "MTIzNA=="
     val secret = "eWluZ3Rhb2h1bw=="
 
@@ -82,5 +114,8 @@ fun main(args: Array<String>) {
 //            .parseClaimsJws(token1)
 //            .body.subject
 //    )
+
+
+    println(mapToBean<Order1>(mapOf("id" to "1", "name" to "lisi", "age" to "111", "nick_name" to "张三")))
 
 }
