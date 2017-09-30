@@ -62,9 +62,9 @@ fun main(args: Array<String>) {
     val createdDate = Date()
     val expirationDate = Date(Date().toInstant().plusSeconds(28800).toEpochMilli())
 
-    val subject = "13575762817"
+    val subject = "18606590985"
     val expireTime = expirationDate.time / 1000
-    val audience = 7
+    val audience = 69
     // val secret = "MTIzNA=="
     val secret = "eWluZ3Rhb2h1bw=="
 
