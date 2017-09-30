@@ -7,15 +7,23 @@
 <body>
 
 <div class="container wrap" id="container">
+    <div class="list-group-item yth-list-group-one">
+        <a href="/items/new" class="btn btn-default btn-block">+ 添加商品</a>
+    </div>
 
-    <ul class="list-group list-wrap list item-list">
-        <li class="list-group-item yth-list-group">
-            <a href="/items/new" class="btn btn-default btn-block">+ 添加商品</a>
-        </li>
+    <div class="yth-nav-list">
+        <ul class="nav nav-pills nav-stacked yth-nav-stacked">
+            <li role="presentation" class="active"><a class="nav-link" href="#">炒菜</a></li>
+            <li role="presentation"><a class="nav-link" href="#">饮料</a></li>
+            <li role="presentation"><a class="nav-link" href="#">麻辣烫</a></li>
+            <li role="presentation"><a class="nav-link" href="#">盖浇饭</a></li>
+            <li role="presentation"><a class="nav-link" href="#">小卤味</a></li>
+        </ul>
+        <ul class="list-group list-wrap list item-list">
         <#list itemList as item>
             <li class="list-group-item yth-list-group">
                 <div class="media">
-                        <div class="media-left media-middle">
+                    <div class="media-left media-middle">
                         <img class="media-object img-rounded item-image thumbnailUrl thumbnailAlt" src="<#if item.thumbnail??>${app.cdnUrl}/${item.thumbnail}<#else>${app.cdnUrl}/default_image_item.jpg</#if>" alt="${item.itemName}">
                     </div>
                     <div class="media-body">
@@ -31,7 +39,8 @@
         <#else>
             空空如也
         </#list>
-    </ul>
+        </ul>
+    </div>
     <a class="refresh">加载更多</a>
 </div>
 <script src="${app.siteUrl}/${assets('js/list.js', app.envs)}"></script>

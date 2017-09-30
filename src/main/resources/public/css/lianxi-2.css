@@ -7,12 +7,17 @@ body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
 	padding: 0;
 }
 
+.nav-link{
+	text-align: center;
+}
+
 .list-wrap{
 	margin: 0;
+	flex: 8;
 }
 
 .item-image{
-	width: 80px;
+	width: 60px;
 }
 .discounted-price{
 	color: #f75c50;
@@ -28,8 +33,23 @@ body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
 	padding: 10px 0;
 	border-bottom: 1px solid #ccc;
 }
+
+.yth-list-group-one{
+	padding:10px 8px;
+
+}
+
 .yth-list-group{
 	padding:10px 8px;
+}
+
+.yth-nav-stacked{
+	flex: 2;
+}
+
+.yth-nav-list{
+	display: flex;
+	flex-direction: row;
 }
 
 /* user_list */
