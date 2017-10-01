@@ -101,7 +101,7 @@
             </div>
 
             <div class="form-group">
-                <a type="submit" class="btn btn-primary btn-block">保存</a>
+                <button type="submit" class="btn btn-primary btn-block">保存</button>
             </div>
 
         </form>
@@ -128,24 +128,26 @@
     }
 
     $("#itemEditForm").validate({
+
         submitHandler: function(form) {
+            console.log(111)
             //https://github.com/marioizquierdo/jquery.serializeJSON
             var formData =  $(form).serializeJSON()
             formData.productPrice *= 100
             formData.discountPrice *= 100
             formData.filekeys = formData.filekeys || []
             formData.coverImages = formData.filekeys.join(":")
-                    formData.corpId = ${user.shopId}
-                            $.ajax("/items/", {
-                                type: "POST",
-                                contentType: "application/json",
-                                data: JSON.stringify(formData)
-                            }).success(function(item){
-                                location.href = "/items/list";
-                                alert("保存成功！")
-                            }).fail(function(){
-                                alert("保存失败！")
-                            })
+            formData.corpId = ${user.shopId}
+            $.ajax("/items/", {
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(formData)
+            }).success(function(item){
+                location.href = "/items/list";
+                alert("保存成功！")
+            }).fail(function(){
+                alert("保存失败！")
+            })
         },
         ignore: "*:not([name])",
         rules: {

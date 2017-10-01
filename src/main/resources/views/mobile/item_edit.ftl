@@ -105,7 +105,7 @@
             </div>
 
             <div class="form-group">
-                <a type="submit" class="btn btn-primary btn-block">保存</a>
+                <button type="submit" class="btn btn-primary btn-block">保存</button>
             </div>
 
         </form>
@@ -165,7 +165,7 @@
                 required: true,
                 min: 0.01
             },
-            discountPrice:{
+            discountPrice: {
                 required: true,
                 min: 0.01
             }

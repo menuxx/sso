@@ -3,7 +3,6 @@ $.validator.setDefaults({
     success: "valid",
     errorElement: "span",
     errorPlacement: function ( error, element ) {
-        console.log(error, element)
         error.addClass( "help-block" );
         element.parents( ".form-group" ).addClass( "has-feedback" );
         if ( element.prop( "type" ) === "checkbox" ) {
