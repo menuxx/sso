@@ -33,25 +33,11 @@ class ExceptionHandlerConfig {
         return RespData(null).failed(ex.message ?: "invalid auth token", 101)
     }
 
-    @ExceptionHandler(InvalidParameterException::class)
+    @ExceptionHandler(HttpMessageNotReadableException::class, InvalidParameterException::class, InvalidFormatException::class)
     @ResponseBody
-    fun invalidParam1(ex: InvalidParameterException) : RespData<Any> {
-        logger.error("invalid params", ex)
-        return RespData(null).failed(ex.message ?: "invalid params", 104)
-    }
-
-    @ExceptionHandler(HttpMessageNotReadableException::class)
-    @ResponseBody
-    fun invalidParam2(ex: HttpMessageNotReadableException) : RespData<Any> {
+    fun invalidParam(ex: HttpMessageNotReadableException) : RespData<Any> {
         logger.error("invalid params", ex)
         return RespData(null).failed("invalid params", 104)
-    }
-
-    @ExceptionHandler(InvalidFormatException::class)
-    @ResponseBody
-    fun invalidParam3(ex: InvalidFormatException) : RespData<Any> {
-        logger.error("invalid params", ex)
-        return RespData(null).failed("${ex.value} not cast ${ex.targetType}", 104)
     }
 
     @ExceptionHandler(DataAccessException::class)

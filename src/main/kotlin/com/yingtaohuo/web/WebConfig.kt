@@ -7,14 +7,22 @@ package com.yingtaohuo.web
  */
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.EnableWebMvc
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 @EnableWebMvc
-class WebConfig() : WebMvcConfigurerAdapter() {
+class WebConfig : WebMvcConfigurerAdapter() {
 
-    override fun addInterceptors(registry: InterceptorRegistry) {
+    private val CLASSPATH_RESOURCE_LOCATIONS = arrayOf("classpath:/META-INF/resources/", "classpath:/resources/", "classpath:/static/", "classpath:/public/")
+
+    override fun addViewControllers(registry: ViewControllerRegistry) {
+        //registry.addRedirectViewController("/", "/items/list")
+    }
+
+    override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
+        registry.addResourceHandler("/**").addResourceLocations(*CLASSPATH_RESOURCE_LOCATIONS)
     }
 
 }

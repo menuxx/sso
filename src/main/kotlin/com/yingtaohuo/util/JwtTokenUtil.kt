@@ -9,7 +9,6 @@ import io.jsonwebtoken.Claims
 import io.jsonwebtoken.SignatureAlgorithm
 import java.util.*
 
-
 /**
  * 作者: yinchangsheng@gmail.com
  * 创建于: 2017/8/27
@@ -61,8 +60,8 @@ data class JwtPayload(val sub: String, val aud: String, val exp: Int, val iat: S
 private val objectMapper = ObjectMapper().registerModule(KotlinModule())
 
 fun parseBody(token: String) : JwtPayload {
-    val paylod = token.split(".")[1]
-    val body = Base64.getDecoder().decode(paylod.toByteArray())
+    val payload = token.split(".")[1]
+    val body = Base64.getDecoder().decode(payload.toByteArray())
     return objectMapper.readValue<JwtPayload>(body, JwtPayload::class.java)
 }
 

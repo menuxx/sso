@@ -1,14 +1,15 @@
 $.validator.setDefaults({
     debug: true,
     success: "valid",
-    errorElement: "em",
+    errorElement: "span",
     errorPlacement: function ( error, element ) {
+        console.log(error, element)
         error.addClass( "help-block" );
         element.parents( ".form-group" ).addClass( "has-feedback" );
         if ( element.prop( "type" ) === "checkbox" ) {
             error.insertAfter( element.parent( "label" ) );
         } else {
-            error.insertAfter( element );
+            error.insertAfter( element.parent() );
         }
         if ( !element.next( "span" )[ 0 ] ) {
             $( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );

@@ -1,5 +1,6 @@
 
 <#include "./header.ftl" />
+<#setting number_format="0">
 
 </head>
 <body>
@@ -8,181 +9,179 @@
 
     <div class="row form-page">
 
-        <form novalidate id="itemEditForm" method="POST">
+        <form novalidate id="itemEditForm">
             <div class="form-group">
                 <span class="required">*</span>
                 <label>商品名称：</label>
-                <input name="itemName" type="text" value="${itemModel.itemName}" required class="form-control">
+                <input name="itemName" type="text" value="${item.itemName}" class="form-control">
+            </div>
+            <div class="form-group">
+                <span class="required">*</span>
+                <label>选择分类：</label>
+                <select data-value-type="number" class="form-control category-select" name="categoryId">
+                    <#list categories as category>
+                    <option value="${category.id}">${category.categoryName}</option>
+                        <#else>
+                        <option>--空空如也--</option>
+                    </#list>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>单位：</label>
+                <input name="unit" type="text" value="<#if item.unit??>${item.unit}</#if>" class="form-control" placeholder="例如：盒、个、袋、包...">
             </div>
             <div class="form-group">
                 <span class="required">*</span>
                 <label>原价：</label>
                 <div class="input-group">
                     <span class="input-group-addon">¥</span>
-                    <input name="productPrice" type="number" value="${itemModel.productPrice / 100}" class="form-control">
+                    <input name="productPrice" type="number" data-value-type="number" value="${item.productPrice / 100}" class="form-control">
                 </div>
-            </div>
-            <div class="form-group">
-                <span class="required">*</span>
-                <label>选择分类：</label>
-                <select class="form-control" name="categoryId">${itemModel.categoryId}
-                    <option>麻辣烫</option>
-                    <option>盖浇饭</option>
-                    <option>煲仔饭</option>
-                    <option>凉皮</option>
-                    <option>卤味</option>
-                </select>
             </div>
             <div class="form-group">
                 <label>折后价：</label>
                 <div class="input-group">
                     <span class="input-group-addon">¥</span>
-                    <input name="discountPrice" type="number" value="${itemModel.discountPrice / 100}" class="form-control">
+                    <input name="discountPrice" type="number" data-value-type="number" value="${item.discountPrice / 100}" class="form-control">
                 </div>
             </div>
             <div class="form-group">
                 <label>打包计价：</label>
                 <label class="checkbox-inline">
-                    <input name="packageFlag" checked type="checkbox" value="${itemModel.packageFlag}">该商品打包时计算打包价
+                    <input name="packageFlag" value="1" data-value-type="number" type="checkbox" data-unchecked-value="0" <#if item.packageFlag==1>checked</#if> />该商品打包时计算打包价
                 </label>
             </div>
 
             <div class="form-group">
+
                 <label>库存商品：</label>
+
                 <div class="checkbox">
                     <label>
-                        <input name="stock" value="${itemModel.offline}" type="radio"> 缺货
+                        <input name="soldout" type="checkbox" value="1" data-value-type="number" data-unchecked-value="0" <#if item.soldout==1>checked</#if> /> 缺货
                     </label>
                     <span class="yth-help-info text-warning">(会继续显示在小程序上但不能选购)</span>
                 </div>
 
                 <div class="checkbox">
                     <label>
-                        <input name="stock" value="${itemModel.soldout}" type="radio"> 下架
+                        <input name="offline" type="checkbox" value="1" data-value-type="number" data-unchecked-value="0" <#if item.offline==1>checked</#if> />下架
                     </label>
                     <span class="yth-help-info text-warning">(不会继续出现在小程序上面)</span>
                 </div>
             </div>
-            <style>
-                .file-choose{
-                    display: flex;
-                    flex-direction: row;
-                }
-                .file-choose .image-list{
-                    display: flex;
-                    flex-direction: row;
-                }
-
-                .file-choose .image-list .itemModel-image-box {
-                    position: relative;
-                }
-
-                .file-choose .image-list .remove-btn {
-                    width: 20px;
-                    height: 20px;
-                    position: absolute;
-                    right: 0;
-                    top: -5px;
-                    font-size: 20px;
-                }
-
-                .file-choose .image-list .itemModel-image{
-                    width: 70px;
-                    height: 70px;
-                    display: block;
-                    margin: 0 5px;
-                }
-                .file-choose .choose-btn{
-                    width: 70px;
-                    height: 70px;
-                    display: block;
-                    margin: 0 5px;
-                    border:1px dashed #cccccc;
-                    font-size: 30px;
-                    text-align: center;
-                    line-height:60px;
-                }
-                .file-choose .choose-btn .choose-btn-native{
-                    display: none;
-                }
-
-            </style>
 
             <div class="form-group" id="fileUploadContainer">
-                <label>上传图片：</label>
+                <label>商品图(第一张作为缩略图，最多可以传三张)：</label>
                 <div class="file-choose">
                     <div class="image-list">
-                        <div class="itemModel-image-box">
-                            <span class="glyphicon glyphicon-remove-circle remove-btn"></span>
-                            <img class="itemModel-image" src="https://file.menuxx.com/images/itemModel/2017-9-2-0-19-35-104.jpeg">
-                        </div>
-                        <div class="itemModel-image-box">
-                            <span class="glyphicon glyphicon-remove-circle remove-btn"></span>
-                            <img class="itemModel-image" src="https://file.menuxx.com/images/itemModel/2017-9-2-0-19-35-104.jpeg">
-                        </div>
-                        <div class="itemModel-image-box">
-                            <span class="glyphicon glyphicon-remove-circle remove-btn"></span>
-                            <img class="itemModel-image" src="https://file.menuxx.com/images/itemModel/2017-9-2-0-19-35-104.jpeg">
-                        </div>
-                        <div class="itemModel-image-box">
-                            <span class="glyphicon glyphicon-remove-circle remove-btn"></span>
-                            <img class="itemModel-image" src="https://file.menuxx.com/images/itemModel/2017-9-2-0-19-35-104.jpeg">
-                        </div>
+                        <#list item.coverImageUrls as imageUrl>
+                            <div class="item-image-box">
+                                <input type="hidden" name="filekeys[]" value="${imageUrl}">
+                                <span class="glyphicon glyphicon-remove-circle remove-btn"></span>
+                                <img class="item-image" src="${app.cdnUrl}/${imageUrl}">
+                            </div>
+                        </#list>
                     </div>
                     <label id="uploadBtn" class="choose-btn">
-                        +<input accept="image/png,image/gif" class="choose-btn-native" type="file">
+                        +<input class="choose-btn-native" type="file">
                     </label>
                 </div>
             </div>
 
             <div class="form-group">
                 <label>商品描述：</label>
-                <textarea name="itemDesc" class="form-control" rows="3">${itemModel.itemDesc}</textarea>
-            </div>
-
-            <div class="form-group">
-                <span class="required">*</span>
-                <label>单位：</label>
-                <input name="unit" type="text" value="<#if itemModel.unit??>${itemModel.unit}</#if>" class="form-control" placeholder="例如：盒、个、袋、包...">
+                <textarea name="itemDesc" class="form-control" rows="3">${item.itemDesc}</textarea>
             </div>
 
             <div class="form-group">
                 <label>条形码：</label>
-                <input name="barCode" type="number" value="<#if itemModel.barCode??>${itemModel.barCode}</#if>" class="form-control">
+                <input name="barCode" type="number" value="<#if item.barCode??>${item.barCode}</#if>" class="form-control">
             </div>
 
             <div class="form-group">
                 <label>商品编码：</label>
-                <input name="itemCode" type="number" value="<#if itemModel.itemCode??>${itemModel.itemCode}</#if>" class="form-control">
+                <input name="itemCode" type="number" value="<#if item.itemCode??>${item.itemCode}</#if>" class="form-control">
             </div>
 
             <div class="form-group">
-                <button type="submit" class="btn btn-block">保存</button>
+                <a type="submit" class="btn btn-primary btn-block">保存</a>
             </div>
 
         </form>
     </div>
 </div>
 
-<script src="${app.siteUrl}/js/jquery.validate.js"></script>
+<script src="${app.siteUrl}/${assets('js/jquery.serializejson.js', app.envs)}"></script>
+<#if app.envs?seq_contains('development')>
+    <script src="${app.siteUrl}/${assets('js/moxie.js', app.envs)}"></script>
+    <script src="${app.siteUrl}/js/plupload.dev.js"></script>
+    <script src="${app.siteUrl}/js/qiniu.min.js"></script>
+<#else>
+    <script src="${app.siteUrl}/js/plupload.full.min.js"></script>
+    <script src="${app.siteUrl}/js/qiniu.min.js"></script>
+</#if>
+<script src="${app.siteUrl}/${assets('js/jquery.validate.js', app.envs)}"></script>
+<script src="${app.siteUrl}/${assets('js/messages_zh.js', app.envs)}"></script>
 <script src="${app.siteUrl}/js/jquery.validate.bootstrap.js"></script>
-<script src="${app.siteUrl}/js/messages_zh.js"></script>
-<script src="${app.siteUrl}/js/moxie.js"></script>
-<script src="${app.siteUrl}/js/plupload.dev.js"></script>
-<script src="${app.siteUrl}/js/qiniu.min.js"></script>
 <script src="${app.siteUrl}/js/zh_CN.js"></script>
-
 <script type="text/javascript">
+
+    if ($('.item-image-box').length <= 3 ) {
+        $("#uploadBtn").show();
+    }
+
+    // 自动选中 当前 item 的分类
+    $(".category-select option").each(function (index, option) {
+        if ( parseInt(option.value) === ${item.categoryId} ) {
+            $(".category-select").val(parseInt(option.value))
+        }
+    })
+
     $("#itemEditForm").validate({
+        submitHandler: function(form) {
+            //https://github.com/marioizquierdo/jquery.serializeJSON
+            var formData =  $(form).serializeJSON()
+            formData.productPrice *= 100
+            formData.discountPrice *= 100
+            formData.filekeys = formData.filekeys || []
+            formData.coverImages = formData.filekeys.join(":")
+            formData.id = ${item.id}
+            formData.corpId = ${item.corpId}
+            $.ajax("/items/${item.id}", {
+                type: "PUT",
+                contentType: "application/json",
+                data: JSON.stringify(formData)
+            }).success(function(){
+                alert("保存成功！")
+            }).fail(function(){
+                alert("保存失败！")
+            })
+        },
+        ignore: "*:not([name])",
         rules: {
             '[name=itemName]': 'required',
-            '[name=productPrice]': 'required'
+            productPrice: {
+                required: true,
+                min: 0.01
+            },
+            discountPrice:{
+                required: true,
+                min: 0.01
+            }
         }
     })
 
     function getDatetime(date) {
         return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" +date.getDate() + "-" + date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds() + "-" + date.getMilliseconds()
     }
+
+    $(".image-list").delegate('.remove-btn', 'click',function(){
+        $(this).parent().remove()
+        if ($('.item-image-box').length <= 3 ) {
+            $("#uploadBtn").show();
+        }
+    })
 
     // file upload
     var uploader = Qiniu.uploader({
@@ -198,7 +197,7 @@
         max_retries: 3,                   //上传失败最大重试次数
         chunk_size: '1mb',                //分块上传时，每片的体积
         auto_start: true,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传,
-        log_level: 5,
+        //log_level: 5,
         multi_selection: false,
         // disable_statistics_report: false,
         filters: {
@@ -227,8 +226,15 @@
                 var fileKey = JSON.parse(info.response).key
                 var domain = up.getOption('domain')
                 var fileUrl = domain + '/' + fileKey
-                $('.image-list').append($('<img class="itemModel-image" src="' + fileUrl + '" />'))
-                up.refresh()
+                $('.image-list').append($('<div class="item-image-box">' +
+                        '<input type="hidden" name="filekeys[]" value="'+ fileKey +'">'+
+                        '<span class="glyphicon glyphicon-remove-circle remove-btn"></span>'+
+                        '<img class="item-image" src="'+ fileUrl +'">'+
+                        '</div>'
+                ));
+                if ($('.item-image-box').length >=3 ) {
+                    $("#uploadBtn").hide();
+                }
             },
             'Error': function(up, err, errTip) {
                 if (err.code === -600) {
@@ -242,7 +248,7 @@
             'Key': function(up, file) {
                 // image/xxxx
                 var ext = file.type.replace("image/", "")
-                return "images/itemModel/" + getDatetime(new Date()) + '.' + ext
+                return "images/item/" + getDatetime(new Date()) + '.' + ext
             }
         }
     });

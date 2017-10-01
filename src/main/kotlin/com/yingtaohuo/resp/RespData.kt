@@ -1,5 +1,6 @@
 package com.yingtaohuo.resp
 
+
 /**
  * 作者: yinchangsheng@gmail.com
  * 创建于: 2017/8/26
@@ -22,3 +23,7 @@ data class RespData<out T>(val data: T?, var meta: RespMeta?=null) {
         return this
     }
 }
+
+data class RespPageMeta(var error: String, var errorCode: Int, val pageSize: Int, val pageNum: Int, val lastPage: Boolean)
+
+data class RespPageData<out T>(val data: T?, var meta: RespPageMeta?=null)

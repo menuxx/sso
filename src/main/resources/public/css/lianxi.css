@@ -1,3 +1,13 @@
+
+body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
+    font-family: Microsoft YaHei,'宋体' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+}
+
+body{
+    height:100%;
+}
+
+
 .form-page{
     margin: 0;
 }
@@ -7,4 +17,51 @@
 }
 .container{
     padding-top: 15px;
+}
+.file-choose{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.file-choose .image-list{
+    display: flex;
+    flex-direction: row;
+}
+
+.file-choose .image-list .item-image-box {
+    position: relative;
+}
+
+.file-choose .image-list .remove-btn {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 0;
+    top: -5px;
+    font-size: 20px;
+}
+
+.file-choose .image-list .item-image{
+    width: 70px;
+    height: 70px;
+    display: block;
+    margin: 0 5px;
+}
+.file-choose .choose-btn{
+    width: 70px;
+    height: 70px;
+    display: block;
+    margin: 0 5px;
+    border:1px dashed #cccccc;
+    font-size: 30px;
+    text-align: center;
+    line-height:60px;
+}
+.file-choose .choose-btn .choose-btn-native{
+    display: none;
+}
+.container-wrap{
+    display: flex;
+    flex-direction: column;
+
 }

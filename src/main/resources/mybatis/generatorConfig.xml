@@ -32,8 +32,13 @@
             <!--<property name="enableSubPackages" value="true"/>-->
         <!--</javaClientGenerator>-->
 
-        <table schema="menuxx" tableName="t_item" domainObjectName="ItemModel" >
+        <!--<table schema="menuxx" tableName="t_item" domainObjectName="ItemModel" >-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+        <!--</table>-->
+
+        <table schema="menuxx" tableName="t_user" domainObjectName="UserModel" >
             <generatedKey column="id" sqlStatement="Mysql" identity="true" />
         </table>
+
     </context>
 </generatorConfiguration>

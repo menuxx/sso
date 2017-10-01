@@ -1,9 +1,23 @@
+
+body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
+	font-family: Microsoft YaHei,'宋体' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+}
+
 .wrap{
 	padding: 0;
 }
 
+.nav-link{
+	text-align: center;
+}
+
+.list-wrap{
+	margin: 0;
+	flex: 8;
+}
+
 .item-image{
-	width: 80px;
+	width: 60px;
 }
 .discounted-price{
 	color: #f75c50;
@@ -14,11 +28,59 @@
 	padding-right: 30px;
 }
 .refresh{
+	display: block;
 	text-align: center;
-	border: none;
-	padding-bottom: 22px; 
+	padding: 10px 0;
 	border-bottom: 1px solid #ccc;
 }
+
+.yth-list-group-one{
+	padding:10px 8px;
+
+}
+
 .yth-list-group{
 	padding:10px 8px;
+}
+
+.yth-nav-stacked{
+	flex: 2;
+}
+
+.yth-nav-list{
+	display: flex;
+	flex-direction: row;
+}
+
+/* user_list */
+
+.page-header-wrap{
+	background-color: #ffb700;
+	height: 100px;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+}
+
+.total-people{
+	background-color: #ffffff;
+	text-align: center;
+	width: 60px;
+	height: 60px;
+	border-radius:30px;
+	line-height: 60px;
+
+}
+
+.total-num{
+	color: #ffb700;
+	font-size: 30px;
+}
+
+.consumed{
+	width: 60px;
+	height: 23px;
+	color: #cccccc;
+
 }
