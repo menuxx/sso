@@ -44,7 +44,7 @@
 <script src="${app.siteUrl}/${assets('js/list.js', app.envs)}"></script>
 <script>
 
-    function getCurrentCategoryId() {
+    function getCurrentCategoryId(){
         return $(".category-list li.active").data("category-id")
     }
 
@@ -57,7 +57,7 @@
             'itemDesc',
             'discountPrice',
             'productPrice',
-            { name: 'itemEditLink', attr: 'href' }
+            { name: 'itemEditLink', attr: 'href'}
         ],
         item: $("<div />").append($('.yth-list-group:eq(1)').clone() ).html()
     }

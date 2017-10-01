@@ -101,7 +101,7 @@
             </div>
 
             <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block">保存</button>
+                <a type="submit" class="btn btn-primary btn-block">保存</a>
             </div>
 
         </form>
@@ -150,7 +150,14 @@
         ignore: "*:not([name])",
         rules: {
             '[name=itemName]': 'required',
-            '[name=productPrice]': 'required'
+            productPrice: {
+                required: true,
+                min: 0.01
+            },
+            discountPrice:{
+                required: true,
+                min: 0.01
+            }
         }
     })
 
