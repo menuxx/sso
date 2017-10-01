@@ -1,5 +1,6 @@
 package com.yingtaohuo.db
 
+import com.yingtaohuo.model.CategoryModel
 import com.yingtaohuo.sso.db.tables.TCategory
 import com.yingtaohuo.sso.db.tables.records.TCategoryRecord
 import com.zaxxer.hikari.HikariDataSource
@@ -21,6 +22,18 @@ class DBCategory(private val dataSource: HikariDataSource) {
                 return ctx.select().from(tCate).where(tCate.CORP_ID.eq(shopId)).fetchArray().map { cate ->
                     cate.into(TCategoryRecord::class.java)
                 }
+            }
+        }
+    }
+
+    fun insertCategory(category: CategoryModel) : TCategoryRecord {
+        dataSource.connection.use {
+            DSL.using(it).use { ctx ->
+                val tCate = TCategory.T_CATEGORY
+                val updateRecord = toRecord<TCategoryRecord, CategoryModel>(category, true, false)
+                return ctx.insertInto(tCate).set(updateRecord)
+                        .returning()
+                        .fetchOne()
             }
         }
     }

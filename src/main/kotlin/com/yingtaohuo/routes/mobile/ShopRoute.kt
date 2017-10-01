@@ -1,6 +1,7 @@
 package com.yingtaohuo.routes.mobile
 
 import com.yingtaohuo.AllOpen
+import com.yingtaohuo.db.DBCategory
 import com.yingtaohuo.db.DBShop
 import com.yingtaohuo.db.DBUser
 import com.yingtaohuo.db.fromRecord
@@ -26,7 +27,16 @@ import javax.validation.Valid
 @Controller
 @RequestMapping("/shops/{shopId}")
 @PreAuthorize("hasRole('ADMIN')")
-class ShopRoute(val dbUser: DBUser, val dbShop: DBShop) {
+class ShopRoute(val dbUser: DBUser, val dbShop: DBShop, val dbCategory: DBCategory) {
+
+    @GetMapping("category_list")
+    fun categoryListView(model: Model) : String {
+        val user = getCurrentUser()
+        val categories = dbCategory.loadCategoryRangeShop(user.shopId)
+        model.addAttribute("title", "分类管理")
+        model.addAttribute("categories", categories)
+        return "mobile/category_list"
+    }
 
     @GetMapping("/users/list")
     fun getUsersView(model: Model, @RequestParam(defaultValue = Page.DefaultPageSizeText) pageSize: Int, @RequestParam(defaultValue = Page.DefaultPageNumText) pageNum: Int) : String {

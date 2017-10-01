@@ -113,6 +113,4 @@
     })
 </script>
 
-
-
 <#include "./footer.ftl" />

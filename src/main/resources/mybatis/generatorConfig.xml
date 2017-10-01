@@ -36,7 +36,11 @@
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
         <!--</table>-->
 
-        <table schema="menuxx" tableName="t_user" domainObjectName="UserModel" >
+        <!--<table schema="menuxx" tableName="t_user" domainObjectName="UserModel" >-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+        <!--</table>-->
+
+        <table schema="menuxx" tableName="t_category" domainObjectName="CategoryModel" >
             <generatedKey column="id" sqlStatement="Mysql" identity="true" />
         </table>
 
