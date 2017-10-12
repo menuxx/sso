@@ -58,18 +58,17 @@
     })
 
     $("#create").on('click', function () {
-        var tableNumber = $.trim($("#tableNumber").val());
-        if (tableNumber === null || tableNumber.length === 0){
+        var self = this
+        var tableName = $.trim($("#tableNumber").val());
+        if ( tableName === null || tableName.length === 0 ) {
             alert("请输入桌子名称！");
             return
         }
-        var self = this
-        setTimeout(function () {
-            var table = {
-                id:10,
-                tableName: 'tableName',
-            }
-
+        $.ajax("/tables/", {
+            type: 'POST',
+            contentType: "application/json",
+            data: JSON.stringify({tableName: tableName})
+        }).success(function (table) {
             $(self).parents(".table-li").before($('<div class="col-md-2 table-li" data-tableid= ' + table.id + ' >'+
                     '<div class="thumbnail">' +
                     '<img class="qrcode-image" width="200" height="200" src="/image/yth_qrcode.jpeg" alt="桌号二维码">' +
@@ -80,17 +79,20 @@
                     '<a class="btn btn-danger btn-sm remove" role="button">删除</a>' +
                     '</div>' +'</div>' + '</div>' + '</div>'
             ));
-
-        }, 50)
+        })
     });
 
-    $(".table-list").delegate('.table-code', 'click', function(){
+    $(".table-list").delegate('.table-code', 'click', function() {
         $(this).parents(".thumbnail").find(".qrcode-image").attr("src", "/image/1.jpg")
 
     });
 
     $(".table-list").delegate('.remove', 'click', function() {
-        $(this).parents(".table-li").remove()
+        var li = $(this).parents(".table-li")
+        var tableId = li.data('tableid')
+        $.ajax("/tables/" + tableId, { type: 'PUT' }).success(function (res) {
+            li.remove()
+        })
     });
 
 

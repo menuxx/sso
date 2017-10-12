@@ -13,6 +13,10 @@ import org.springframework.stereotype.Service
  * 创建于: 2017/9/26
  * 微信: yin80871901
  */
+
+val TableStatusOfDisable = 0
+val TableStatusOfEnable = 1
+
 @Service
 class DBTable ( val dataSource: HikariDataSource ) {
 
@@ -20,7 +24,9 @@ class DBTable ( val dataSource: HikariDataSource ) {
         dataSource.connection.use { it ->
             val tTable = TTable.T_TABLE
             DSL.using(it).use { ctx ->
-                return ctx.select().from(tTable).where(tTable.CORP_ID.eq(shopId)).fetchArray().map { t ->
+                return ctx.select().from(tTable)
+                        .where(tTable.CORP_ID.eq(shopId).and(tTable.STATUS.eq(TableStatusOfEnable)))
+                        .fetchArray().map { t ->
                     t.into(TTableRecord::class.java)
                 }
             }
@@ -33,6 +39,15 @@ class DBTable ( val dataSource: HikariDataSource ) {
             DSL.using(it).use { ctx ->
                 val record = toRecord<TTableRecord, TableModel>(tableModel, false, true)
                 return ctx.insertInto(tTable).set(record).returning().fetchOne()
+            }
+        }
+    }
+
+    fun updateTableStatus(tableId: Int, status: Int) : Int {
+        dataSource.connection.use { it ->
+            val tTable = TTable.T_TABLE
+            DSL.using(it).use { ctx ->
+                return ctx.update(tTable).set(tTable.STATUS, status).where(tTable.ID.eq(tableId)).execute()
             }
         }
     }
