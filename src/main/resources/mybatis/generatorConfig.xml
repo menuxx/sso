@@ -40,9 +40,17 @@
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
         <!--</table>-->
 
-        <table schema="menuxx" tableName="t_category" domainObjectName="CategoryModel" >
-            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
-        </table>
+        <!--<table schema="menuxx" tableName="t_category" domainObjectName="CategoryModel" >-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+        <!--</table>-->
 
-    </context>
-</generatorConfiguration>
+        <!--<table schema="menuxx" tableName="t_shop_config" domainObjectName="ShopConfigModel" >-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+        <!--</table>-->
+
+        <!--<table schema="menuxx" tableName="t_table" domainObjectName="TableModel">-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+        <!--</table>-->
+
+        </context>
+    </generatorConfiguration>

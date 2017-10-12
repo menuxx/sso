@@ -30,8 +30,8 @@
 </div>
 
 <script type="text/javascript">
-    $("#submitCategory").on("submit", function (event) {
-        event.preventDefault()
+    $("#submitCategory").on("submit", function (e) {
+        e.preventDefault()
         var categoryName = $(this).find("[name=categoryName]").val()
         if (!categoryName || categoryName.length === 0) {
             return alert("分类名称不能为空哦")

@@ -156,14 +156,12 @@
                 required: true,
                 min: 0.01
             },
-            discountPrice:{
+            discountPrice: {
                 required: true,
                 min: 0.01
             }
         }
     })
-
-
 
     function getDatetime(date) {
         return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" +date.getDate() + "-" + date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds() + "-" + date.getMilliseconds()
