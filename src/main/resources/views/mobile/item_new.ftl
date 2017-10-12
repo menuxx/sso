@@ -170,7 +170,7 @@
     }
 
     $(".image-list").delegate('.remove-btn', 'click',function(){
-        $(this).parent().remove()
+        $(this).parent().remove();
         if ($('.item-image-box').length <= 3 ) {
             $("#uploadBtn").show();
         }

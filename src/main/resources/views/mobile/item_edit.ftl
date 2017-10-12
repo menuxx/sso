@@ -181,7 +181,7 @@
         if ($('.item-image-box').length <= 3 ) {
             $("#uploadBtn").show();
         }
-    })
+    });
 
     // file upload
     var uploader = Qiniu.uploader({
