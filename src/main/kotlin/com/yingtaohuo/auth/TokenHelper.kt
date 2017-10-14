@@ -130,7 +130,7 @@ object TokenHelper {
          * e.g Bearer your_token
          */
         val authHeader = request.getHeader(AUTH_HEADER)
-        return if (authHeader != null && authHeader.startsWith("YTH ")) {
+        return if (authHeader != null && authHeader.startsWith("YTH-ADMIN ")) {
             authHeader.substring(4)
         } else null
 
