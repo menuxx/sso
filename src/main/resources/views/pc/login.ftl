@@ -2,7 +2,7 @@
 <style type="text/css">
     * {  margin:0; padding: 0; }
     body {
-        width: 960px;
+        width: 100%;
         padding-top: 100px;
     }
     .title {
