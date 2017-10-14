@@ -1,6 +1,8 @@
 package com.yingtaohuo.auth
 
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 import javax.servlet.ServletException
@@ -32,7 +34,11 @@ class TokenBasedAuthentication(private val principle: UserDetails) : AbstractAut
     override fun getPrincipal() = principle
 }
 
-class TokenAuthenticationFilter(private val userDetailsService: UserDetailsService) : OncePerRequestFilter() {
+class TokenAuthenticationFilter(
+        @Autowired
+        @Qualifier("adminDetailsService")
+        private val userDetailsService: UserDetailsService
+) : OncePerRequestFilter() {
 
     private val logger = LoggerFactory.getLogger(this.javaClass)
 
