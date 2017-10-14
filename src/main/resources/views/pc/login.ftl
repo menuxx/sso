@@ -30,6 +30,7 @@
         bottom: 10px;
         text-align: center;
         color: #cccccc;
+        left: 0;
     }
 </style>
 </head>
@@ -47,12 +48,11 @@
             </div>
             <button style="display: none;">传送</button>
         </div>
-
-        <div class="copyright">
-            <p>杭州典丰科技有限公司</p>
-            <p>浙ICP 备 17006410号</p>
-        </div>
     </form>
+    <div class="copyright">
+        <p>杭州典丰科技有限公司</p>
+        <p>浙ICP 备 17006410号</p>
+    </div>
 </div>
 <script>
     $("#loginForm").on("submit", function (event) {
