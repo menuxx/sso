@@ -17,17 +17,17 @@ import org.springframework.stereotype.Service
  */
 
 @Service("userDetailsService")
-class YTHUserDetailsService(val dbShopUser: DBShopUser, val adminDetailsService: YTHAdminDetailsService) : UserDetailsService {
+class YTHUserDetailsService(val dbShopUser: DBShopUser) : UserDetailsService {
 
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String?): UserDetails? {
         // 代理
-        val shopUser: TCorpUserRecord? = dbShopUser.getUserDetailByTelphone(username) ?: return adminDetailsService.loadUserByUsername(username)
+        val shopUser: TCorpUserRecord? = dbShopUser.getUserDetailByTelphone(username)
         return if ( shopUser != null ) {
-            var authorities = dbShopUser.findAuthoritiesByTelphone(username).map { YTHGrantedAuthority(it[TAuthority.T_AUTHORITY.NAME]) }.toMutableList()
-            if ( authorities.isEmpty() ) {
-                authorities = mutableListOf(YTHGrantedAuthority("USER"))
-            }
+            // var authorities = dbShopUser.findAuthoritiesByTelphone(username).map { YTHGrantedAuthority(it[TAuthority.T_AUTHORITY.NAME]) }.toMutableList()
+            // if ( authorities.isEmpty() ) {
+             val authorities = mutableListOf(YTHGrantedAuthority("USER"))
+            // }
             YTHAuthUser(
                     shopUser.id.toInt(),
                     shopUser.corpId,
