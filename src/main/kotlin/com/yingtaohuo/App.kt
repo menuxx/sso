@@ -49,7 +49,7 @@ class App {
     @Bean
     fun syncConfig(dataSource: HikariDataSource): CommandLineRunner {
         return CommandLineRunner {
-            dataSource.connection.use { it ->
+            dataSource.connection.use {
                 val tConfig = TConfig.T_CONFIG
                 val tShopConfig = TShopConfig.T_SHOP_CONFIG
                 DSL.using(it).use { ctx ->

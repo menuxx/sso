@@ -135,7 +135,7 @@ class AuthRoute(
         val users = dbShopUser.loadUsersByShopId(shopId)
         if ( users.isNotEmpty() ) {
             val user = users.first()
-            val authToken = genAuthToken(user.mobile, user.id)
+            val authToken = genAuthToken(user.mobile, user.id.toInt())
             return AuthToken(authToken)
         }
         throw NotFoundException("该商户没有任何管理员")
