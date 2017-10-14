@@ -1,8 +1,10 @@
 package com.yingtaohuo.db
 
+import com.yingtaohuo.page.PageParam
 import com.yingtaohuo.sso.db.tables.TConfig
 import com.yingtaohuo.sso.db.tables.TCorp
 import com.yingtaohuo.sso.db.tables.records.TConfigRecord
+import com.yingtaohuo.sso.db.tables.records.TCorpRecord
 import com.zaxxer.hikari.HikariDataSource
 import org.jooq.impl.DSL
 import org.jooq.types.UInteger
@@ -33,11 +35,22 @@ class DBShop(private val dataSource: HikariDataSource) {
         }
     }
 
-    fun getShopById(shopId: Int) : TCorp {
+    fun getShopById(shopId: Int) : TCorpRecord {
         dataSource.connection.use {
             DSL.using(it).use { ctx ->
                 val tCorp = TCorp.T_CORP
-                return ctx.select().from(tCorp).where(tCorp.ID.eq(UInteger.valueOf(shopId))).fetchOne().into(TCorp::class.java)
+                return ctx.select().from(tCorp).where(tCorp.ID.eq(UInteger.valueOf(shopId))).fetchOne().into(TCorpRecord::class.java)
+            }
+        }
+    }
+
+    fun loadShops(page: PageParam) : List<TCorpRecord> {
+        dataSource.connection.use {
+            DSL.using(it).use { ctx ->
+                val tCorp = TCorp.T_CORP
+                return ctx.select().from(tCorp).limit(page.getLimit()).offset(page.getOffset()).fetchArray().map { record ->
+                    record.into(TCorpRecord::class.java)
+                }
             }
         }
     }

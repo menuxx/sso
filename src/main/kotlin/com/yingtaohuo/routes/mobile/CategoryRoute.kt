@@ -21,7 +21,7 @@ import javax.validation.Valid
 @AllOpen
 @RestController
 @RequestMapping("/categories")
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('USER')")
 class CategoryRoute (val dbCategory: DBCategory) {
 
     data class PostCategory(@NotEmpty val categoryName: String)

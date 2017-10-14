@@ -28,7 +28,7 @@ import javax.validation.Valid
 @AllOpen
 @Controller
 @RequestMapping("/items")
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('USER')")
 class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
 
     // page view
@@ -37,7 +37,7 @@ class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
         val user = getCurrentUser()
         val categories = dbCategory.loadCategoryRangeShop(user.shopId)
         val cateId = categoryId ?: categories.first().id
-        val itemList = dbItem.loadPageListByCategroyRangeOfShop(user.shopId, cateId, PageParam(pageNum, pageSize)).map { fromRecord<TItemRecord, ItemModel>(it) }
+        val itemList = dbItem.loadPageListByCategoryRangeOfShop(user.shopId, cateId, PageParam(pageNum, pageSize)).map { fromRecord<TItemRecord, ItemModel>(it) }
         model.addAttribute("currentCateId", cateId)
         model.addAttribute("pageNum", pageNum)
         model.addAttribute("categories", categories)
@@ -89,7 +89,7 @@ class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
     @ResponseBody
     fun itemListApi(model: Model, @RequestParam("cateId") categoryId: Int, @RequestParam(defaultValue = Page.DefaultPageSizeText) pageSize: Int, @RequestParam(defaultValue = Page.DefaultPageNumText) pageNum: Int) : RespData<List<ItemModel>> {
         val user = getCurrentUser()
-        val list = dbItem.loadPageListByCategroyRangeOfShop(user.shopId, categoryId, PageParam(pageNum, pageSize)).map { fromRecord<TItemRecord, ItemModel>(it) }
+        val list = dbItem.loadPageListByCategoryRangeOfShop(user.shopId, categoryId, PageParam(pageNum, pageSize)).map { fromRecord<TItemRecord, ItemModel>(it) }
         return RespData(list).success()
     }
 

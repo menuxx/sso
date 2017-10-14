@@ -17,12 +17,12 @@ class YTHGrantedAuthority(private val authorize: String) : GrantedAuthority {
 
 class YTHAuthUser(
         val id: Int,
-        val shopId: Int,
+        var shopId: Int,
         var nickname: String?,
         var email: String?,
         val telphone: String,
         val enabled: Boolean,
-        val captcha: String?,
+        val _password: String?,
         val lastLoginTime: Date,
         private val authorities: MutableList<YTHGrantedAuthority>?= mutableListOf()
 ) : UserDetails {
@@ -40,7 +40,7 @@ class YTHAuthUser(
     override fun isCredentialsNonExpired() = true
 
     // 密码
-    override fun getPassword() = captcha
+    override fun getPassword() = _password
 
     // 账户尚未过期
     override fun isAccountNonExpired() = true

@@ -1,5 +1,6 @@
 package com.yingtaohuo.auth
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.yingtaohuo.props.AppProps
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -11,8 +12,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.core.annotation.Order
 import org.springframework.core.env.Environment
 import org.springframework.http.HttpMethod
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
+import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 
 /**
@@ -23,39 +27,78 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 @Configuration
 @EnableWebSecurity
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 class WebSecurityConfig(
         private val appProps: AppProps,
         private val userService: YTHUserDetailsService,
-        private val env: Environment
+        private val adminService: YTHAdminDetailsService,
+        private val env: Environment,
+        private val objectMapper: ObjectMapper
 ) : WebSecurityConfigurerAdapter() {
+
+    override fun configure(web: WebSecurity) {
+        web.ignoring().antMatchers(
+                HttpMethod.GET,
+                "/auth/**",
+                "/*.html",
+                "/favicon.ico",
+                "/**/*.html",
+                "/**/*.css",
+                "/**/*.js"
+        );
+    }
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
 
-        http.anonymous().disable()
+        http
+                // .sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS ).and()
+
+                // .anonymous().disable()
+
                 .csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(AuthTokenAuthenticationEntryPoint())
-                .and()
+
+                .exceptionHandling().authenticationEntryPoint(AuthTokenAuthenticationEntryPoint()).and()
+
                 .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
                 .antMatchers(
                         HttpMethod.GET,
-                        "/",
+                        "/auth/**",
                         "/*.html",
                         "/favicon.ico",
                         "/**/*.html",
                         "/**/*.css",
                         "/**/*.js"
                 ).permitAll()
-                .antMatchers("/auth/**").permitAll()
-                .anyRequest()
-                .authenticated()
 
-        if ( env.activeProfiles.contains("development") ) {
-            http.addFilterBefore(MockAuthTokenAuthenticationTokenFilter(appProps, userService), UsernamePasswordAuthenticationFilter::class.java)
-        } else {
-            http.addFilterBefore(AuthTokenAuthenticationTokenFilter(appProps, userService), UsernamePasswordAuthenticationFilter::class.java)
-        }
+                // .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                .antMatchers("/auth/**").permitAll()
+
+                .anyRequest().authenticated().and()
+
+                .addFilterBefore(TokenAuthenticationFilter(adminService), UsernamePasswordAuthenticationFilter::class.java)
+                .addFilterBefore(AuthTokenAuthenticationTokenFilter(appProps, userService), UsernamePasswordAuthenticationFilter::class.java)
+
+                .logout()
+                .logoutRequestMatcher(AntPathRequestMatcher("/auth/logout"))
+                .logoutSuccessHandler(LogoutSuccess(objectMapper))
+                .deleteCookies(TokenHelper.AUTH_COOKIE)
+
+
+        //if ( env.activeProfiles.contains("development") ) {
+        //  .addFilterBefore(MockAuthTokenAuthenticationTokenFilter(appProps, userService), UsernamePasswordAuthenticationFilter::class.java)
+        //} else {
+
+        //}
+
+        // http.csrf().disable()
+                // .ignoringAntMatchers("/auth/login")
+                // .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+
+
+        // http.authorizeRequests().antMatchers(HttpMethod.POST, "/auth/login").authenticated()
 
         http.headers().cacheControl()
     }
@@ -63,8 +106,7 @@ class WebSecurityConfig(
     @Autowired
     @Throws(Exception::class)
     fun configureGlobal(builder: AuthenticationManagerBuilder) {
-        builder.userDetailsService(userService).passwordEncoder(BCryptPasswordEncoder())
-
+        builder.userDetailsService(adminService).passwordEncoder(BCryptPasswordEncoder())
     }
 
 }

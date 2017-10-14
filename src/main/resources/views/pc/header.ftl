@@ -9,6 +9,8 @@
     <link href="${app.siteUrl}/${assets('css/bootstrap.css', app.envs)}" rel="stylesheet">
     <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="${app.siteUrl}/${assets('js/jquery.js', app.envs)}"></script>
+    <link href="${app.siteUrl}/jquery.toast/jquery.toast.min.css" rel="stylesheet">
+    <script src="${app.siteUrl}/jquery.toast/jquery.toast.min.js"></script>
     <style type="text/css">
         body {
             padding-top: 60px;

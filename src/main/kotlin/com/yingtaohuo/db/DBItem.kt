@@ -31,12 +31,12 @@ class DBItem(private val dataSource: HikariDataSource) {
         }
     }
 
-    fun loadPageListByCategroyRangeOfShop(shopId: Int, categoryId: Int, page: PageParam) : List<TItemRecord> {
+    fun loadPageListByCategoryRangeOfShop(shopId: Int, categoryId: Int, page: PageParam) : List<TItemRecord> {
         dataSource.connection.use {
             DSL.using(it).use { ctx ->
                 val tItem = TItem.T_ITEM
-                val limit = page.pageSize
-                val offset = (page.pageNum - 1) * page.pageSize
+                val limit = page.getLimit()
+                val offset = page.getOffset()
                 return ctx.select().from(tItem)
                         .where(tItem.CORP_ID.eq(shopId).and(tItem.CATEGORY_ID.eq(categoryId)))
                         .orderBy(tItem.CREATE_TIME.desc())

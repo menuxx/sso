@@ -26,8 +26,8 @@ import javax.validation.Valid
 @AllOpen
 @Controller
 @RequestMapping("/shops/{shopId}")
-@PreAuthorize("hasRole('ADMIN')")
-class ShopRoute(val dbUser: DBUser, val dbShop: DBShop, val dbCategory: DBCategory) {
+@PreAuthorize("hasRole('USER')")
+class MyShopRoute(val dbUser: DBUser, val dbShop: DBShop, val dbCategory: DBCategory) {
 
     @GetMapping("category_list")
     fun categoryListView(model: Model) : String {

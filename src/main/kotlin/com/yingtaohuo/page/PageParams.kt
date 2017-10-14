@@ -24,4 +24,8 @@ data class PageParam(private val _pageNum: Int, private val _pageSize: Int=Page.
         }
 
     var pageSize: Int = _pageSize
+
+    fun getLimit() = pageSize
+
+    fun getOffset() = (pageNum - 1) * pageSize
 }

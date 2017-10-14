@@ -3,7 +3,7 @@ version '1.0-SNAPSHOT'
 
 buildscript {
     ext.spring_boot_version = "1.5.4.RELEASE"
-    ext.kotlin_version = '1.1.4-3'
+    ext.kotlin_version = '1.1.51'
 
     repositories {
         mavenLocal()
@@ -76,6 +76,15 @@ dependencies {
 
     compile 'com.google.guava:guava:23.0'
 
+    // https://mvnrepository.com/artifact/commons-codec/commons-codec
+    compile "commons-codec:commons-codec:1.10"
+
+
+    // https://mvnrepository.com/artifact/com.google.zxing/core
+    compile "com.google.zxing:core:3.3.0"
+    // https://mvnrepository.com/artifact/com.google.zxing/javase
+    compile "com.google.zxing:javase:3.3.0"
+
     compile 'com.qiniu:qiniu-java-sdk:7.2.+'
     compile 'org.jooq:jooq:3.9.5'
     compile 'org.jooq:jooq-meta:3.9.5'
@@ -87,6 +96,8 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-security"
     compile "org.springframework.boot:spring-boot-starter-data-redis"
     compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-mobile"
+
     compile("org.springframework.boot:spring-boot-starter-jdbc") {
         exclude group: 'org.apache.tomcat', module: 'tomcat-jdbc'
     }

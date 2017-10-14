@@ -10,6 +10,7 @@ server:
 
 spring:
 
+
   redis:
     database: 7
     host: wx3rd.menuxx.com
@@ -50,6 +51,12 @@ spring:
   jackson:
     default-property-inclusion: non_null
     time-zone: Asia/Shanghai
+
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      trigger-file:
 
 qiniu:
   bucket: menuxx

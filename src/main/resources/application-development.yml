@@ -11,3 +11,4 @@ logging:
     com.yingtaohuo: DEBUG
     # org.springframework: DEBUG
     jooq: DEBUG
+    org.springframework.security: DEBUG

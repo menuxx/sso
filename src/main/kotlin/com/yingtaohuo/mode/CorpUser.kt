@@ -22,3 +22,6 @@ data class CorpUser(
         val captcha: String,
         val lastLoginTime: Date
 )
+
+@NoArg
+data class UserTokenState(val accessToken: String, val expiresIn: Int)

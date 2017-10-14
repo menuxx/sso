@@ -5,6 +5,8 @@ import com.yingtaohuo.props.AppProps
 import com.yingtaohuo.util.getTelPhoneFromToken
 import com.yingtaohuo.util.validateToken
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
+import org.springframework.util.StringUtils
 
 
 /**
@@ -33,12 +36,23 @@ val authTokenLogger = LoggerFactory.getLogger(AuthTokenAuthenticationTokenFilter
 // filter
 open class AuthTokenAuthenticationTokenFilter(
         val appProps: AppProps,
+        @Autowired
+        @Qualifier("adminDetailsService")
         private val userDetailsService: UserDetailsService) : OncePerRequestFilter() {
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
+        val authorizationOfQuery = request.getParameter("auth_token")
         val authorizationOfHeader = request.getHeader("X-Authorization")
-        if (authorizationOfHeader != null && authorizationOfHeader.startsWith("YTH ")) {
-            val authToken = authorizationOfHeader.substring(4)
+
+        var authToken = ""
+
+        if (!StringUtils.isEmpty(authorizationOfQuery)) {
+            authToken = authorizationOfQuery
+        } else if (authorizationOfHeader != null && authorizationOfHeader.startsWith("YTH ") ) {
+            authToken = authorizationOfHeader.substring(4)
+        }
+
+        if ( !StringUtils.isEmpty(authToken) ) {
             try {
                 val telPhone = getTelPhoneFromToken(authToken, appProps.ssoSecret!!)
                 if ( SecurityContextHolder.getContext().authentication == null ) {
@@ -69,7 +83,7 @@ open class AuthTokenAuthenticationTokenFilter(
 // entry_point
 class AuthTokenAuthenticationEntryPoint : AuthenticationEntryPoint {
     override fun commence(request: HttpServletRequest, response: HttpServletResponse, authException: AuthenticationException) {
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized")
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.message)
     }
 }
 

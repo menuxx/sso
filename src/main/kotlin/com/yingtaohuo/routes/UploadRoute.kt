@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam
  */
 @RestController
 @RequestMapping("/upload")
-@PreAuthorize("hasRole('ADMIN')")
 @AllOpen
 class UploadRoute(val qiniuProps: QiNiuProps) {
 
