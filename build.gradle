@@ -6,9 +6,9 @@ buildscript {
     ext.kotlin_version = '1.1.51'
 
     repositories {
-        mavenLocal()
         maven { url "http://nexus.daocloud.io/repository/maven-public/" }
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+        mavenLocal()
         mavenCentral()
         maven { url 'http://repo.spring.io/plugins-release' }
         maven { url 'https://plugins.gradle.org/m2/' }
