@@ -77,7 +77,7 @@
                     '<div class="btn-group">' +
                     '<a class="btn btn-info btn-sm table-code" role="button">显示桌码</a>' +
                     '<a class="btn btn-danger btn-sm remove" role="button">删除</a>' +
-                    '</div>' +'</div>' + '</div>' + '</div>'
+                    '</div>' + '</div>' + '</div>' + '</div>'
             ));
         })
     });
@@ -91,7 +91,7 @@
         var li = $(this).parents(".table-li")
         var tableId = li.data('tableid')
         $.ajax("/tables/" + tableId, { type: 'PUT' }).success(function (res) {
-            li.remove()
+            li.remove();
         })
     });
 

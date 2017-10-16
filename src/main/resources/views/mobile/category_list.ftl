@@ -1,5 +1,32 @@
 <#include "./header.ftl" />
 <#setting number_format="000">
+<style type="text/css">
+
+    .list-group-item .btn-category {
+        float: right;
+    }
+
+    .btn-modify{
+        padding: 0 12px;
+    }
+
+    .btn-delete{
+        padding: 0 12px;
+    }
+    .btn-save{
+        padding: 0 12px;
+        display: none;
+    }
+    .form-input{
+        width: 20%;
+        height: 20px;
+        padding: 0 10px;
+        display: none;
+    }
+
+</style>
+</head>
+<body>
 
 <div class="container">
     <div class="alert alert-info">
@@ -12,7 +39,13 @@
                 <#if cate.categoryIcon??>
                     <img src="${cate.categoryIcon}" alt="分类图标">
                 </#if>
-                ${cate.categoryName}
+                <span class="category-name">${cate.categoryName}</span>
+                <input type="text" class="form-control form-input" value="${cate.categoryName}">
+                <div class="btn-group btn-category">
+                    <a class="btn btn-link btn-modify">修改</a>
+                    <a class="btn btn-link btn-save">保存</a>
+                    <a class="btn btn-link btn-delete">删除</a>
+                </div>
             </li>
         <#else>
             空空如也
@@ -31,7 +64,7 @@
 
 <script type="text/javascript">
     $("#submitCategory").on("submit", function (e) {
-        e.preventDefault()
+        e.preventDefault();
         var categoryName = $(this).find("[name=categoryName]").val()
         if (!categoryName || categoryName.length === 0) {
             return alert("分类名称不能为空哦")
@@ -43,13 +76,39 @@
         }).success(function (data) {
             var newCategory = $('<li class="list-group-item">' +
                     data.categoryName +
+                    '<div class="btn-group btn-category">' +
+                    '<a class="btn btn-link btn-modify">修改</a>' +
+                    '<a class="btn btn-link btn-save">保存</a>' +
+                    '<a class="btn btn-link btn-delete">删除</a>' +
+                    '</div>' +
                     '</li>');
             $(".yth-categories-list").append(newCategory)
             alert("创建成功")
         }).fail(function (err) {
             alert("创建失败")
         })
-    })
+    });
+    $('.btn-modify').on('click', function () {
+        $(this).hide();
+        $(this).parent('.btn-category').find('.btn-save').show();
+        $(this).parents('.list-group-item').find('.category-name').hide();
+        $(this).parents('.list-group-item').find('.form-input').show();
+    });
+
+    $('.btn-save').on('click',function(){
+        var formVal =  $('.form-input').val();
+        $(this).hide();
+        $(this).parent('.btn-category').find('.btn-modify').show();
+        $(this).parents('.list-group-item').find('.form-input').hide();
+        $(this).parents('.list-group-item').find('.category-name').show();
+        $(this).parents('.list-group-item').find('.category-name').html(formVal);
+    });
+
+    $(".yth-categories-list").delegate('.btn-delete', 'click', function() {
+        var li = $(this).parents(".list-group-item");
+        li.remove();
+    });
+
 </script>
 
 <#include "./footer.ftl" />
