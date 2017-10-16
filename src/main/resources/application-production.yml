@@ -6,19 +6,6 @@ app:
 spring:
   freemarker:
     cache: true
-  
-  redis:
-    database: 8
-    host: wx3rd.menuxx.com
-    port: 7389
-    password: 4cj34t4j9
-    timeout: 500
-    pool:
-      max-active: 100
-      min-idle: 100
-      max-idle: 100
-      max-wait: 10000
-
 
   datasource:
     password: FNQ31287twv
