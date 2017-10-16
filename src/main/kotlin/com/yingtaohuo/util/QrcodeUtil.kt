@@ -1,17 +1,14 @@
 package com.yingtaohuo.util
 
-import com.google.zxing.BinaryBitmap
-import com.google.zxing.DecodeHintType
-import com.google.zxing.EncodeHintType
+import com.google.zxing.*
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource
 import com.google.zxing.common.HybridBinarizer
 import com.google.zxing.qrcode.QRCodeReader
 import org.yaml.snakeyaml.reader.ReaderException
 import java.util.*
 import javax.imageio.ImageIO
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.MultiFormatWriter
 import com.google.zxing.common.BitMatrix
+import com.google.zxing.multi.qrcode.QRCodeMultiReader
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
 import com.yingtaohuo.exception.HttpException
 import okhttp3.OkHttpClient
@@ -35,6 +32,7 @@ fun parseQrcode(qrcodeImage: InputStream) : String {
     //decode the barcode
     val reader = QRCodeReader()
     val hints = mutableMapOf<DecodeHintType, Any>()
+    hints[DecodeHintType.POSSIBLE_FORMATS] = listOf(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_128)
     hints[DecodeHintType.CHARACTER_SET] = "UTF-8"
     val result = reader.decode(bitmap, hints)
     return result.text

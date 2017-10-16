@@ -1,6 +1,7 @@
 package com.yingtaohuo.routes.pc
 
 import com.google.common.io.ByteStreams
+import com.google.common.io.Files
 import com.yingtaohuo.AllOpen
 import com.yingtaohuo.db.DBShop
 import com.yingtaohuo.db.DBTable
@@ -26,6 +27,7 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.util.*
 import javax.validation.Valid
 
@@ -174,7 +176,7 @@ class TableRoute (
                             val pShop = dbShop.getShopById(shop.platformId)
                             val accessToken = wxAuthorizerCache.getAuthorizerToken(pShop.authorizerAppid)
                             if ( accessToken != null ) {
-                                val pagePath = "/pages/index/index?corpId=${shop.id}&tableId=${table.id}"
+                                val pagePath = "/pages/index/index?corpId=$shopId&tableId=${table.id}"
                                 return RespData(updateTableQrCode(
                                         table.id,
                                         pagePath,
