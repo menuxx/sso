@@ -24,6 +24,7 @@
                         <a class="btn btn-link btn-manage">管理</a>
                         <a class="btn btn-link btn-category">分类</a>
                         <a class="btn btn-link btn-items">菜单</a>
+                        <a class="btn btn-link btn-table">桌码</a>
                     </div>
                 </li>
             </#list>
@@ -57,6 +58,12 @@
         var shopId = $(this).parents(".shop-item").data('shop-id')
         bindShop(shopId).then(function (data) {
             location.href = "/items/list"
+        })
+    })
+    $('.btn-table').on('click', function () {
+        var shopId = $(this).parents(".shop-item").data('shop-id')
+        bindShop(shopId).then(function (data) {
+            location.href = "/tables/list"
         })
     })
 </script>

@@ -25,3 +25,32 @@ class InvalidParameterException : RuntimeException {
     constructor(message: String?) : super(message)
     constructor(message: String?, cause: Throwable?) : super(message, cause)
 }
+
+@ResponseStatus(HttpStatus.BAD_GATEWAY)
+class QiniuUploadException : RuntimeException {
+    constructor() : super()
+    constructor(message: String?) : super(message)
+    constructor(message: String?, cause: Throwable?) : super(message, cause)
+}
+
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+class WXHttpException : RuntimeException {
+    constructor() : super()
+    constructor(message: String?) : super(message)
+    constructor(message: String?, cause: Throwable?) : super(message, cause)
+}
+
+
+@ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+class WXAccessTokenException : RuntimeException {
+    constructor() : super()
+    constructor(message: String?) : super(message)
+    constructor(message: String?, cause: Throwable?) : super(message, cause)
+}
+
+@ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+class HttpException : RuntimeException {
+    constructor() : super()
+    constructor(message: String?) : super(message)
+    constructor(message: String?, cause: Throwable?) : super(message, cause)
+}

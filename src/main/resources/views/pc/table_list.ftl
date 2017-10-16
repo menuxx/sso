@@ -26,11 +26,11 @@
         <#list tables as table>
         <div class="col-md-2 table-li" data-tableid="${table.id?string('0')}">
             <div class="thumbnail">
-                <img class="qrcode-image" width="200" height="200" src="/image/yth_qrcode.jpeg" alt="桌号二维码">
+                <img class="qrcode-image" width="200" height="200" src="<#if table.wxQrcodeUrl??>${app.cdnUrl}/${table.wxQrcodeUrl}<#else>/image/yth_qrcode.jpeg</#if>" alt="桌号二维码">
                 <div class="caption">
                     <h5 class="name">${table.tableName}</h5>
                     <div class="btn-group">
-                        <a class="btn btn-info btn-sm table-code" role="button">显示桌码</a>
+                        <a class="btn btn-info btn-sm table-code" role="button">生成桌码</a>
                         <a class="btn btn-danger btn-sm remove" role="button">删除</a>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                     '<div class="caption">' +
                     '<h5 class="name"> '+ table.tableName + '</h5>' +
                     '<div class="btn-group">' +
-                    '<a class="btn btn-info btn-sm table-code" role="button">显示桌码</a>' +
+                    '<a class="btn btn-info btn-sm table-code" role="button">生成桌码</a>' +
                     '<a class="btn btn-danger btn-sm remove" role="button">删除</a>' +
                     '</div>' +'</div>' + '</div>' + '</div>'
             ));
@@ -83,8 +83,33 @@
     });
 
     $(".table-list").delegate('.table-code', 'click', function() {
-        $(this).parents(".thumbnail").find(".qrcode-image").attr("src", "/image/1.jpg")
-
+        $.toast({
+            heading: '生成中...',
+            text: '请稍后，大概需要几秒钟',
+            showHideTransition: 'slide',
+            icon: 'success',
+            hideAfter: 1000
+        });
+        var tableid = $(this).parents(".table-li").data('tableid')
+        var self = this
+        // 1. 店铺码
+        // 2. 桌码
+        // 3. 付款码
+        // 4. 平台码
+        $.ajax("/tables/createwxqrcode", {
+            type: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify({ tableId: tableid, codeType: 2 })
+        }).success(function (data) {
+            $.toast({
+                heading: '生成完毕',
+                text: '桌码ID: ' + tableid,
+                showHideTransition: 'slide',
+                icon: 'success',
+                hideAfter: 1000
+            });
+            $(self).parents(".thumbnail").find(".qrcode-image").attr("src", "${app.cdnUrl}/" + data.data.fileKey)
+        })
     });
 
     $(".table-list").delegate('.remove', 'click', function() {

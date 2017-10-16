@@ -10,10 +10,9 @@ server:
 
 spring:
 
-
   redis:
-    database: 7
-    host: wx3rd.menuxx.com
+    database: 9
+    host: 120.132.29.90
     port: 7389
     password: 4cj34t4j9
     timeout: 1000

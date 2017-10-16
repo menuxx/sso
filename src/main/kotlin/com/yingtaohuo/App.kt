@@ -18,8 +18,12 @@ import com.yingtaohuo.sso.db.tables.TConfig
 import com.yingtaohuo.sso.db.tables.TShopConfig
 import com.yingtaohuo.sso.db.tables.records.TConfigRecord
 import com.zaxxer.hikari.HikariDataSource
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.jooq.impl.DSL
 import org.springframework.boot.CommandLineRunner
+import java.text.SimpleDateFormat
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -39,9 +43,20 @@ class App {
     }
 
     @Bean
+    fun commonHttpClient() : OkHttpClient {
+        return OkHttpClient.Builder()
+                .addInterceptor(HttpLoggingInterceptor { msg -> println("YTH-SSO " + msg) }.setLevel(HttpLoggingInterceptor.Level.BODY))
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .readTimeout(4, TimeUnit.SECONDS)
+                .build()
+    }
+
+    @Bean
     fun objectMapperBuilder(): Jackson2ObjectMapperBuilder {
         val builder = Jackson2ObjectMapperBuilder()
         builder.annotationIntrospector(IgnoreInheritedIntrospector())
+        builder.dateFormat(SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
+        builder.timeZone("GMT+8")
         builder.serializationInclusion(JsonInclude.Include.NON_NULL)
         return builder
     }
@@ -86,6 +101,5 @@ class ViewModelConfig(val appProps: AppProps, val env: Environment) {
 }
 
 fun main(args: Array<String>) {
-    System.setProperty("spring.devtools.restart.enabled", "true")
     SpringApplication.run(App::class.java, *args)
 }

@@ -44,7 +44,7 @@ class QrCodeTest {
 
             // gh_87e8a8151cf9_258.jpg
 
-            val image = ImageIO.read(Resources.getResource("11111.jpg"))
+            val image = ImageIO.read(Resources.getResource("gh_87e8a8151cf9_258.jpg"))
 
             // val image = ImageIO.read(resp.body().byteStream())
 
