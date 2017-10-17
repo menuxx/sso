@@ -10,11 +10,20 @@ import javax.imageio.ImageIO
 import com.google.zxing.common.BitMatrix
 import com.google.zxing.multi.qrcode.QRCodeMultiReader
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
+import com.sun.imageio.spi.FileImageInputStreamSpi
 import com.yingtaohuo.exception.HttpException
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.awt.image.BufferedImage
 import java.io.*
+import javax.imageio.ImageReader
+import javax.imageio.stream.FileImageInputStream
+import javax.imageio.stream.ImageInputStream
+import java.awt.image.Raster
+
+
+
+
 
 
 /**
@@ -24,17 +33,19 @@ import java.io.*
  */
 
 @Throws(ReaderException::class)
-fun parseQrcode(qrcodeImage: InputStream) : String {
+fun parseQrcode(qrcodeImage: File) : String {
     val image = ImageIO.read(qrcodeImage)
+    val subImage = image.getSubimage(0, 0, image.width, (image.height * 0.85).toInt())
     // val image = ImageIO.read(resp.body().byteStream())
-    val source = BufferedImageLuminanceSource(image)
+    val source = BufferedImageLuminanceSource(subImage)
     val bitmap = BinaryBitmap(HybridBinarizer(source))
     //decode the barcode
-    val reader = QRCodeReader()
+    val qrreader = QRCodeReader()
     val hints = mutableMapOf<DecodeHintType, Any>()
+    hints[DecodeHintType.PURE_BARCODE] = true
     hints[DecodeHintType.POSSIBLE_FORMATS] = listOf(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_128)
     hints[DecodeHintType.CHARACTER_SET] = "UTF-8"
-    val result = reader.decode(bitmap, hints)
+    val result = qrreader.decode(bitmap, hints)
     return result.text
 }
 

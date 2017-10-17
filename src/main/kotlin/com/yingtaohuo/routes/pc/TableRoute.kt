@@ -1,6 +1,5 @@
 package com.yingtaohuo.routes.pc
 
-import com.google.common.io.ByteStreams
 import com.google.common.io.Files
 import com.yingtaohuo.AllOpen
 import com.yingtaohuo.db.DBShop
@@ -19,14 +18,12 @@ import com.yingtaohuo.wx3rd.QrCodeInfo
 import com.yingtaohuo.wx3rd.WXAuthorizerCache
 import com.yingtaohuo.wx3rd.WXLiteApi
 import okhttp3.OkHttpClient
-import okio.Okio
 import org.hibernate.validator.constraints.NotEmpty
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.*
 import javax.validation.Valid
@@ -82,9 +79,10 @@ class TableRoute (
         if ( resp.isSuccessful && body != null ) {
             val filename = UUID.randomUUID().toString()
             val bytes = body.bytes()
+            Files.write(bytes, File("$filename.jpg"))
             val stream1 = ByteArrayInputStream(bytes.copyOf())
             // 读取为微信生成的二维码
-            val qrcodeData = parseQrcode(stream1)
+            val qrcodeData = parseQrcode(File("$filename.jpg"))
             // 重新生成带 logo 的二维码
             val newQrcodeImage = get2CodeImage(qrcodeData, logoData)
             // 上传新做成的文件
@@ -101,9 +99,10 @@ class TableRoute (
         if ( resp.isSuccessful && body != null ) {
             val filename = UUID.randomUUID().toString()
             val bytes = body.bytes()
-            val stream = ByteArrayInputStream(bytes.copyOf())
+            Files.write(bytes, File("$filename.jpg"))
+            // val stream = ByteArrayInputStream(bytes.copyOf())
             // 读取为微信生成的二维码
-            val qrCodeData = parseQrcode(stream)
+            val qrCodeData = parseQrcode(File("$filename.jpg"))
             val i = ByteArrayInputStream(bytes.copyOf())
             val fileKey = qiniuService.uploadFile(i, "images/table/$filename.jpg")
             return mapOf("qrCodeData" to qrCodeData, "fileKey" to fileKey)

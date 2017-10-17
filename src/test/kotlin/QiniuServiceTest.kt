@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.test.context.web.WebAppConfiguration
 import java.io.ByteArrayInputStream
+import java.io.File
 import java.util.*
 
 /**
@@ -51,7 +52,7 @@ class QiniuServiceTest {
                     val bytes = body.bytes()
                     val stream1 = ByteArrayInputStream(bytes)
                     val stream2 = ByteArrayInputStream(bytes)
-                    val url = parseQrcode(stream1)
+                    val url = parseQrcode(File("11111111111111111.jpg"))
                     println("url : $url")
                     qiniuService.uploadFile(stream2, "image/qrcode/$fileKey.jpg")
                 }
