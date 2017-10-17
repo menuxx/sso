@@ -1,4 +1,4 @@
-package com.yingtaohuo.wx3rd
+package com.yingtaohuo.wx
 
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Service

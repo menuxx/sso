@@ -57,6 +57,14 @@ spring:
     restart:
       trigger-file:
 
+weixin:
+  subscribe-no:
+    app-id: wx0ab69ba942af8039
+    app-secret: 4e1939ed22c63181c92d2fd2818cd6af
+  service-no:
+    app-id: wx931d9dfbd5275c6e
+    app-secret: 5882869733213d929bee994933dae42b
+
 qiniu:
   bucket: menuxx
   access-key: sr4H3rnxg3fkN9bf5NBTj9V9ptPFMnW5Ryxbg_o6

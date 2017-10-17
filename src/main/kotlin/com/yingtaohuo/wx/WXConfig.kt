@@ -1,4 +1,4 @@
-package com.yingtaohuo.wx3rd
+package com.yingtaohuo.wx
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Bean

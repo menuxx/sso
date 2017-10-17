@@ -2,6 +2,7 @@ package com.yingtaohuo.props
 
 import com.yingtaohuo.NoArg
 import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.boot.context.properties.NestedConfigurationProperty
 import org.springframework.stereotype.Component
 
 /**
@@ -18,3 +19,24 @@ data class QiNiuProps(var bucket: String?, var accessKey: String?, var secretKey
 @Component
 @NoArg
 data class AppProps(var cdnUrl: String?, var siteUrl: String?, var ssoSecret: String?, var envs: Array<String>?)
+
+@ConfigurationProperties("weixin")
+@Component
+@NoArg
+data class WeixinProps(
+        @NestedConfigurationProperty
+        val subscribeNo: WeixinSubscribeNo,
+        @NestedConfigurationProperty
+        val serviceNo: WeixinServiceNo
+)
+
+data class WeixinSubscribeNo(
+        val appId: String,
+        val appSecret: String
+)
+
+data class WeixinServiceNo(
+        val appId: String,
+        val appSecret: String
+)
+

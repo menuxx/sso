@@ -1,7 +1,7 @@
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.yingtaohuo.App
-import com.yingtaohuo.wx3rd.QrCodeInfo
-import com.yingtaohuo.wx3rd.WXLiteApi
+import com.yingtaohuo.wx.QrCodeInfo
+import com.yingtaohuo.wx.WXLiteApi
 import okio.Okio
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -2,9 +2,9 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.yingtaohuo.App
 import com.yingtaohuo.service.QiniuService
 import com.yingtaohuo.util.parseQrcode
-import com.yingtaohuo.wx3rd.QrCodeInfo
-import com.yingtaohuo.wx3rd.WXAuthorizerCache
-import com.yingtaohuo.wx3rd.WXLiteApi
+import com.yingtaohuo.wx.QrCodeInfo
+import com.yingtaohuo.wx.WXAuthorizerCache
+import com.yingtaohuo.wx.WXLiteApi
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired

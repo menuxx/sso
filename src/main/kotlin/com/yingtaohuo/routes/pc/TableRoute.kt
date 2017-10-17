@@ -14,9 +14,9 @@ import com.yingtaohuo.resp.RespData
 import com.yingtaohuo.service.QiniuService
 import com.yingtaohuo.sso.db.tables.records.TCorpRecord
 import com.yingtaohuo.util.*
-import com.yingtaohuo.wx3rd.QrCodeInfo
-import com.yingtaohuo.wx3rd.WXAuthorizerCache
-import com.yingtaohuo.wx3rd.WXLiteApi
+import com.yingtaohuo.wx.QrCodeInfo
+import com.yingtaohuo.wx.WXAuthorizerCache
+import com.yingtaohuo.wx.WXLiteApi
 import okhttp3.OkHttpClient
 import org.hibernate.validator.constraints.NotEmpty
 import org.springframework.security.access.prepost.PreAuthorize
@@ -80,7 +80,6 @@ class TableRoute (
             val filename = UUID.randomUUID().toString()
             val bytes = body.bytes()
             Files.write(bytes, File("$filename.jpg"))
-            val stream1 = ByteArrayInputStream(bytes.copyOf())
             // 读取为微信生成的二维码
             val qrcodeData = parseQrcode(File("$filename.jpg"))
             // 重新生成带 logo 的二维码
@@ -100,7 +99,6 @@ class TableRoute (
             val filename = UUID.randomUUID().toString()
             val bytes = body.bytes()
             Files.write(bytes, File("$filename.jpg"))
-            // val stream = ByteArrayInputStream(bytes.copyOf())
             // 读取为微信生成的二维码
             val qrCodeData = parseQrcode(File("$filename.jpg"))
             val i = ByteArrayInputStream(bytes.copyOf())
