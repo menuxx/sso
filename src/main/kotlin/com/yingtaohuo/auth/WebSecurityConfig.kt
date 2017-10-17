@@ -60,7 +60,7 @@ class WebSecurityConfig(
                 .csrf().disable()
 
                 .exceptionHandling()
-                    .authenticationEntryPoint(AuthTokenAuthenticationEntryPoint())
+                    .authenticationEntryPoint(AuthAuthenticationEntryPoint())
                 .and()
 
                 .authorizeRequests()

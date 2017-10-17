@@ -30,11 +30,13 @@ data class WeixinProps(
         val serviceNo: WeixinServiceNo
 )
 
+@NoArg
 data class WeixinSubscribeNo(
         val appId: String,
         val appSecret: String
 )
 
+@NoArg
 data class WeixinServiceNo(
         val appId: String,
         val appSecret: String

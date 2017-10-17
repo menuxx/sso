@@ -82,14 +82,28 @@ open class AuthTokenAuthenticationTokenFilter(
 }
 
 // entry_point
-class AuthTokenAuthenticationEntryPoint : AuthenticationEntryPoint {
+class AuthAuthenticationEntryPoint : AuthenticationEntryPoint {
 
     val WeixinAuthorizeUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect"
 
     override fun commence(request: HttpServletRequest, response: HttpServletResponse, authException: AuthenticationException) {
         val ua = request.getHeader("User-Agent")
         val fromUrl = request.requestURL
+
+        val ythUa = Pattern.compile("YTH_")
         val wxUa = Pattern.compile("micromessenger")
+
+        when ( true ) {
+            // 如果在樱桃火App内打开
+            ythUa.matcher(ua).find() -> {
+
+            }
+            // 如果在
+            wxUa.matcher(ua).find() -> {
+
+            }
+        }
+
         println("====== fromUrl: $fromUrl")
         if (wxUa.matcher(ua).find()) {
             println("================= in weixin =================")
