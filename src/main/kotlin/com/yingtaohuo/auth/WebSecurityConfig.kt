@@ -44,6 +44,7 @@ class WebSecurityConfig(
                 "/favicon.ico",
                 "/**/*.html",
                 "/**/*.css",
+                "/**/*.txt",
                 "/**/*.js"
         );
     }
@@ -58,7 +59,9 @@ class WebSecurityConfig(
 
                 .csrf().disable()
 
-                .exceptionHandling().authenticationEntryPoint(AuthTokenAuthenticationEntryPoint()).and()
+                .exceptionHandling()
+                    .authenticationEntryPoint(AuthTokenAuthenticationEntryPoint())
+                .and()
 
                 .authorizeRequests()
 
@@ -69,6 +72,7 @@ class WebSecurityConfig(
                         "/favicon.ico",
                         "/**/*.html",
                         "/**/*.css",
+                        "/**/*.txt",
                         "/**/*.js"
                 ).permitAll()
 

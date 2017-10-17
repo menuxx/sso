@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.util.StringUtils
+import java.util.regex.Pattern
 
 
 /**
@@ -82,7 +83,18 @@ open class AuthTokenAuthenticationTokenFilter(
 
 // entry_point
 class AuthTokenAuthenticationEntryPoint : AuthenticationEntryPoint {
+
+    val WeixinAuthorizeUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect"
+
     override fun commence(request: HttpServletRequest, response: HttpServletResponse, authException: AuthenticationException) {
+        val ua = request.getHeader("User-Agent")
+        val fromUrl = request.requestURL
+        val wxUa = Pattern.compile("micromessenger")
+        println("====== fromUrl: $fromUrl")
+        if (wxUa.matcher(ua).find()) {
+            println("================= in weixin =================")
+            response.sendRedirect("https://www.baidu.com")
+        }
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.message)
     }
 }

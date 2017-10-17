@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse
 open class WeiXinAuthentication : OncePerRequestFilter() {
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filter: FilterChain) {
-        
+
     }
 
 }
