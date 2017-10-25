@@ -1,7 +1,11 @@
 package com.yingtaohuo.auth
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.yingtaohuo.db.DBShopUser
+import com.yingtaohuo.db.DBWXUser
 import com.yingtaohuo.props.AppProps
+import com.yingtaohuo.props.WeixinProps
+import com.yingtaohuo.wechat.WXUserApi
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
@@ -30,10 +34,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class WebSecurityConfig(
         private val appProps: AppProps,
+        private val wxProps: WeixinProps,
         private val userService: YTHUserDetailsService,
         private val adminService: YTHAdminDetailsService,
-        private val env: Environment,
-        private val objectMapper: ObjectMapper
+        private val dbWXUser: DBWXUser,
+        private val dbShopUser: DBShopUser,
+        private val wxUserApi: WXUserApi,
+        private val objectMapper: ObjectMapper,
+        private val env: Environment
 ) : WebSecurityConfigurerAdapter() {
 
     override fun configure(web: WebSecurity) {
@@ -45,7 +53,8 @@ class WebSecurityConfig(
                 "/**/*.html",
                 "/**/*.css",
                 "/**/*.txt",
-                "/**/*.js"
+                "/**/*.js",
+                "/**/*.map"
         );
     }
 
@@ -60,7 +69,7 @@ class WebSecurityConfig(
                 .csrf().disable()
 
                 .exceptionHandling()
-                    .authenticationEntryPoint(AuthAuthenticationEntryPoint())
+                    .authenticationEntryPoint(AuthAuthenticationEntryPoint(appProps, wxProps))
                 .and()
 
                 .authorizeRequests()
@@ -73,8 +82,12 @@ class WebSecurityConfig(
                         "/**/*.html",
                         "/**/*.css",
                         "/**/*.txt",
-                        "/**/*.js"
+                        "/**/*.js",
+                        "/**/*.map"
                 ).permitAll()
+
+                // 字体文件
+                .regexMatchers(HttpMethod.GET, "\\.(eot|svg|ttf|woff|woff2)").permitAll()
 
                 // .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
@@ -83,24 +96,22 @@ class WebSecurityConfig(
                 .anyRequest().authenticated().and()
 
                 .addFilterBefore(TokenAuthenticationFilter(adminService), UsernamePasswordAuthenticationFilter::class.java)
-                .addFilterBefore(AuthTokenAuthenticationTokenFilter(appProps, userService), UsernamePasswordAuthenticationFilter::class.java)
+                .addFilterBefore(WeiXinAuthenticationFilter(wxUserApi, wxProps, dbWXUser, dbShopUser, userService), UsernamePasswordAuthenticationFilter::class.java)
 
                 .logout()
                 .logoutRequestMatcher(AntPathRequestMatcher("/auth/logout"))
                 .logoutSuccessHandler(LogoutSuccess(objectMapper))
                 .deleteCookies(TokenHelper.AUTH_COOKIE)
 
-
-        //if ( env.activeProfiles.contains("development") ) {
-        //  .addFilterBefore(MockAuthTokenAuthenticationTokenFilter(appProps, userService), UsernamePasswordAuthenticationFilter::class.java)
-        //} else {
-
-        //}
+        if ( env.activeProfiles.contains("development") ) {
+            http.addFilterBefore(MockAuthTokenAuthenticationTokenFilter(appProps, userService), UsernamePasswordAuthenticationFilter::class.java)
+        } else {
+            http.addFilterBefore(AuthTokenAuthenticationTokenFilter(appProps, userService), UsernamePasswordAuthenticationFilter::class.java)
+        }
 
         // http.csrf().disable()
                 // .ignoringAntMatchers("/auth/login")
                 // .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-
 
         // http.authorizeRequests().antMatchers(HttpMethod.POST, "/auth/login").authenticated()
 

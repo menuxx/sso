@@ -4,13 +4,11 @@ import com.yingtaohuo.AllOpen
 import com.yingtaohuo.db.DBCategory
 import com.yingtaohuo.db.fromRecord
 import com.yingtaohuo.model.CategoryModel
+import com.yingtaohuo.resp.RespData
 import com.yingtaohuo.util.getCurrentUser
 import org.hibernate.validator.constraints.NotEmpty
 import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 /**
@@ -23,6 +21,13 @@ import javax.validation.Valid
 @RequestMapping("/categories")
 @PreAuthorize("hasRole('USER')")
 class CategoryRoute (val dbCategory: DBCategory) {
+
+    @GetMapping("/")
+    fun getCategoriesRangeOfShop() : RespData<List<CategoryModel>> {
+        val user = getCurrentUser()
+        val list: List<CategoryModel> = dbCategory.loadCategoryRangeShop(user.shopId).map(::fromRecord)
+        return RespData(list).success()
+    }
 
     data class PostCategory(@NotEmpty val categoryName: String)
     @PostMapping("/")

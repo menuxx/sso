@@ -13,32 +13,38 @@ import org.springframework.stereotype.Component
 @ConfigurationProperties("qiniu")
 @Component
 @NoArg
-data class QiNiuProps(var bucket: String?, var accessKey: String?, var secretKey: String?)
+data class QiNiuProps(var bucket: String, var accessKey: String, var secretKey: String)
+
+@ConfigurationProperties("ronglian")
+@Component
+@NoArg
+data class RongLianProps(var appId: String, var accountSid: String, var authToken: String)
+
 
 @ConfigurationProperties("app")
 @Component
 @NoArg
-data class AppProps(var cdnUrl: String?, var siteUrl: String?, var ssoSecret: String?, var envs: Array<String>?)
+data class AppProps(var cdnUrl: String, var siteUrl: String, var ssoSecret: String, var envs: Array<String>)
 
 @ConfigurationProperties("weixin")
 @Component
 @NoArg
 data class WeixinProps(
         @NestedConfigurationProperty
-        val subscribeNo: WeixinSubscribeNo,
+        var subscribeNo: WeixinSubscribeNo,
         @NestedConfigurationProperty
-        val serviceNo: WeixinServiceNo
+        var serviceNo: WeixinServiceNo
 )
 
 @NoArg
 data class WeixinSubscribeNo(
-        val appId: String,
-        val appSecret: String
+        var appId: String,
+        var appSecret: String
 )
 
 @NoArg
 data class WeixinServiceNo(
-        val appId: String,
-        val appSecret: String
+        var appId: String,
+        var appSecret: String
 )
 

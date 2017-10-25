@@ -34,14 +34,14 @@ class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
     // page view
     @GetMapping("/list")
     fun itemList(model: Model, @RequestParam(name = "cateId", required = false) categoryId: Int?, @RequestParam(defaultValue = Page.DefaultPageSizeText) pageSize: Int, @RequestParam(defaultValue = Page.DefaultPageNumText) pageNum: Int) : String {
-        val user = getCurrentUser()
-        val categories = dbCategory.loadCategoryRangeShop(user.shopId)
-        val cateId = categoryId ?: categories.first().id
-        val itemList = dbItem.loadPageListByCategoryRangeOfShop(user.shopId, cateId, PageParam(pageNum, pageSize)).map { fromRecord<TItemRecord, ItemModel>(it) }
-        model.addAttribute("currentCateId", cateId)
-        model.addAttribute("pageNum", pageNum)
-        model.addAttribute("categories", categories)
-        model.addAttribute("itemList", itemList)
+        // val user = getCurrentUser()
+        // val categories = dbCategory.loadCategoryRangeShop(user.shopId)
+        // val cateId = categoryId ?: categories.first().id
+        // val itemList = dbItem.loadPageListByCategoryRangeOfShop(user.shopId, cateId, PageParam(pageNum, pageSize)).map { fromRecord<TItemRecord, ItemModel>(it) }
+        // model.addAttribute("currentCateId", cateId)
+        // model.addAttribute("pageNum", pageNum)
+        // model.addAttribute("categories", categories)
+        // model.addAttribute("itemList", itemList)
         model.addAttribute("title", "商品列表")
         return "mobile/item_list"
     }
@@ -87,10 +87,12 @@ class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
     // page view
     @GetMapping("/")
     @ResponseBody
-    fun itemListApi(model: Model, @RequestParam("cateId") categoryId: Int, @RequestParam(defaultValue = Page.DefaultPageSizeText) pageSize: Int, @RequestParam(defaultValue = Page.DefaultPageNumText) pageNum: Int) : RespData<List<ItemModel>> {
+    fun itemListApi(model: Model, @RequestParam(name = "cateId", required = false) cateId: Int?, @RequestParam(defaultValue = Page.DefaultPageSizeText) pageSize: Int, @RequestParam(defaultValue = Page.DefaultPageNumText) pageNum: Int) : RespData<List<ItemModel>> {
         val user = getCurrentUser()
+        val categories = dbCategory.loadCategoryRangeShop(user.shopId)
+        val categoryId = cateId ?: categories.first().id
         val list = dbItem.loadPageListByCategoryRangeOfShop(user.shopId, categoryId, PageParam(pageNum, pageSize)).map { fromRecord<TItemRecord, ItemModel>(it) }
-        return RespData(list).success()
+        return RespData(list).success(mapOf("cateId" to categoryId))
     }
 
     /**

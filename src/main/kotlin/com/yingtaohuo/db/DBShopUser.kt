@@ -1,14 +1,12 @@
 package com.yingtaohuo.db
 
 import com.yingtaohuo.sso.db.tables.*
-import com.yingtaohuo.sso.db.tables.records.TCorpRecord
 import com.yingtaohuo.sso.db.tables.records.TCorpUserRecord
 import com.zaxxer.hikari.HikariDataSource
 import org.jooq.Record
 import org.jooq.impl.DSL
 import org.jooq.types.UInteger
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 /**
  * 作者: yinchangsheng@gmail.com
@@ -27,24 +25,24 @@ class DBShopUser(val dataSource: HikariDataSource) {
         }
     }
 
-    fun getUserDetailByTelphone(username: String?) : TCorpUserRecord? {
+    fun getUserDetailByTelphone(mobile: String) : TCorpUserRecord? {
         val tShopUser = TCorpUser.T_CORP_USER
-        val fTelphone = tShopUser.MOBILE
+        val fMobile = tShopUser.MOBILE
         dataSource.connection.use {
             DSL.using(it).use { ctx ->
-                return ctx.select().from(tShopUser).where(fTelphone.eq(username)).fetchOne().into(TCorpUserRecord::class.java)
+                return ctx.select().from(tShopUser).where(fMobile.eq(mobile)).fetchOne().into(TCorpUserRecord::class.java)
             }
         }
     }
 
-    fun findAuthoritiesByTelphone(username: String?) : Array<out Record> {
+    fun findAuthoritiesByTelphone(mobile: String) : Array<out Record> {
         dataSource.connection.use {
             DSL.using(it).use { ctx ->
                 // select * from t_admin left join t_user_authority on t_admin.id = t_user_authority.user_id left join t_authority on t_user_authority.authority_id = t_authority.id where t_admin.mobile = "13575762817"
                 val tShopUser = TCorpUser.T_CORP_USER
                 val tUserAuthority = TUserAuthority.T_USER_AUTHORITY
                 val tAuthority = TAuthority.T_AUTHORITY
-                return ctx.select().from(tShopUser).leftJoin(tUserAuthority).on(tShopUser.ID.eq(tUserAuthority.USER_ID)).leftJoin(tAuthority).on(tUserAuthority.AUTHORITY_ID.eq(tAuthority.ID)).where(tShopUser.MOBILE.eq(username)).fetchArray()
+                return ctx.select().from(tShopUser).leftJoin(tUserAuthority).on(tShopUser.ID.eq(tUserAuthority.USER_ID)).leftJoin(tAuthority).on(tUserAuthority.AUTHORITY_ID.eq(tAuthority.ID)).where(tShopUser.MOBILE.eq(mobile)).fetchArray()
             }
         }
     }
@@ -57,6 +55,30 @@ class DBShopUser(val dataSource: HikariDataSource) {
                         .fetchArray().map {
                     it.into(TCorpUserRecord::class.java)
                 }
+            }
+        }
+    }
+
+    fun updateWxUserId(mobile: String, userId: Int) : TCorpUserRecord {
+        val tShopUser = TCorpUser.T_CORP_USER
+        dataSource.connection.use {
+            DSL.using(it).use { ctx ->
+                return ctx.update(tShopUser)
+                        .set(tShopUser.WX_USER_ID, UInteger.valueOf(userId))
+                        .where(tShopUser.MOBILE.eq(mobile))
+                        .returning()
+                        .fetchOne()
+            }
+        }
+    }
+
+    fun getUserByWxUserId(wxUserId: Int) : TCorpUserRecord? {
+        val tShopUser = TCorpUser.T_CORP_USER
+        dataSource.connection.use {
+            DSL.using(it).use { ctx ->
+                return ctx.select().from(tShopUser)
+                        .where(tShopUser.WX_USER_ID.eq(UInteger.valueOf(wxUserId)))
+                        .fetchOne().into(TCorpUserRecord::class.java)
             }
         }
     }

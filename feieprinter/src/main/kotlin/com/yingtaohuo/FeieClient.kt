@@ -52,14 +52,14 @@ open class FeieClient(private val user: String, private val ukey: String) {
     private val logger = LoggerFactory.getLogger(FeieClient::class.java)
 
     private val httpClient = OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor { msg -> println("FEIE " + msg) }.setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor(HttpLoggingInterceptor { msg -> logger.debug("FEIE: " + msg) }.setLevel(HttpLoggingInterceptor.Level.BODY))
             .connectTimeout(5, TimeUnit.SECONDS)
             .readTimeout(4, TimeUnit.SECONDS)
             .build()
 
     private fun getHeader(apiname: String): Header {
         val sign = FeieSignature(user, ukey)
-        println(sign.genSign())
+        logger.debug("sign: " + sign.genSign())
         return Header(
                 user = user,
                 debug = ClientWorkModelOfProd,

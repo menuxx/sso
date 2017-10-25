@@ -92,7 +92,7 @@ class AuthRoute(
             response.addCookie(createAuthCookie(refreshedToken!!, TokenHelper.EXPIRES_IN))
             ResponseEntity.ok(UserTokenState(refreshedToken, TokenHelper.EXPIRES_IN))
         } else {
-            ResponseEntity.accepted().body(RespMeta("未获取过刷新令牌", -1))
+            ResponseEntity.accepted().body(RespMeta("未获取过刷新令牌", -1, null))
         }
     }
 

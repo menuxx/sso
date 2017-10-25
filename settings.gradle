@@ -1,3 +1,5 @@
 rootProject.name = 'sso'
 include 'feieprinter'
+include 'webchat'
+include 'ronglian'
 

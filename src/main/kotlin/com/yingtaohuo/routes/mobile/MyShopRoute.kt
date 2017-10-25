@@ -74,7 +74,9 @@ class MyShopRoute(val dbUser: DBUser, val dbShop: DBShop, val dbCategory: DBCate
     fun updateBusinessTimeline(@PathVariable("shopId") shopId: Int,
                                @Valid @RequestBody timeline: BusinessTimeline) : RespData<Int> {
         val user = getCurrentUser()
-        return RespData(dbShop.updateTimeline(user.shopId, timeline.businessTimeline)).success()
+        return RespData(
+                dbShop.updateTimeline(user.shopId, timeline.businessTimeline)
+        ).success()
     }
 
 }
