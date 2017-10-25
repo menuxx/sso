@@ -140,9 +140,9 @@
             }).success(function(item){
                 var cateId = sessionStorage.getItem('item_list.cateId')
                 if (cateId) {
-                    location.href = "/items/list?cateId=" + cateId;
+                    location.href = "/items/list#/?cateId=" + cateId;
                 } else {
-                    location.href = "/items/list"
+                    location.href = "/items/list#/"
                 }
                 $.toast({
                     heading: '跳转中...',
