@@ -50,10 +50,20 @@ class TableRoute (
     fun tableListView(model: Model) : String {
         val user = getCurrentUser()
         val tables = dbTable.getTablesRangeOfShop(user.shopId)
+        val shop = dbShop.getShopById(user.shopId)
+        model.addAttribute("shop", shop)
         model.addAttribute("user", user)
         model.addAttribute("title", "桌子")
         model.addAttribute("tables", tables)
         return "pc/table_list"
+    }
+
+    @GetMapping("/")
+    @ResponseBody
+    fun getTableList(model: Model) : RespData<List<TableModel>> {
+        val user = getCurrentUser()
+        val tables : List<TableModel> = dbTable.getTablesRangeOfShop(user.shopId).map(::fromRecord)
+        return RespData(tables).success()
     }
 
     data class NewTable(@NotEmpty val tableName: String)

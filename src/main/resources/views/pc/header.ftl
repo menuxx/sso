@@ -17,3 +17,6 @@
             padding-top: 60px;
         }
     </style>
+    <script type="text/javascript">
+        var cndUrl = '${app.cdnUrl}';
+    </script>

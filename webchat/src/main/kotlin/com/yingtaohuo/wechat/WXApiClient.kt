@@ -1,6 +1,7 @@
 package com.yingtaohuo.wechat
 
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -18,9 +19,11 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import com.google.common.cache.CacheLoader
 import com.google.common.cache.CacheBuilder
+import com.google.common.io.ByteStreams
 import com.google.common.reflect.Reflection
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
+import kotlin.collections.HashMap
 
 
 /**
@@ -104,10 +107,11 @@ class WXApiCachedClient(appId: String, appSecret: String) : WXApiClient(appId, a
 class WXResponseMapper(private val objectMapper: ObjectMapper) : ResponseMapper {
     override fun map(response: Response, type: Type): Response {
         val body = response.body()
-        val res = objectMapper.readValue<WXResult>(body.asInputStream())
-        if ( res.errcode != 0 ) {
-            throw WXException(res.errmsg, res.errcode)
+        val bytes = ByteStreams.toByteArray(body.asInputStream())
+        val res = objectMapper.readValue(bytes, HashMap::class.java)
+        if ( res["errcode"] != null && res["errcode"] as Int != 0 ) {
+            throw WXException(res["errmsg"] as String, res["errcode"] as Int)
         }
-        return response
+        return response.toBuilder().body(bytes).build()
     }
 }

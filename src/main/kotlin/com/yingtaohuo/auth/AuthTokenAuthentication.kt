@@ -117,9 +117,9 @@ class AuthAuthenticationEntryPoint(private val appProps : AppProps, private val 
                     authLogger.debug("================= in weixin =================")
                     val encodeUrl = URLEncoder.encode(fromUrl, "UTF-8")
                     val redUrl = WeixinAuthorizeUrl
-                            .replace("APPID", wxProps.serviceNo.appId, true)
-                            .replace("REDIRECT_URI", encodeUrl, true)
-                            .replace("SCOPE", "snsapi_base")
+                            .replace("APPID", wxProps.serviceNo.appId)
+                            .replace("REDIRECT_URI", encodeUrl)
+                            .replace("SCOPE", "snsapi_userinfo")
                             .replace("STATE", "ythauth")
                     response.sendRedirect(redUrl)
                 }

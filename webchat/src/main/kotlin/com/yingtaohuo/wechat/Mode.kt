@@ -23,7 +23,8 @@ data class WXUserAccessToken(
         @JsonProperty("refresh_token")
         val refreshToken: String,
         val openid: String,
-        val scope: String
+        val scope: String,
+        val unionid: String
 )
 
 data class WXResult(val errcode: Int, val errmsg: String)
@@ -46,5 +47,6 @@ data class WXUserInfo(
         // 用户特权信息，json 数组，如微信沃卡用户为（chinaunicom）
         val privilege: Array<String>,
         // 只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。
-        val unionid: String
+        val unionid: String,
+        val language: String
 )

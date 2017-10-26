@@ -19,7 +19,7 @@ class DBWXUser(private val dataSource: HikariDataSource) {
         val tWxUser = TWxUser.T_WX_USER
         dataSource.connection.use {
             DSL.using(it).use { ctx ->
-                return ctx.select().from(tWxUser).where(tWxUser.OPENID.eq(openid)).fetchOne().into(TWxUserRecord::class.java)
+                return ctx.select().from(tWxUser).where(tWxUser.OPENID.eq(openid)).fetchOne()?.into(TWxUserRecord::class.java)
             }
         }
     }
@@ -28,7 +28,7 @@ class DBWXUser(private val dataSource: HikariDataSource) {
         val tWxUser = TWxUser.T_WX_USER
         dataSource.connection.use {
             DSL.using(it).use { ctx ->
-                return ctx.select().from(tWxUser).where(tWxUser.UNIONID.eq(unionid)).fetchOne().into(TWxUserRecord::class.java)
+                return ctx.select().from(tWxUser).where(tWxUser.UNIONID.eq(unionid)).fetchOne()?.into(TWxUserRecord::class.java)
             }
         }
     }

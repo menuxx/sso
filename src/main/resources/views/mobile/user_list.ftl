@@ -24,8 +24,6 @@
                 <div class="media-body">
                     <h4 class="media-heading nickName">${user.nickName}</h4>
                     <p class="gender"><#if user.gender == 1>男<#elseif user.gender == 2>女<#else >未知</#if></p>
-
-
                 </div>
                 <div class="media-right media-middle">
                     <#if user.consumed == 1>
