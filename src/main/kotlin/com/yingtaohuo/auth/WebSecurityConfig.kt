@@ -92,6 +92,7 @@ class WebSecurityConfig(
                 // .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                 .antMatchers("/auth/**").permitAll()
+                .antMatchers("/mock/**").permitAll()
 
                 .anyRequest().authenticated().and()
 
