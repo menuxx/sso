@@ -33,11 +33,11 @@ DEFAULT_JVM_OPTS=""
 # Use the maximum available, or set MAX_FD != -1 to use that value.
 MAX_FD="maximum"
 
-warn ( ) {
+warn () {
     echo "$*"
 }
 
-die ( ) {
+die () {
     echo
     echo "$*"
     echo
@@ -155,13 +155,11 @@ if $cygwin ; then
 fi
 
 # Escape application args
-save ( ) {
+save () {
     for i do printf %s\\n "$i" | sed "s/'/'\\\\''/g;1s/^/'/;\$s/\$/' \\\\/" ; done
     echo " "
 }
 APP_ARGS=$(save "$@")
-
-echo $CLASSPATH
 
 # Collect all arguments for the java command, following the shell quoting and substitution rules
 eval set -- $DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS "\"-Dorg.gradle.appname=$APP_BASE_NAME\"" -classpath "\"$CLASSPATH\"" org.gradle.wrapper.GradleWrapperMain "$APP_ARGS"

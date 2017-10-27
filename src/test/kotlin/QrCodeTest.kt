@@ -1,6 +1,5 @@
 import com.google.common.io.Resources
-import com.google.zxing.BinaryBitmap
-import com.google.zxing.Result
+import com.google.zxing.*
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource
 import com.google.zxing.common.HybridBinarizer
 import com.google.zxing.qrcode.QRCodeReader
@@ -10,7 +9,11 @@ import org.junit.Test
 import javax.imageio.ImageIO
 import org.yaml.snakeyaml.reader.ReaderException
 import qiniu.happydns.util.Hex
+import java.io.File
 import java.net.URLEncoder
+import java.awt.image.BufferedImage
+
+
 
 
 /**
@@ -44,7 +47,9 @@ class QrCodeTest {
 
             // gh_87e8a8151cf9_258.jpg
 
-            val image = ImageIO.read(Resources.getResource("11111.jpg"))
+            val image = ImageIO.read(File("11111111111111111.jpg"))
+
+            // val subImage = image.getSubimage(0, 0, image.width, (image.height * 0.85).toInt())
 
             // val image = ImageIO.read(resp.body().byteStream())
 
@@ -57,8 +62,10 @@ class QrCodeTest {
 
             val result: Result
             try {
-                // val hints = mutableMapOf<EncodeHintType, Any>()
-                result = reader.decode(bitmap)
+                val hints = mutableMapOf<DecodeHintType, Any>()
+                hints[DecodeHintType.PURE_BARCODE] = true
+                hints[DecodeHintType.CHARACTER_SET] = "UTF-8"
+                result = reader.decode(bitmap, hints)
                 println(result.text)
                 println(Hex.encodeHexString(result.rawBytes))
             } catch (e: ReaderException) {

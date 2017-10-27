@@ -17,7 +17,8 @@ body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
 }
 
 .item-image{
-	width: 60px;
+	width: 100px;
+	height: 100px;
 }
 .discounted-price{
 	color: #f75c50;

@@ -10,10 +10,9 @@ server:
 
 spring:
 
-
   redis:
-    database: 7
-    host: wx3rd.menuxx.com
+    database: 9
+    host: 120.132.29.90
     port: 7389
     password: 4cj34t4j9
     timeout: 1000
@@ -57,6 +56,19 @@ spring:
       enabled: true
     restart:
       trigger-file:
+
+ronglian:
+  app-id: 8a216da85da6adf7015de9addca8199f"
+  account-sid: 8a216da857511049015774861894153f
+  auth-token: e1de26cde6e24dd28dfedcd81467d1f0
+
+weixin:
+  subscribe-no:
+    app-id: wx0ab69ba942af8039
+    app-secret: 4e1939ed22c63181c92d2fd2818cd6af
+  service-no:
+    app-id: wx931d9dfbd5275c6e
+    app-secret: 5882869733213d929bee994933dae42b
 
 qiniu:
   bucket: menuxx

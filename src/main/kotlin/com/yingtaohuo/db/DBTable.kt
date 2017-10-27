@@ -18,7 +18,18 @@ val TableStatusOfDisable = 0
 val TableStatusOfEnable = 1
 
 @Service
-class DBTable ( val dataSource: HikariDataSource ) {
+class DBTable (private val dataSource: HikariDataSource ) {
+
+    fun getTableById(tableId: Int) : TTableRecord? {
+        dataSource.connection.use { it ->
+            val tTable = TTable.T_TABLE
+            DSL.using(it).use { ctx ->
+                return ctx.select().from(tTable).where(tTable.ID.eq(tableId)).fetchOne().map { t ->
+                    t.into(TTableRecord::class.java)
+                }
+            }
+        }
+    }
 
     fun getTablesRangeOfShop(shopId: Int) : List<TTableRecord> {
         dataSource.connection.use { it ->
@@ -48,6 +59,19 @@ class DBTable ( val dataSource: HikariDataSource ) {
             val tTable = TTable.T_TABLE
             DSL.using(it).use { ctx ->
                 return ctx.update(tTable).set(tTable.STATUS, status).where(tTable.ID.eq(tableId)).execute()
+            }
+        }
+    }
+
+    fun updateTable(tableId: Int, qrCodeData: String, qrCodeUrl: String, qrCodePagePath: String) : Int {
+        dataSource.connection.use { it ->
+            val tTable = TTable.T_TABLE
+            DSL.using(it).use { ctx ->
+                return ctx.update(tTable)
+                        .set(tTable.WX_QRCODE_DATA, qrCodeData)
+                        .set(tTable.WX_QRCODE_URL, qrCodeUrl)
+                        .set(tTable.WX_QRCODE_PATH, qrCodePagePath)
+                        .where(tTable.ID.eq(tableId)).execute()
             }
         }
     }

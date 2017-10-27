@@ -7,18 +7,24 @@ package com.yingtaohuo.resp
  * 微信: yin80871901
  */
 
-data class RespMeta(var error: String, var errorCode: Int)
+data class RespMeta(var error: String, var errorCode: Int, val extra: Map<String, Any>?)
 
 data class RespData<out T>(val data: T?, var meta: RespMeta?=null) {
     fun success() : RespData<T> {
         if (meta == null) {
-            meta = RespMeta("ok", 0)
+            meta = RespMeta("ok", 0, null)
+        }
+        return this
+    }
+    fun success(extra: Map<String, Any>?) : RespData<T> {
+        if (meta == null) {
+            meta = RespMeta("ok", 0, extra)
         }
         return this
     }
     fun failed(error: String, errorCode: Int) : RespData<T> {
         if (meta == null) {
-            meta = RespMeta(error, errorCode)
+            meta = RespMeta(error, errorCode, null)
         }
         return this
     }

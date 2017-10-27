@@ -9,12 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 @Controller
 class MockRoute {
 
-    @GetMapping("/bind_shop")
-    fun page1(model: Model) : String {
-        model.addAttribute("title", "111")
-        return "mobile/bind_shop"
-    }
-
     @GetMapping("/login")
     fun page2(model: Model) : String {
         model.addAttribute("title", "111")

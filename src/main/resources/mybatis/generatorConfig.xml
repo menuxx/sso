@@ -48,7 +48,11 @@
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
         <!--</table>-->
 
-        <!--<table schema="menuxx" tableName="t_table" domainObjectName="TableModel">-->
+        <table schema="menuxx" tableName="t_table" domainObjectName="TableModel">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+        </table>
+
+        <!--<table schema="menuxx" tableName="t_wx_user" domainObjectName="WXUserModel">-->
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
         <!--</table>-->
 

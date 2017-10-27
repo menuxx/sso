@@ -74,11 +74,7 @@
             <div class="form-group" id="fileUploadContainer">
                 <label>商品图(第一张作为缩略图，最多可以传三张)：</label>
                 <div class="file-choose">
-                    <div class="image-list">
-                        <div class="item-image-box">
-                            <input type="hidden" name="filekeys[]" value="">
-                        </div>
-                    </div>
+                    <div class="image-list"></div>
                     <label id="uploadBtn" class="choose-btn">
                         +<input class="choose-btn-native" type="file">
                     </label>
@@ -130,7 +126,6 @@
     $("#itemEditForm").validate({
 
         submitHandler: function(form) {
-            console.log(111)
             //https://github.com/marioizquierdo/jquery.serializeJSON
             var formData =  $(form).serializeJSON()
             formData.productPrice *= 100
@@ -143,10 +138,27 @@
                 contentType: "application/json",
                 data: JSON.stringify(formData)
             }).success(function(item){
-                location.href = "/items/list";
-                alert("保存成功！")
-            }).fail(function(){
-                alert("保存失败！")
+                var cateId = sessionStorage.getItem('item_list.cateId')
+                if (cateId) {
+                    location.href = "/items/list#/?cateId=" + cateId;
+                } else {
+                    location.href = "/items/list#/"
+                }
+                $.toast({
+                    heading: '跳转中...',
+                    text: '商品创建完成',
+                    showHideTransition: 'slide',
+                    icon: 'success',
+                    hideAfter: 1000
+                });
+            }).fail(function(e){
+                $.toast({
+                    heading: '商品创建出现问题',
+                    text: '创建失败:' + e.message,
+                    showHideTransition: 'slide',
+                    icon: 'fail',
+                    hideAfter: 1000
+                });
             })
         },
         ignore: "*:not([name])",

@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service
 class YTHUserDetailsService(val dbShopUser: DBShopUser) : UserDetailsService {
 
     @Throws(UsernameNotFoundException::class)
-    override fun loadUserByUsername(username: String?): UserDetails? {
+    override fun loadUserByUsername(username: String): UserDetails? {
         // 代理
         val shopUser: TCorpUserRecord? = dbShopUser.getUserDetailByTelphone(username)
         return if ( shopUser != null ) {
@@ -48,7 +48,7 @@ class YTHUserDetailsService(val dbShopUser: DBShopUser) : UserDetailsService {
 class YTHAdminDetailsService(val dbAdminUser: DBAdminUser) : UserDetailsService {
 
     @Throws(UsernameNotFoundException::class)
-    override fun loadUserByUsername(mobile: String?): UserDetails? {
+    override fun loadUserByUsername(mobile: String): UserDetails? {
         val adminUser = dbAdminUser.getUserDetailByMobile(mobile)
         return if ( adminUser != null ) {
             val authorities = dbAdminUser.findAuthoritiesByMobile(mobile).map { YTHGrantedAuthority(it[TAuthority.T_AUTHORITY.NAME]) }.toMutableList()

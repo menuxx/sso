@@ -1,11 +1,11 @@
+import com.yingtaohuo.util.getTelPhoneFromToken
+import com.yingtaohuo.util.isTokenExpired
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
-import java.lang.ClassCastException
 import java.util.*
 import java.util.regex.Pattern
 import kotlin.reflect.KMutableProperty
 import kotlin.reflect.full.*
-import kotlin.reflect.jvm.javaType
 
 
 /**
@@ -117,5 +117,11 @@ fun main(args: Array<String>) {
 
 
     println(mapToBean<Order1>(mapOf("id" to "1", "name" to "lisi", "age" to "111", "nick_name" to "张三")))
+
+    val ph = getTelPhoneFromToken("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODYwNjU5MDk4NSIsImF1ZCI6IjY5IiwiZXhwIjoxNTA4MzYzNDA3LCJpYXQiOjE1MDgzMzQ2MDd9.Zy8hMm_skpK6U-ckq2DEWs8INfSRbSRxAXnctKnb1hZWUh3rhsF6QbATGvgHpi0U4SDutKzxlUceA5WV2RR9ew", "eWluZ3Rhb2h1bw==")
+
+    isTokenExpired("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODYwNjU5MDk4NSIsImF1ZCI6IjY5IiwiZXhwIjoxNTA4MzYzNDA3LCJpYXQiOjE1MDgzMzQ2MDd9.Zy8hMm_skpK6U-ckq2DEWs8INfSRbSRxAXnctKnb1hZWUh3rhsF6QbATGvgHpi0U4SDutKzxlUceA5WV2RR9ew", "eWluZ3Rhb2h1bw==")
+
+    println(ph)
 
 }
