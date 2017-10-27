@@ -124,7 +124,6 @@
     }
 
     $("#itemEditForm").validate({
-
         submitHandler: function(form) {
             //https://github.com/marioizquierdo/jquery.serializeJSON
             var formData =  $(form).serializeJSON()
@@ -137,7 +136,7 @@
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(formData)
-            }).success(function(item){
+            }).success(function (item) {
                 var cateId = sessionStorage.getItem('item_list.cateId')
                 if (cateId) {
                     location.href = "/items/list#/?cateId=" + cateId;
