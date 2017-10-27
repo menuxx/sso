@@ -70,9 +70,9 @@ configurations {
 
 dependencies {
 
-    compile project(":webchat")
     compile project(":ronglian")
     compile project(":feieprinter")
+    compile project(":webchat")
 
     optional "org.springframework.boot:spring-boot-configuration-processor"
 
