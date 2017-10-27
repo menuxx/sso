@@ -73,6 +73,14 @@
             times += 1;
             $(self).disable(true);
         },1000)
-    })
+    });
+
+    var src = $.trim($('.user-img').attr('src'));
+    if(src == ""){
+        $('.user-img').attr('src','/image/time.jpeg');
+    }
+
+    
+
 </script>
 <#include "./footer.ftl" />
