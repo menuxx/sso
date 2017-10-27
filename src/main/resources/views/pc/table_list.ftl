@@ -3,7 +3,6 @@
 <script src="/js/jszip.js" type="text/javascript"></script>
 <script src="/js/jszip-utils.js" type="text/javascript"></script>
 <script src="/js/FileSaver.js" type="text/javascript"></script>
-<script src="/js/scale.min.js" type="text/javascript"></script>
 <style type="text/css">
     .thumbnail .caption {
         padding: 0 15px;
@@ -215,6 +214,7 @@
         // 3. 付款码
         // 4. 平台码
         $.ajax("/tables/createwxqrcode", {
+
             type: "PUT",
             contentType: "application/json",
             data: JSON.stringify({ tableId: tableid, codeType: 2 })

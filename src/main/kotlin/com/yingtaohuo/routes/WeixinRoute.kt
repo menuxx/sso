@@ -34,7 +34,7 @@ class WeixinRoute(
     @GetMapping("/shop_bind")
     fun shopBindView(model: Model, session: HttpSession) : String {
         model.addAttribute("title", "商户店铺绑定")
-        val authUserInfo = session.getAttribute("authUserInfo")
+        val authUserInfo = session.getAttribute("authUserInfo") as WXUserInfo
         model.addAttribute("authUserInfo", authUserInfo)
         return "mobile/shop_bind"
     }
