@@ -35,14 +35,14 @@
                 <label>原价：</label>
                 <div class="input-group">
                     <span class="input-group-addon">¥</span>
-                    <input name="productPrice" type="number" data-value-type="number" value="${item.productPrice / 100}" class="form-control">
+                    <input name="productPrice" type="number" data-value-type="number" value="${(item.productPrice / 100)?string('0.00')}" class="form-control">
                 </div>
             </div>
             <div class="form-group">
                 <label>折后价：</label>
                 <div class="input-group">
                     <span class="input-group-addon">¥</span>
-                    <input name="discountPrice" type="number" data-value-type="number" value="${item.discountPrice / 100}" class="form-control">
+                    <input name="discountPrice" type="number" data-value-type="number" value="${(item.discountPrice / 100)?string('0.00')}" class="form-control">
                 </div>
             </div>
             <div class="form-group">
