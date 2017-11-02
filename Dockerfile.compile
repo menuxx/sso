@@ -1,6 +1,10 @@
 FROM java:8-jdk
 MAINTAINER Yinchangsheng <yinchangsheng@gmail.com>
 
+ADD feieprinter /tmp/build/feieprinter
+ADD ronglian /tmp/build/ronglian
+ADD webchat /tmp/build/webchat
+
 ADD gradlew /tmp/build/
 
 ADD gradle /tmp/build/gradle
