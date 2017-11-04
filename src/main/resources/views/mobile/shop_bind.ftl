@@ -61,8 +61,12 @@
     // post /captcha/send
     // { mobile -> String }
 
+
+
     // 绑定 post /auth/wx/shop_bind
     // { mobile -> String, captcha -> String }
+
+
 
     var src = $.trim($(".user-img").attr('src'))
     if ( src === '' ) {

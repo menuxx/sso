@@ -109,6 +109,8 @@
         li.remove();
     });
 
+
+
 </script>
 
 <#include "./footer.ftl" />
