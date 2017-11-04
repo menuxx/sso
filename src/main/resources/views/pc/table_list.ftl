@@ -88,7 +88,7 @@
         var canvasEl = document.getElementById("tableCardTpl")
         var ctx = canvasEl.getContext("2d")
         var tplBgImg = new Image()
-        tplBgImg.src = "/image/WechatIMG1688.png"
+        tplBgImg.src = "/image/qrcode-table-tpl.png"
         tplBgImg.crossOrigin = 'Anonymous'
         tplBgImg.onload = function () {
             ctx.drawImage(tplBgImg, 0, 0, 1000, 607)
