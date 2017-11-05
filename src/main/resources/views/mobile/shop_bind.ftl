@@ -36,7 +36,7 @@
 <div class="alert alert-info" role="alert">输入店铺手机号完成绑定,可以在微信上管理您的店铺。</div>
 <div class="authorize">
     <div class="user">
-        <img class="user-img" src="${authUserInfo.headimgurl}">
+        <img class="user-img" src="<#if authUserInfo.headimgurl??>${authUserInfo.headimgurl}<#else>/image/timg.jpeg</#if>">
     </div>
     <span class="authorize-txt">绑定到</span>
     <div class="yth">
@@ -67,7 +67,11 @@
             contentType: 'application/json',
             data: JSON.stringify({ mobile: mobile })
         }).success(function(data) {
-            alert('发送成功')
+            if ( data.meta.errorCode === 0 ) {
+                alert('发送成功')
+            } else {
+                alert(data.meta.error)
+            }
         }).fail(function(err) {
             alert('发送失败')
         })
@@ -75,41 +79,39 @@
 
     // 绑定 post /auth/wx/shop_bind
     // { mobile -> String, captcha -> String }
-
-
-    var src = $.trim($(".user-img").attr('src'))
-    if ( src === '' ) {
-        $(".user-img").attr('src', '/image/ddd.jpg')
-    }
-
-
     var times = 0;
     $('.obtain').on('click', function() {
         if (times != 0) {
             return;
         }
-        var self = this
-        sendCaptcha($("#bindForm input[name=mobile]").val())
+        var self = this;
+        var mobile = $("#bindForm input[name=mobile]").val()
+        if(/^1([0-9]{10})$/.test(mobile)){
+            sendCaptcha(mobile)
+        }else{
+            return alert("手机格式不正确，请检查");
+        }
+
+
         var timeID = setInterval(function(){
-            if (times === 60) {
-                clearInterval(timeID)
-                $(self).html('获取')
-                times = 0
-                return
+
+            if(times === 60){
+                self.removeClass("disabled");
+                self.html('获取');
+                return  clearInterval(timeID);
+            }else {
+                self.addClass("disabled");
+                self.html(60 - times);
+                times += 1;
             }
-            $(self).html(60 - times)
-            times += 1;
-            $(self).disable(true);
-        },1000)
+
+
+        },1000);
+
     });
 
-    var src = $.trim($('.user-img').attr('src'));
-    if(src == ""){
-        $('.user-img').attr('src','/image/time.jpeg');
-    }
-
     $("#bindForm").on('submit', function (event) {
-        event.preventDefault()
+        event.preventDefault();
         var mobile = $(this).find('[name=mobile]').val()
         var captcha = $(this).find('[name=captcha]').val()
         $.ajax('/auth/wx/shop_bind', {
