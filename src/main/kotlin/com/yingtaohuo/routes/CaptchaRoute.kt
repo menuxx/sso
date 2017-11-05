@@ -3,10 +3,7 @@ package com.yingtaohuo.routes
 import com.yingtaohuo.AllOpen
 import com.yingtaohuo.resp.RespData
 import com.yingtaohuo.service.CaptchaService
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 /**
@@ -21,6 +18,7 @@ class CaptchaRoute(val captchaService: CaptchaService) {
 
     data class SendCaptcha(val mobile: String)
     @PostMapping("/send")
+    @ResponseBody
     fun sendCaptcha(@Valid @RequestBody captcha: SendCaptcha) : RespData<String> {
         return try {
             val captcha = captchaService.sendCaptcha(captcha.mobile)

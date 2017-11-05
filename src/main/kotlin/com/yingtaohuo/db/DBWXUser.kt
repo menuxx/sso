@@ -33,26 +33,25 @@ class DBWXUser(private val dataSource: HikariDataSource) {
         }
     }
 
-    fun insertUser(user: WXUserModel) : TWxUserRecord {
+    fun insertUser(user: WXUserModel) : Int {
         val tWxUser = TWxUser.T_WX_USER
         dataSource.connection.use {
             DSL.using(it).use { ctx ->
                 return ctx.insertInto(tWxUser)
                         .set(toRecord<TWxUserRecord, WXUserModel>(user, false, true))
-                        .returning().fetchOne()
+                        .returning(tWxUser.ID).fetchOne().getValue(tWxUser.ID).toInt()
             }
         }
     }
 
-    fun updateUser(user: WXUserModel) : TWxUserRecord {
+    fun updateUser(user: WXUserModel) : Int {
         val tWxUser = TWxUser.T_WX_USER
         dataSource.connection.use {
             DSL.using(it).use { ctx ->
                 return ctx.update(tWxUser)
                         .set(toRecord<TWxUserRecord, WXUserModel>(user, false, true))
                         .where(tWxUser.UNIONID.eq(user.unionid))
-                        .returning()
-                        .fetchOne()
+                        .execute()
             }
         }
     }

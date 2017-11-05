@@ -43,12 +43,12 @@
         <img class="logo-img" src="http://olt6vsmtk.bkt.clouddn.com/YTH-logo.png">
     </div>
 </div>
-<form class="form-wrap">
+<form id="bindForm" class="form-wrap">
     <div class="form-group">
-        <input type="tel" class="form-control" placeholder="手机号">
+        <input name="mobile" type="tel" class="form-control" placeholder="手机号">
     </div>
     <div class="input-group">
-        <input type="text" class="form-control" placeholder="验证码">
+        <input name="captcha" type="text" class="form-control" placeholder="验证码">
         <span class="input-group-btn">
           <a class="btn btn-primary obtain" type="button">获取</a>
         </span>
@@ -61,11 +61,20 @@
     // post /captcha/send
     // { mobile -> String }
 
-
+    function sendCaptcha(mobile) {
+        $.ajax('/captcha/send', {
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ mobile: mobile })
+        }).success(function(data) {
+            alert('发送成功')
+        }).fail(function(err) {
+            alert('发送失败')
+        })
+    }
 
     // 绑定 post /auth/wx/shop_bind
     // { mobile -> String, captcha -> String }
-
 
 
     var src = $.trim($(".user-img").attr('src'))
@@ -80,6 +89,7 @@
             return;
         }
         var self = this
+        sendCaptcha($("#bindForm input[name=mobile]").val())
         var timeID = setInterval(function(){
             if (times === 60) {
                 clearInterval(timeID)
@@ -98,7 +108,25 @@
         $('.user-img').attr('src','/image/time.jpeg');
     }
 
-    
+    $("#bindForm").on('submit', function (event) {
+        event.preventDefault()
+        var mobile = $(this).find('[name=mobile]').val()
+        var captcha = $(this).find('[name=captcha]').val()
+        $.ajax('/auth/wx/shop_bind', {
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ mobile: mobile, captcha: captcha })
+        }).success(function (data) {
+            if (data.meta.errorCode === 0) {
+                alert('绑定完成')
+                location.href = '/'
+            } else {
+                alert(data.meta.error)
+            }
+        }).fail(function (err) {
+            alert('绑定失败: ' + err)
+        })
+    })
 
 </script>
 <#include "./footer.ftl" />

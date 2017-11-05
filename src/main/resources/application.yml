@@ -58,7 +58,7 @@ spring:
       trigger-file:
 
 ronglian:
-  app-id: 8a216da85da6adf7015de9addca8199f"
+  app-id: 8a216da85da6adf7015de9addca8199f
   account-sid: 8a216da857511049015774861894153f
   auth-token: e1de26cde6e24dd28dfedcd81467d1f0
 

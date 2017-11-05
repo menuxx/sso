@@ -10,6 +10,8 @@ import java.lang.reflect.Modifier
  * 作者: yinchangsheng@gmail.com
  * 创建于: 2017/9/2
  * 微信: yin80871901
+ * change 自动检测是否更新
+ * nullEmpty 内容为空的值 不更新
  */
 inline fun <reified R: Record, reified M> toRecord(model: M, change: Boolean, nullEmpty: Boolean) : R {
 

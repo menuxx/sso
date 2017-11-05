@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.util.StringUtils
 import org.springframework.web.bind.annotation.*
+import java.sql.Timestamp
 import java.util.*
 import javax.servlet.http.HttpSession
 import javax.validation.Valid
@@ -52,6 +53,9 @@ class WeixinRoute(
         if ( StringUtils.isEmpty(captcha) || captcha != shopBind.captcha ) {
             return RespData("验证码不正确，再发一次吧").failed("验证码不正确", 4001)
         }
+
+        val shopUser = dbShopUser.getUserDetailByTelphone(shopBind.mobile) ?: return RespData("绑定身份有问题，请联系检查手机号").failed("手机号不正确", 4002)
+
         if ( authUserInfo?.unionid != null ) {
             val user = dbWXUser.findUserByUnionid(authUserInfo.unionid)
             val userModel = WXUserModel()
@@ -59,18 +63,20 @@ class WeixinRoute(
             userModel.city = authUserInfo.city
             userModel.country = authUserInfo.country
             userModel.headimgurl = authUserInfo.headimgurl
-            userModel.updateAt = Date()
             userModel.nickname = authUserInfo.nickname
             userModel.openid = authUserInfo.openid
             userModel.province = authUserInfo.province
             userModel.sex = authUserInfo.sex.toInt()
-            val wxUser = if ( user == null ) {
-                dbWXUser.insertUser(userModel)
+            userModel.createAt = Timestamp(Date().time)
+            userModel.updateAt = Timestamp(Date().time)
+            if ( user == null ) {
+                val wxUserId = dbWXUser.insertUser(userModel)
+                dbShopUser.updateWxUserId(shopUser.mobile, wxUserId)
             } else {
-                dbWXUser.updateUser(userModel)
+                val wxUserId = dbWXUser.updateUser(userModel)
+                dbShopUser.updateWxUserId(shopUser.mobile, wxUserId)
             }
-            dbShopUser.updateWxUserId(shopBind.mobile, wxUser.id.toInt())
-            return RespData("ok").success()
+            return RespData(shopUser.corpId.toString()).success()
         }
         throw NotFoundException("还没有通过微信认证授权")
     }

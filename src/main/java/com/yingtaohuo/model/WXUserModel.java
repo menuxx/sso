@@ -1,5 +1,6 @@
 package com.yingtaohuo.model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class WXUserModel {
@@ -21,9 +22,9 @@ public class WXUserModel {
 
     private String unionid;
 
-    private Date createAt;
+    private Timestamp createAt;
 
-    private Date updateAt;
+    private Timestamp updateAt;
 
     public Integer getId() {
         return id;
@@ -97,19 +98,19 @@ public class WXUserModel {
         this.unionid = unionid == null ? null : unionid.trim();
     }
 
-    public Date getCreateAt() {
+    public Timestamp getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(Date createAt) {
+    public void setCreateAt(Timestamp createAt) {
         this.createAt = createAt;
     }
 
-    public Date getUpdateAt() {
+    public Timestamp getUpdateAt() {
         return updateAt;
     }
 
-    public void setUpdateAt(Date updateAt) {
+    public void setUpdateAt(Timestamp updateAt) {
         this.updateAt = updateAt;
     }
 }
