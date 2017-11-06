@@ -75,6 +75,8 @@
 
 <script type="text/javascript">
 
+    var logoPath = '${shop.logoPath}';
+
     var loadImage = function (url, callback) {
         var img = new Image()
         img.src = url
@@ -145,7 +147,8 @@
             }).filter(function (item) { return item !== null })
 
             function doWork() {
-                drawTableCode(tables[workIndex], "/image/qrcode-table-tpl.png", function (table, dataUrl) {
+                var logoUrl = cndUrl + "/images/corps/logo/" + logoPath + '?imageView2/2/m/2/w/50/h/50'
+                drawTableCode(tables[workIndex], logoUrl, function (table, dataUrl) {
                     workIndex++
                     img.file(table.tableName + '_1000x607.png', dataUrl.replace("data:image/png;base64,", ''), {base64: true});
                     if (workIndex < tables.length) {
@@ -214,7 +217,6 @@
         // 3. 付款码
         // 4. 平台码
         $.ajax("/tables/createwxqrcode", {
-
             type: "PUT",
             contentType: "application/json",
             data: JSON.stringify({ tableId: tableid, codeType: 2 })
