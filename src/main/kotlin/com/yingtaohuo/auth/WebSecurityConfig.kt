@@ -91,6 +91,7 @@ class WebSecurityConfig(
 
                 // .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
+                .antMatchers("/captcha/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/mock/**").permitAll()
 

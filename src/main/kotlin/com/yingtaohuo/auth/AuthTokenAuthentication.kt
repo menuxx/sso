@@ -114,6 +114,7 @@ class AuthAuthenticationEntryPoint(private val appProps : AppProps, private val 
             // 如果在微信中打开
             wxUa.matcher(ua).find() -> {
                 if (wxUa.matcher(ua).find()) {
+                    authLogger.debug("fromUrl: $fromUrl")
                     authLogger.debug("================= in weixin =================")
                     val encodeUrl = URLEncoder.encode(fromUrl, "UTF-8")
                     val redUrl = WeixinAuthorizeUrl
@@ -121,6 +122,7 @@ class AuthAuthenticationEntryPoint(private val appProps : AppProps, private val 
                             .replace("REDIRECT_URI", encodeUrl)
                             .replace("SCOPE", "snsapi_userinfo")
                             .replace("STATE", "ythauth")
+                    authLogger.debug("redUrl: $redUrl")
                     response.sendRedirect(redUrl)
                 }
             }

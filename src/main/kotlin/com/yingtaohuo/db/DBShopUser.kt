@@ -30,7 +30,7 @@ class DBShopUser(val dataSource: HikariDataSource) {
         val fMobile = tShopUser.MOBILE
         dataSource.connection.use {
             DSL.using(it).use { ctx ->
-                return ctx.select().from(tShopUser).where(fMobile.eq(mobile)).fetchOne().into(TCorpUserRecord::class.java)
+                return ctx.select().from(tShopUser).where(fMobile.eq(mobile)).fetchOne()?.into(TCorpUserRecord::class.java)
             }
         }
     }
@@ -59,15 +59,14 @@ class DBShopUser(val dataSource: HikariDataSource) {
         }
     }
 
-    fun updateWxUserId(mobile: String, userId: Int) : TCorpUserRecord {
+    fun updateWxUserId(mobile: String, userId: Int) : Int {
         val tShopUser = TCorpUser.T_CORP_USER
         dataSource.connection.use {
             DSL.using(it).use { ctx ->
                 return ctx.update(tShopUser)
                         .set(tShopUser.WX_USER_ID, UInteger.valueOf(userId))
                         .where(tShopUser.MOBILE.eq(mobile))
-                        .returning()
-                        .fetchOne()
+                        .execute()
             }
         }
     }
@@ -78,7 +77,7 @@ class DBShopUser(val dataSource: HikariDataSource) {
             DSL.using(it).use { ctx ->
                 return ctx.select().from(tShopUser)
                         .where(tShopUser.WX_USER_ID.eq(UInteger.valueOf(wxUserId)))
-                        .fetchOne().into(TCorpUserRecord::class.java)
+                        .fetchOneInto(TCorpUserRecord::class.java)
             }
         }
     }

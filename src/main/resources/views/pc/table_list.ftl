@@ -88,7 +88,7 @@
         var canvasEl = document.getElementById("tableCardTpl")
         var ctx = canvasEl.getContext("2d")
         var tplBgImg = new Image()
-        tplBgImg.src = "/image/WechatIMG1688.png"
+        tplBgImg.src = "/image/qrcode-table-tpl.png"
         tplBgImg.crossOrigin = 'Anonymous'
         tplBgImg.onload = function () {
             ctx.drawImage(tplBgImg, 0, 0, 1000, 607)
@@ -145,7 +145,7 @@
             }).filter(function (item) { return item !== null })
 
             function doWork() {
-                drawTableCode(tables[workIndex], "/image/WechatIMG1687.png", function (table, dataUrl) {
+                drawTableCode(tables[workIndex], "/image/qrcode-table-tpl.png", function (table, dataUrl) {
                     workIndex++
                     img.file(table.tableName + '_1000x607.png', dataUrl.replace("data:image/png;base64,", ''), {base64: true});
                     if (workIndex < tables.length) {
