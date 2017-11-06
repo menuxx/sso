@@ -27,6 +27,7 @@
 <body>
 <canvas style="position: absolute; left: -1000px; top: -1000px;" id="toDataUrl"></canvas>
 <div class="container">
+    <input type="text" class="form-control qrcode-url" placeholder="输入图标地址" />
     <a class="btn btn-link" id="downAllQrcode">生成并下载所有桌贴    (${shop.shopName}_的桌码.zip)</a>
     <div class="table-card">
         <div class="table-card-progress progress">
@@ -131,6 +132,8 @@
         zip.file("注意事项.txt", "每张桌码尺寸 1000 像素 x 607 像素(宽 x 高)");
         var img = zip.folder("桌码图片");
 
+        var logoUrl = $('.qrcode-url').val()
+
         $.ajax("/tables/").success(function (res) {
             var rowTables = res.data
             var workIndex = 0
@@ -147,7 +150,7 @@
             }).filter(function (item) { return item !== null })
 
             function doWork() {
-                var logoUrl = cndUrl + "/images/corps/logo/" + logoPath + '?imageView2/2/m/2/w/50/h/50'
+                // var logoUrl = cndUrl + "/images/corps/logo/" + logoPath + '?imageView2/2/m/2/w/50/h/50'
                 drawTableCode(tables[workIndex], logoUrl, function (table, dataUrl) {
                     workIndex++
                     img.file(table.tableName + '_1000x607.png', dataUrl.replace("data:image/png;base64,", ''), {base64: true});
