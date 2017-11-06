@@ -145,7 +145,7 @@
             }).filter(function (item) { return item !== null })
 
             function doWork() {
-                drawTableCode(tables[workIndex], "/image/WechatIMG1687.png", function (table, dataUrl) {
+                drawTableCode(tables[workIndex], "/image/qrcode-table-tpl.png", function (table, dataUrl) {
                     workIndex++
                     img.file(table.tableName + '_1000x607.png', dataUrl.replace("data:image/png;base64,", ''), {base64: true});
                     if (workIndex < tables.length) {
