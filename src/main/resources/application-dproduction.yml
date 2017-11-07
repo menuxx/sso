@@ -1,7 +1,7 @@
 
 app:
-  site-url: http://sso.yingtaohuo.com
-  #site-url: http://192.168.33.76:8082
+  #site-url: http://sso.yingtaohuo.com
+  site-url: http://192.168.33.76:8082
 
 spring:
   freemarker:

@@ -70,7 +70,7 @@
                 hideAfter: 1900
             });
             setTimeout(function () {
-                location.href = "/shops/list"
+                location.href = "/shops/list?pageSize=300"
             }, 2000)
         }).fail(function (err) {
             $.toast({

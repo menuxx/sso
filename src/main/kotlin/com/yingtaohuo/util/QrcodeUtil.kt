@@ -73,14 +73,14 @@ private val WHITE = -0x1
  * @throws Exception
  */
 @Throws(Exception::class)
-fun get2CodeImage(url: String, logoData: ByteArray) : ByteArrayOutputStream {
+fun get2CodeImage(url: String, logoData: ByteArray, bottomImg: ByteArray) : ByteArrayOutputStream {
     val format = "png"
     val hints = Hashtable<EncodeHintType, Any>()
     hints.put(EncodeHintType.MARGIN, "2")
     hints.put(EncodeHintType.CHARACTER_SET, "UTF-8")
     hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H)
-    val bitMatrix = MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, 400, 400, hints)
-    return writeToOutput(bitMatrix, format, logoData)
+    val bitMatrix = MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, 400, 430, hints)
+    return writeToOutput(bitMatrix, format, logoData, bottomImg)
 }
 
 /**
@@ -92,12 +92,14 @@ fun get2CodeImage(url: String, logoData: ByteArray) : ByteArrayOutputStream {
  * @throws IOException
  */
 @Throws(IOException::class)
-fun writeToOutput(matrix: BitMatrix, format: String, logoData: ByteArray) : ByteArrayOutputStream {
+fun writeToOutput(matrix: BitMatrix, format: String, logoData: ByteArray, bottomImgData: ByteArray) : ByteArrayOutputStream {
     val image = toBufferedImage(matrix)
     val gs = image.createGraphics()
     //载入logo
     val img = ImageIO.read(ByteArrayInputStream(logoData))
     gs.drawImage(img, 150, 150, null)
+    val bottomImg = ImageIO.read(ByteArrayInputStream(bottomImgData))
+    gs.drawImage(bottomImg, 40, 390, null)
     gs.dispose()
     img.flush()
     val output = ByteArrayOutputStream()

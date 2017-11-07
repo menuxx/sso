@@ -108,6 +108,10 @@
                 <button type="submit" class="btn btn-primary btn-block">保存</button>
             </div>
 
+            <div class="form-group">
+                <a id="delete" class="btn btn-danger btn-block">删除</a>
+            </div>
+
         </form>
     </div>
 </div>
@@ -127,14 +131,22 @@
 <script src="${app.siteUrl}/js/zh_CN.js"></script>
 <script type="text/javascript">
 
+    var categoryId = ${item.categoryId};
+
     if ($('.item-image-box').length <= 3 ) {
         $("#uploadBtn").show();
     }
 
     // 自动选中 当前 item 的分类
     $(".category-select option").each(function (index, option) {
-        if ( parseInt(option.value) === ${item.categoryId} ) {
+        if ( parseInt(option.value) === categoryId ) {
             $(".category-select").val(parseInt(option.value))
+        }
+    })
+
+    $("#delete").on("click", function () {
+        if ( confirm("确认删除 `${item.itemName}` 吗?") ) {
+            // $.ajax('/')
         }
     })
 

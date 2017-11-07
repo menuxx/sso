@@ -18,7 +18,7 @@ val TableStatusOfDisable = 0
 val TableStatusOfEnable = 1
 
 @Service
-class DBTable (private val dataSource: HikariDataSource ) {
+class DBTable (private val dataSource: HikariDataSource ) : DBBase() {
 
     fun getTableById(tableId: Int) : TTableRecord? {
         dataSource.connection.use { it ->

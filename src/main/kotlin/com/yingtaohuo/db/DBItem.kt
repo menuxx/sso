@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional
  * 微信: yin80871901
  */
 @Service
-class DBItem(private val dataSource: HikariDataSource) {
+class DBItem(private val dataSource: HikariDataSource) : DBBase() {
 
     private val logger = LoggerFactory.getLogger(DBItem::class.java)
 
@@ -38,7 +38,11 @@ class DBItem(private val dataSource: HikariDataSource) {
                 val limit = page.getLimit()
                 val offset = page.getOffset()
                 return ctx.select().from(tItem)
-                        .where(tItem.CORP_ID.eq(shopId).and(tItem.CATEGORY_ID.eq(categoryId)))
+                        .where(
+                                tItem.CORP_ID.eq(shopId).and(tItem.CATEGORY_ID.eq(categoryId))
+                                        // 状态为 可获取
+                                        .and(tItem.STATUS.eq(StatusSelect))
+                        )
                         .orderBy(tItem.CREATE_TIME.desc())
                         .limit(limit).offset(offset)
                         .fetchArray()
@@ -73,6 +77,18 @@ class DBItem(private val dataSource: HikariDataSource) {
                         .set(record)
                         .returning()
                         .fetchOne()
+            }
+        }
+    }
+
+    fun deleteItem(itemId: Int) : Int {
+        dataSource.connection.use {
+            DSL.using(it).use { ctx ->
+                val tItem = TItem.T_ITEM
+                return ctx.update(tItem)
+                        .set(tItem.STATUS, StatusDelete)
+                        .where(tItem.ID.eq(itemId))
+                        .execute()
             }
         }
     }

@@ -12,3 +12,7 @@
     <script src="${app.siteUrl}/${assets('js/vue-router.js', app.envs)}"></script>
     <script src="${app.siteUrl}/jquery.toast/jquery.toast.min.js"></script>
     <link rel="stylesheet" type="text/css" href="${app.siteUrl}/jquery.toast/jquery.toast.min.css">
+    <script type="text/javascript">
+        var cdnUrl = '${app.cdnUrl}';
+        var siteUrl = '${app.siteUrl}';
+    </script>

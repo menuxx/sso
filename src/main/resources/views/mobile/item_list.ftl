@@ -1,4 +1,3 @@
-
 <#include "./header.ftl" />
 <#setting number_format="000">
 
@@ -15,10 +14,6 @@
     </div>
 </div>
 <script>
-
-    var cdnUrl = '${app.cdnUrl}';
-    var siteUrl = '${app.siteUrl}';
-
     var MainComponent = {
         template: '<div><div class="yth-nav-list" id="yth-item-list">\n' +
         '            <ul class="category-list nav nav-pills nav-stacked yth-nav-stacked">\n' +

@@ -35,7 +35,7 @@
     <div class="">
         <ul class="list-group yth-categories-list">
         <#list categories as cate>
-            <li class="list-group-item">
+            <li class="list-group-item" data-cateid="${cate.id}">
                 <#if cate.categoryIcon??>
                     <img src="${cate.categoryIcon}" alt="分类图标">
                 </#if>
@@ -105,6 +105,12 @@
     });
 
     $(".yth-categories-list").delegate('.btn-delete', 'click', function() {
+        var cateid = $(this).parent('.list-group-item').data('cateid')
+        $.ajax('/category/' + cateid, {
+            type: 'DELETE',
+            contentType: 'application/json',
+            data: JSON.stringify()
+        })
         var li = $(this).parents(".list-group-item");
         li.remove();
     });

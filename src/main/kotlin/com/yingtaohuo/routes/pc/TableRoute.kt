@@ -19,6 +19,7 @@ import com.yingtaohuo.wx.WXAuthorizerCache
 import com.yingtaohuo.wx.WXLiteApi
 import okhttp3.OkHttpClient
 import org.hibernate.validator.constraints.NotEmpty
+import org.springframework.core.io.ClassPathResource
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -93,7 +94,8 @@ class TableRoute (
             // 读取为微信生成的二维码
             val qrcodeData = parseQrcode(File("$filename.jpg"))
             // 重新生成带 logo 的二维码
-            val newQrcodeImage = get2CodeImage(qrcodeData, logoData)
+            val bottomImg = ClassPathResource("public/image/qrcode-bottom.png").file.readBytes()
+            val newQrcodeImage = get2CodeImage(qrcodeData, logoData, bottomImg)
             // 上传新做成的文件
             val fileKey = qiniuService.uploadFile(ByteArrayInputStream(newQrcodeImage.toByteArray()), "images/table/$filename.png")
             return mapOf("qrCodeData" to qrcodeData, "fileKey" to fileKey)

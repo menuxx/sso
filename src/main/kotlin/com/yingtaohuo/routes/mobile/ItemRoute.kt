@@ -68,6 +68,11 @@ class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
         return "mobile/item_edit"
     }
 
+    @DeleteMapping("/{id}")
+    fun delItem(@PathVariable("id") itemId: Int) : RespData<Int> {
+        return RespData(dbItem.deleteItem(itemId)).success()
+    }
+
     /**
      * 修改商品
      */
