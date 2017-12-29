@@ -19,7 +19,7 @@
             <ul class="list-group">
             <#list shops as shop>
                 <li class="list-group-item shop-item clearfix" data-shop-id="${shop.id}">
-                    <h5 class="title">${shop.corpName}</h5>
+                    <h5 class="title">#${shop.id} - ${shop.corpName}</h5>
                     <div class="btn-group btn-opts">
                         <a class="btn btn-link btn-manage">管理</a>
                         <a class="btn btn-link btn-category">分类</a>

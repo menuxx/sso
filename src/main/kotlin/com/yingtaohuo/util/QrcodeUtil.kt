@@ -8,23 +8,12 @@ import org.yaml.snakeyaml.reader.ReaderException
 import java.util.*
 import javax.imageio.ImageIO
 import com.google.zxing.common.BitMatrix
-import com.google.zxing.multi.qrcode.QRCodeMultiReader
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
-import com.sun.imageio.spi.FileImageInputStreamSpi
 import com.yingtaohuo.exception.HttpException
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.awt.image.BufferedImage
 import java.io.*
-import javax.imageio.ImageReader
-import javax.imageio.stream.FileImageInputStream
-import javax.imageio.stream.ImageInputStream
-import java.awt.image.Raster
-
-
-
-
-
 
 /**
  * 作者: yinchangsheng@gmail.com

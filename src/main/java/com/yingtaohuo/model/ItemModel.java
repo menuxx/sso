@@ -1,12 +1,7 @@
 package com.yingtaohuo.model;
 
-import org.springframework.util.StringUtils;
-
 import javax.validation.constraints.NotNull;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 public class ItemModel {
 
@@ -24,6 +19,7 @@ public class ItemModel {
 
     @NotNull
     private Integer productPrice;
+
 
     private Integer discountPrice;
 
@@ -54,6 +50,8 @@ public class ItemModel {
     private Integer joinActMinus;
 
     private Integer offline;
+
+    private Integer status;
 
     private Date createTime;
 
@@ -225,6 +223,14 @@ public class ItemModel {
         this.offline = offline;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -232,19 +238,4 @@ public class ItemModel {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
-
-    public String getThumbnail() {
-        if (!StringUtils.isEmpty(thumbnails)) {
-            return thumbnails.split(":")[0];
-        }
-        return null;
-    }
-
-    public List<String> getCoverImageUrls() {
-    	if (coverImages != null && !StringUtils.isEmpty(coverImages)) {
-				return Arrays.asList(coverImages.split(":"));
-			}
-			return Collections.emptyList();
-		}
-
 }

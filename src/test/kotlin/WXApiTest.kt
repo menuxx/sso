@@ -1,14 +1,19 @@
+
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.yingtaohuo.App
+import com.yingtaohuo.db.DBOrder
+import com.yingtaohuo.page.PageParam
 import com.yingtaohuo.wx.QrCodeInfo
 import com.yingtaohuo.wx.WXLiteApi
 import okio.Okio
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.test.context.web.WebAppConfiguration
 import java.io.File
+import java.util.*
 
 /**
  * 作者: yinchangsheng@gmail.com
@@ -21,7 +26,9 @@ import java.io.File
 @WebAppConfiguration
 class WXApiTest {
 
-    @Test
+    @Autowired lateinit var dbOrder: DBOrder
+
+    // @Test
     fun createWXQrcodeTest() {
         val mapper = ObjectMapper()
         val api = WXLiteApi(mapper)
@@ -37,5 +44,13 @@ class WXApiTest {
             }
         }
     }
+
+    @Test
+    fun loadDetailOrdersRangeShopTest() {
+        val data = dbOrder.loadDetailOrdersRangeShop(1, Date(1510070400000), Date(1510156799000), PageParam(1, 15))
+        println(data)
+    }
+
+
 
 }

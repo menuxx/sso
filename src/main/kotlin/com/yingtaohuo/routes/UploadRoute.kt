@@ -3,22 +3,18 @@ package com.yingtaohuo.routes
 import com.qiniu.util.Auth
 import com.yingtaohuo.AllOpen
 import com.yingtaohuo.props.QiNiuProps
-import com.yingtaohuo.resp.RespData
-import com.yingtaohuo.util.getCurrentUser
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.bind.annotation.RequestParam
 
 /**
  * 作者: yinchangsheng@gmail.com
  * 创建于: 2017/8/26
  * 微信: yin80871901
  */
+@AllOpen
 @RestController
 @RequestMapping("/upload")
-@AllOpen
 class UploadRoute(val qiniuProps: QiNiuProps) {
 
     /**

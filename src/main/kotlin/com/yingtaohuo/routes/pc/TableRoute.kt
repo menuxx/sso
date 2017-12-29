@@ -94,7 +94,7 @@ class TableRoute (
             // 读取为微信生成的二维码
             val qrcodeData = parseQrcode(File("$filename.jpg"))
             // 重新生成带 logo 的二维码
-            val bottomImg = ClassPathResource("public/image/qrcode-bottom.png").file.readBytes()
+            val bottomImg = ClassPathResource("qrcode-bottom.png").file.readBytes()
             val newQrcodeImage = get2CodeImage(qrcodeData, logoData, bottomImg)
             // 上传新做成的文件
             val fileKey = qiniuService.uploadFile(ByteArrayInputStream(newQrcodeImage.toByteArray()), "images/table/$filename.png")

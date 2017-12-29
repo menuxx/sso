@@ -32,7 +32,15 @@
             <!--<property name="enableSubPackages" value="true"/>-->
         <!--</javaClientGenerator>-->
 
-        <!--<table schema="menuxx" tableName="t_item" domainObjectName="ItemModel" >-->
+        <!--<table schema="menuxx" tableName="t_item" domainObjectName="ItemModel">-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+        <!--</table>-->
+
+        <!--<table schema="menuxx" tableName="t_order_item" domainObjectName="OrderItemModel">-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+        <!--</table>-->
+
+        <!--<table schema="menuxx" tableName="t_order" domainObjectName="OrderModel">-->
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
         <!--</table>-->
 
@@ -48,9 +56,9 @@
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
         <!--</table>-->
 
-        <table schema="menuxx" tableName="t_table" domainObjectName="TableModel">
-            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
-        </table>
+        <!--<table schema="menuxx" tableName="t_table" domainObjectName="TableModel">-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+        <!--</table>-->
 
         <!--<table schema="menuxx" tableName="t_wx_user" domainObjectName="WXUserModel">-->
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
