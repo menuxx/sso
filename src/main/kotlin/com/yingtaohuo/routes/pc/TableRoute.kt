@@ -10,6 +10,7 @@ import com.yingtaohuo.exception.NotFoundException
 import com.yingtaohuo.exception.WXAccessTokenException
 import com.yingtaohuo.exception.WXHttpException
 import com.yingtaohuo.model.TableModel
+import com.yingtaohuo.props.AppProps
 import com.yingtaohuo.resp.RespData
 import com.yingtaohuo.service.QiniuService
 import com.yingtaohuo.sso.db.tables.records.TCorpRecord
@@ -39,6 +40,7 @@ import javax.validation.Valid
 @RequestMapping("/tables")
 @PreAuthorize("hasRole('ADMIN')")
 class TableRoute (
+        val appProps: AppProps,
         val dbShop: DBShop,
         val wxAuthorizerCache: WXAuthorizerCache,
         val dbTable: DBTable,
@@ -94,8 +96,8 @@ class TableRoute (
             // 读取为微信生成的二维码
             val qrcodeData = parseQrcode(File("$filename.jpg"))
             // 重新生成带 logo 的二维码
-            val bottomImg = ClassPathResource("qrcode-bottom.png").file.readBytes()
-            val newQrcodeImage = get2CodeImage(qrcodeData, logoData, bottomImg)
+            val bottomImg = getUrlImageToByteArray(commonHttpClient, appProps.siteUrl + "/qrcode-bottom.png")
+            val newQrcodeImage = get2CodeImage(qrcodeData, logoData, bottomImg!!)
             // 上传新做成的文件
             val fileKey = qiniuService.uploadFile(ByteArrayInputStream(newQrcodeImage.toByteArray()), "images/table/$filename.png")
             return mapOf("qrCodeData" to qrcodeData, "fileKey" to fileKey)
