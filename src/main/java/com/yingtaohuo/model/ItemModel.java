@@ -1,6 +1,7 @@
 package com.yingtaohuo.model;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -209,7 +210,7 @@ public class ItemModel {
         if ( coverImages != null ) {
             return Arrays.asList(coverImages.split(":"));
         }
-        return Arrays.asList(new String[]{});
+        return new ArrayList<>();
     }
 
     public void setCoverImages(String coverImages) {

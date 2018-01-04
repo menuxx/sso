@@ -14,6 +14,14 @@
     </div>
 </div>
 <script>
+    function dataProcess(list) {
+        return list.map( function (item) {
+            if ( item.thumbnails != null && item.thumbnails.length > 0 ) {
+                item.thumbnail = item.thumbnails.split(':')[0]
+            }
+            return item
+        })
+    }
     var MainComponent = {
         template: '<div><div class="yth-nav-list" id="yth-item-list">\n' +
         '            <ul class="category-list nav nav-pills nav-stacked yth-nav-stacked">\n' +
@@ -83,7 +91,7 @@
             fetchItems: function () {
                 var self = this;
                 $.ajax("/items/?pageNum=1" + getCateIdQuery(self.$route)).success(function(res) {
-                    self.itemList = res.data;
+                    self.itemList = dataProcess( res.data );
                     self.pageNum = 1;
                     self.pageNum++;
                     self.currentCateId = res.meta.extra.cateId
@@ -94,7 +102,7 @@
                 var self = this;
                 this.pageNum++;
                 $.ajax("/items/?pageNum=" + this.pageNum + getCateIdQuery(self.$route)).success(function(res) {
-                    self.itemList = self.itemList.concat(res.data);
+                    self.itemList = self.itemList.concat( dataProcess( res.data ) );
                     // default pageSize 30
                     if ( self.itemList.length < 30 ) {
                         self.pageNum--;
