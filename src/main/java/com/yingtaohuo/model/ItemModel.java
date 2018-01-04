@@ -1,7 +1,9 @@
 package com.yingtaohuo.model;
 
 import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class ItemModel {
 
@@ -201,6 +203,13 @@ public class ItemModel {
 
     public String getCoverImages() {
         return coverImages;
+    }
+
+    public List<String> getCoverImageUrls() {
+        if ( coverImages != null ) {
+            return Arrays.asList(coverImages.split(":"));
+        }
+        return Arrays.asList(new String[]{});
     }
 
     public void setCoverImages(String coverImages) {
