@@ -4,6 +4,7 @@ import com.yingtaohuo.model.ItemModel
 import com.yingtaohuo.page.PageParam
 import com.yingtaohuo.sso.db.tables.TItem
 import com.yingtaohuo.sso.db.tables.records.TItemRecord
+import com.yingtaohuo.util.nullSkipUpdate
 import com.zaxxer.hikari.HikariDataSource
 import org.jooq.impl.DSL
 import org.slf4j.LoggerFactory
@@ -68,15 +69,15 @@ class DBItem(private val dataSource: HikariDataSource) : DBBase() {
         }
     }
 
-    fun insertItem(itemModel: ItemModel) : TItemRecord {
+    fun insertItem(itemModel: ItemModel) : ItemModel {
+
         dataSource.connection.use {
             DSL.using(it).use { ctx ->
                 val tItem = TItem.T_ITEM
-                val record = toRecord<TItemRecord, ItemModel>(itemModel, false, true)
                 return ctx.insertInto(tItem)
-                        .set(record)
+                        .set(nullSkipUpdate(ctx.newRecord(tItem, itemModel)))
                         .returning()
-                        .fetchOne()
+                        .fetchOne().into(ItemModel::class.java)
             }
         }
     }
