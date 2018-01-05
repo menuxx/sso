@@ -40,6 +40,7 @@
         '                        </div>\n'+
         '                        <div class="media-right media-middle">\n'+
         '                            <a :href="item.id | fullUrl(\'/items/\')" class="btn btn-link">编辑</a>\n'+
+
         '                        </div>\n'+
         '                    </div>\n'+
         '                </li>\n'+

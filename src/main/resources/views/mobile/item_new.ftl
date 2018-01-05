@@ -131,6 +131,7 @@
             formData.discountPrice *= 100
             formData.filekeys = formData.filekeys || []
             formData.coverImages = formData.filekeys.join(":")
+            formData.thumbnails = formData.filekeys.map( key => key + "?imageView2/1/w/200/h/200" ).join(":")
             formData.corpId = ${user.shopId}
             $.ajax("/items/", {
                 type: "POST",

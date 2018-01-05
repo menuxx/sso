@@ -10,6 +10,9 @@ import java.util.concurrent.TimeUnit
  * 作者: yinchangsheng@gmail.com
  * 创建于: 2017/10/15
  * 微信: yin80871901
+ *
+ * /pages/index/index?corpId=120 店铺
+ * /pages/menu/menu?tableId=1230 桌码
  */
 
 data class QrCodeInfo(val path: String, val width: Int)

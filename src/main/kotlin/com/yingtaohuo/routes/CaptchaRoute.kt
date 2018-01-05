@@ -3,6 +3,7 @@ package com.yingtaohuo.routes
 import com.yingtaohuo.AllOpen
 import com.yingtaohuo.resp.RespData
 import com.yingtaohuo.service.CaptchaService
+import org.hibernate.validator.constraints.NotEmpty
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
@@ -16,7 +17,7 @@ import javax.validation.Valid
 @RequestMapping("/captcha")
 class CaptchaRoute(val captchaService: CaptchaService) {
 
-    data class SendCaptcha(val mobile: String)
+    data class SendCaptcha(@NotEmpty val mobile: String)
     @PostMapping("/send")
     @ResponseBody
     fun sendCaptcha(@Valid @RequestBody captcha: SendCaptcha) : RespData<String> {

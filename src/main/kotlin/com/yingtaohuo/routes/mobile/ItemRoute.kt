@@ -108,7 +108,7 @@ class ItemRoute(val dbItem: DBItem, val dbCategory: DBCategory) {
     fun postItem(@Valid @RequestBody item: ItemModel) : RespData<ItemModel> {
         val user = getCurrentUser()
         item.corpId = user.shopId
-        val newItem = fromRecord<TItemRecord, ItemModel>(dbItem.insertItem(item))
+        val newItem = dbItem.insertItem(item)
         return RespData(newItem).success()
     }
 

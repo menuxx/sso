@@ -160,6 +160,7 @@
             formData.coverImages = formData.filekeys.join(":")
             formData.id = ${item.id}
             formData.corpId = ${item.corpId}
+
             $.ajax("/items/${item.id}", {
                 type: "PUT",
                 contentType: "application/json",
