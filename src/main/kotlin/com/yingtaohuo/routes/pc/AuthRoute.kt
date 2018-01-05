@@ -7,6 +7,7 @@ import com.yingtaohuo.auth.YTHAuthUser
 import com.yingtaohuo.db.DBShopUser
 import com.yingtaohuo.exception.NotFoundException
 import com.yingtaohuo.mode.UserTokenState
+import com.yingtaohuo.model.CategoryModel
 import com.yingtaohuo.resp.RespData
 import com.yingtaohuo.resp.RespMeta
 import com.yingtaohuo.util.getCurrentUser
@@ -31,6 +32,7 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.web.bind.annotation.RequestMapping
 import javax.validation.Valid
+import kotlin.collections.HashMap
 
 
 /**
@@ -72,7 +74,7 @@ class AuthRoute(
     data class BindShop(@NotEmpty val shopId: Int)
     @PutMapping("/bind_shop")
     @ResponseBody
-    fun adminBindShop(@RequestBody shop: BindShop, request: HttpServletRequest) : RespData<String> {
+    fun adminBindShop(@Valid @RequestBody shop: BindShop, request: HttpServletRequest) : RespData<String> {
         val admin = getCurrentUser()
         admin.shopId = shop.shopId
         val authentication = UsernamePasswordAuthenticationToken(admin, null, admin.authorities)

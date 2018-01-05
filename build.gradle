@@ -26,6 +26,12 @@ buildscript {
     }
 }
 
+repositories {
+    mavenLocal()
+    maven { url "http://nexus.daocloud.io/repository/maven-public/" }
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+}
+
 apply plugin : 'idea'
 apply plugin : 'java'
 apply plugin : 'kotlin'
