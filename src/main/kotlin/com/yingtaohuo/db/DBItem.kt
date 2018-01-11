@@ -68,7 +68,7 @@ class DBItem(private val dataSource: HikariDataSource) : DBBase() {
         }
     }
 
-    fun insertItem(itemModel: ItemModel) : TItemRecord {
+    fun insertItem(itemModel: ItemModel) : ItemModel {
         dataSource.connection.use {
             DSL.using(it).use { ctx ->
                 val tItem = TItem.T_ITEM
@@ -76,7 +76,7 @@ class DBItem(private val dataSource: HikariDataSource) : DBBase() {
                 return ctx.insertInto(tItem)
                         .set(record)
                         .returning()
-                        .fetchOne()
+                        .fetchOne().into(ItemModel::class.java)
             }
         }
     }

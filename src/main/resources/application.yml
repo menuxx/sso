@@ -12,7 +12,7 @@ spring:
 
   redis:
     database: 9
-    host: 120.132.29.90
+    host: yingtaohuo.com
     port: 7389
     password: 4cj34t4j9
     timeout: 1000
